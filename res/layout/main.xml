@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonLinkToAttractions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stringButtonAttractions" android:onClick="showAttractions"/>
+
+    <Button
+        android:id="@+id/buttonLinkToMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stringButtonMaps" android:onClick="showMaps"/>
+
+    <Button
+        android:id="@+id/buttonShowInstruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stringButtonInstruction" android:onClick="showInstruction"/>
+
+    <Spinner
+        android:id="@+id/spinnerChooseLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:entries="@array/languageList"/>
+
+</LinearLayout>
