@@ -30,7 +30,7 @@ public class TourMeCreahmyActivity extends Activity {
 	}	
 	
 	public void showMaps(View view) {
-		Intent intent = new Intent(this, MapsActivity.class);
+		Intent intent = new Intent(this, ShowMapsActivity.class);
 		startActivity(intent);
 	}
 	public void showInstruction(View view) {

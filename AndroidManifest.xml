@@ -5,6 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="10" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -19,8 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapsActivity"
-            android:label="MapsActivity" >
+            android:name=".ShowMapsActivity"
+            android:label="ShowMapsActivity" >
         </activity>
         <activity
             android:name=".InstructionActivity"
@@ -34,6 +35,8 @@
             android:name=".EachAttractionActivity"
             android:label="EachAttractionActivity" >
         </activity>
+
+        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>

@@ -21,6 +21,8 @@ public final class R {
         public static final int buttonLinkToAttractions=0x7f060002;
         public static final int buttonLinkToMap=0x7f060003;
         public static final int buttonShowInstruction=0x7f060004;
+        public static final int mapview=0x7f060006;
+        public static final int spinner1=0x7f060007;
         public static final int spinnerChooseLanguage=0x7f060005;
         public static final int textView1=0x7f060000;
     }
