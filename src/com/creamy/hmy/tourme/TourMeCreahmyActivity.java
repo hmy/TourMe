@@ -1,21 +1,59 @@
 package com.creamy.hmy.tourme;
 
-import android.app.Activity;
+import java.util.Locale;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-public class TourMeCreahmyActivity extends Activity {
+public class TourMeCreahmyActivity extends LocalizedActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-	}
 
+		
+		setContentView(R.layout.main);
+		
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerChooseLanguage);
+		
+		if(LocalizedActivity.locale == Locale.ENGLISH)
+          spinner.setSelection(0);
+		else if (LocalizedActivity.locale == Locale.KOREAN)
+          spinner.setSelection(1);
+		else if (LocalizedActivity.locale == Locale.CHINESE)
+          spinner.setSelection(2);
+		
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		    @Override
+		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+		    	switch (position) {
+	            case 0:  setLocale(Locale.ENGLISH);
+	                     break;
+	            case 1:  setLocale(Locale.KOREAN);
+	                     break;
+	            case 2:  setLocale(Locale.CHINESE);
+	                     break;
+		    	} 
+		    }
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+	
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 		switch(keyCode){
 		case KeyEvent.KEYCODE_BACK:
@@ -28,7 +66,7 @@ public class TourMeCreahmyActivity extends Activity {
 		Intent intent = new Intent(this, AttractionsActivity.class);
 		startActivity(intent);
 	}	
-	
+
 	public void showMaps(View view) {
 		Intent intent = new Intent(this, ShowMapsActivity.class);
 		startActivity(intent);

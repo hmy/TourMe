@@ -1,11 +1,10 @@
 package com.creamy.hmy.tourme;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class AttractionsActivity extends Activity {
+public class AttractionsActivity extends LocalizedActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

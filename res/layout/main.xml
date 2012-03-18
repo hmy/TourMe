@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="@string/stringButtonAttractions" android:onClick="showAttractions"/>
 
-    <Button
+    <Button 
         android:id="@+id/buttonLinkToMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,5 +26,12 @@
         android:id="@+id/spinnerChooseLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:entries="@array/languageList"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

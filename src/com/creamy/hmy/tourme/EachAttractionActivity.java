@@ -1,9 +1,8 @@
 package com.creamy.hmy.tourme;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-public class EachAttractionActivity extends Activity {
+public class EachAttractionActivity extends LocalizedActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

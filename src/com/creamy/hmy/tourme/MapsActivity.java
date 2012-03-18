@@ -1,14 +1,16 @@
 package com.creamy.hmy.tourme;
 
-import android.app.Activity;
+import java.util.Locale;
+
 import android.os.Bundle;
 
-public class MapsActivity extends Activity {
+public class MapsActivity extends LocalizedActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maps);
+		
 	}
 }

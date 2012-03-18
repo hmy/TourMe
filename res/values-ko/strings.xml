@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">TourMeCreahmy</string>
+	<string name="alertMessageExit">투어미를 종료하시겠습니까?</string>
+	<string name="buttonYes">네</string>
+	<string name="buttonNo">아니오</string>
+	<string name="stringButtonAttractions">여행지</string>
+	<string name="stringButtonMaps">지도</string>
+	<string name="stringButtonInstruction">사용법</string>
+	<string name="languageListEnglish">영어(English)</string>
+	<string name="languageListKorean">한국어(Korean)</string>
+	<string name="languageListChinese">중국어(Chinese)</string>
+</resources>

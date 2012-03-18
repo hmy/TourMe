@@ -5,17 +5,17 @@
     <string name="alertMessageExit">Do you want to exit TourMe?</string>
     <string name="buttonYes">Yes</string>
     <string name="buttonNo">No</string>
+    <string name="stringButtonAttractions">Attractions</string>
+    <string name="stringButtonMaps">Maps</string>
+    <string name="stringButtonInstruction">Instruction</string>
+    <string name="languageListEnglish">English</string>
+    <string name="languageListKorean">Korean</string>
+    <string name="languageListChinese">Chinese</string>
+    
     <string-array name="languageList">
         <item>@string/languageListEnglish</item>
         <item>@string/languageListKorean</item>
         <item>@string/languageListChinese</item>
-        <item>@string/languageListRussian</item>
     </string-array>
-        <string name="stringButtonAttractions">Attractions</string>
-        <string name="stringButtonMaps">Maps</string>
-        <string name="stringButtonInstruction">Instruction</string>
-        <string name="languageListEnglish">English</string>
-        <string name="languageListKorean">Korean</string>
-        <string name="languageListRussian">Russian</string>
-        <string name="languageListChinese">Chinese</string>
+
 </resources>
