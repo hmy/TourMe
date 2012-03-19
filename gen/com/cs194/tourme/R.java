@@ -27,7 +27,7 @@ public final class R {
         public static final int spinnerChooseLanguage=0x7f060008;
         public static final int textView1=0x7f060003;
         public static final int textViewForExpand=0x7f060001;
-        public static final int webView1=0x7f060004;
+        public static final int videoView1=0x7f060004;
     }
     public static final class layout {
         public static final int attractions=0x7f030000;

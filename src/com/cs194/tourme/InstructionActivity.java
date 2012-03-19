@@ -1,9 +1,8 @@
 package com.cs194.tourme;
 
-import com.cs194.tourme.R;
-
+import android.net.Uri;
 import android.os.Bundle;
-import android.webkit.WebView;
+import android.widget.VideoView;
 
 public class InstructionActivity extends LocalizedActivity {
 
@@ -13,9 +12,9 @@ public class InstructionActivity extends LocalizedActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.instruction);
 		
-		//WebView webView = (WebView) findViewById(R.id.webView1);
-		//webView.loadUrl("http://www.youtube.com");///embed/rsvKskQcFD4");//("http://www.youtube.com/embed/rsvKskQcFD4","http://www.youtube.com/embed/rsvKskQcFD4","rtf-8");
-		//webView.
+		VideoView videoView = (VideoView) findViewById(R.id.videoView1);
+		videoView.setVideoURI(Uri.parse("http://inst.eecs.berkeley.edu/~cs186-ar/suj.mp4"));///embed/rsvKskQcFD4");//("http://www.youtube.com/embed/rsvKskQcFD4","http://www.youtube.com/embed/rsvKskQcFD4","rtf-8");
+		videoView.start();
 	}
 
 

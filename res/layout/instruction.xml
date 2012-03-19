@@ -11,9 +11,9 @@
         android:text="@string/languageListKorean"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <WebView
-        android:id="@+id/webView1"
+    <VideoView
+        android:id="@+id/videoView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
