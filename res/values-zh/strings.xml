@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">TourMeCreahmy</string>
+	<string name="app_name">TourMe</string>
 	<string name="alertMessageExit">투어미를 종료하시겠습니까?(Chinese)</string>
 	<string name="buttonYes">네(Chinese)</string>
 	<string name="buttonNo">아니오(Chinese)</string>

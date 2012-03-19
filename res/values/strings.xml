@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TourMeCreahmy</string>
+    <string name="app_name">TourMe</string>
     <string name="alertMessageExit">Do you want to exit TourMe?</string>
     <string name="buttonYes">Yes</string>
     <string name="buttonNo">No</string>
