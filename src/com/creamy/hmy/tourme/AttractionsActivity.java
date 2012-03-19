@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
@@ -23,7 +24,6 @@ public class AttractionsActivity extends ExpandableListActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attractions);
-
 		
 		final String NAME = "name";
 		final String IMAGE = "image";
@@ -84,16 +84,15 @@ public class AttractionsActivity extends ExpandableListActivity {
 			}
 		}
 				);		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
+	}
+	
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
+	        int childPosition, long id) {
+		TextView tv = (TextView) findViewById(R.id.textViewForExpand);
+		tv.setText(""+groupPosition+"/"+childPosition+"/"+id);
+	    // use groupPosition and childPosition to locate the current item in the adapter
+	    return true;
 	}
 
 	public void showAttraction(View view) {

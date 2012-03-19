@@ -23,6 +23,15 @@ public class LocalizedActivity extends Activity {
 	}
 
 	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		Intent intent = getIntent();
+		finish();
+		startActivity(intent);
+
+		super.onConfigurationChanged(newConfig);
+	}
+
+	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 
