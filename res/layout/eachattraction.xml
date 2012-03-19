@@ -4,11 +4,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+   <ScrollView
+        android:id="@+id/ScrollViewForImage"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="eachAttraction"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_weight="0.05" >
+
+       <ImageView
+           android:id="@+id/imageView1"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:src="@drawable/logo" />
+
+    </ScrollView>
+    <ScrollView
+        android:id="@+id/ScrollViewForLongText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05" >
+
+        <TextView
+            android:id="@+id/textViewAttractionDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.92"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonPlayVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonPlayVideo" />
+
+        <Button
+            android:id="@+id/buttonPlayAudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonPlayAudio" />
+
+        <Button
+            android:id="@+id/buttonTakePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonTakePicture" />
+    </LinearLayout>
 
 </LinearLayout>

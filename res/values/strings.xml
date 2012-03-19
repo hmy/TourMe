@@ -17,5 +17,8 @@
         <item>@string/languageListKorean</item>
         <item>@string/languageListChinese</item>
     </string-array>
+        <string name="buttonPlayVideo">Play Video</string>
+        <string name="buttonPlayAudio">Play Audio</string>
+        <string name="buttonTakePicture">Take Picture</string>
 
 </resources>
