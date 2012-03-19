@@ -44,6 +44,8 @@ public class ShowMapsActivity extends MapActivity{
 			currLong = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
 		} catch (Exception e) {
 			Log.d("error in loc", e.toString());
+			currLat = 37.87309;
+			currLong = -122.25921;
 		}
 		
 		currentPos = new GeoPoint ( (int) (currLat * 1E6) , (int) (currLong * 1E6));
