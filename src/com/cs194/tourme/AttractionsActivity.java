@@ -93,7 +93,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 	        int childPosition, long id) {
 		TextView tv = (TextView) findViewById(R.id.name);
 		tv.setText(""+groupPosition+"/"+childPosition+"/"+id);
-		showAttraction(v);
+		showAttraction(v);	
 	    // use groupPosition and childPosition to locate the current item in the adapter
 	    return true;
 	}
