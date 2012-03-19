@@ -34,7 +34,6 @@ public final class R {
         public static final int linearLayout2=0x7f060007;
         public static final int mapview=0x7f060011;
         public static final int name=0x7f060001;
-        public static final int spinner1=0x7f060012;
         public static final int spinnerChooseLanguage=0x7f060010;
         public static final int textView1=0x7f06000b;
         public static final int textViewAttractionDescription=0x7f060005;
