@@ -35,7 +35,7 @@ public class ShowMapsActivity extends MapActivity{
 
 		mlocListener = new MyLocationListener(getApplicationContext());
 
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 30*1000, 0, mlocListener);
 
 //		Berkeley GeoLocation 37.87309	-122.25921
 		

@@ -21,9 +21,9 @@ public class MyLocationListener extends ShowMapsActivity implements LocationList
 		loc.getLatitude();
 		loc.getLongitude();
 		
-		String Text = "My current location is:" +
-				" Latitude = " + ((Double) loc.getLatitude()).toString().substring(0,5) +
-				" Longitude = " + ((Double) loc.getLongitude()).toString().substring(0,5);
+		String Text = "My location changed to:" +
+				" Latitude = " + loc.getLatitude() +
+				" Longitude = " + loc.getLongitude() ;
 		
 		Toast.makeText (currentContext, Text, 2).show();
 	}
