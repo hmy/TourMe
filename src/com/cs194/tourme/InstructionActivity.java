@@ -1,6 +1,6 @@
 package com.cs194.tourme;
 
-import com.creamy.hmy.tourme.R;
+import com.cs194.tourme.R;
 
 import android.os.Bundle;
 import android.webkit.WebView;

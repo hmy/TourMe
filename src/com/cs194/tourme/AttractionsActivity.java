@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.creamy.hmy.tourme.R;
+import com.cs194.tourme.R;
 
 import android.app.ExpandableListActivity;
 import android.content.Context;

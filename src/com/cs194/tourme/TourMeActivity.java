@@ -2,7 +2,7 @@ package com.cs194.tourme;
 
 import java.util.Locale;
 
-import com.creamy.hmy.tourme.R;
+import com.cs194.tourme.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
