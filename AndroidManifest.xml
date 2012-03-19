@@ -35,7 +35,7 @@
             android:name=".EachAttractionActivity"
             android:label="EachAttractionActivity" >
         </activity>
-
+        
         <uses-library android:name="com.google.android.maps" />
     </application>
 

@@ -1,7 +1,5 @@
 package com.creamy.hmy.tourme;
 
-import java.util.Locale;
-
 import android.os.Bundle;
 
 public class MapsActivity extends LocalizedActivity {
