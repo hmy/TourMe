@@ -19,18 +19,17 @@ public class TourMeCreahmyActivity extends LocalizedActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-
 		
 		setContentView(R.layout.main);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.spinnerChooseLanguage);
 		
-		if(LocalizedActivity.locale == Locale.ENGLISH)
-          spinner.setSelection(0);
-		else if (LocalizedActivity.locale == Locale.KOREAN)
+		if (LocalizedActivity.locale == Locale.KOREAN)
           spinner.setSelection(1);
 		else if (LocalizedActivity.locale == Locale.CHINESE)
           spinner.setSelection(2);
+		else 
+          spinner.setSelection(0);
 		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 		    @Override

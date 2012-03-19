@@ -18,3 +18,4 @@ public class AttractionsActivity extends LocalizedActivity {
 		startActivity(intent);
 	}	
 }
+
