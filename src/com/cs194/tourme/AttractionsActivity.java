@@ -25,15 +25,16 @@ import android.widget.Toast;
 
 public class AttractionsActivity extends ExpandableListActivity {
 
-	static int cityId = 0;
-	static int attractionId = 0;
-	
+	//	static int cityId = 0;
+	//	static int attractionId = 0;
+	static String attractionName = "";
+
 	final String NAME = "name";
 	final String IMAGE = "image";	
 	LayoutInflater layoutInflater;
 	ArrayList<HashMap<String, String>> headerData;
 	ArrayList<ArrayList<HashMap<String, Object>>> childData;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,7 +69,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 						< listOfAttractionsFromCurrentCity.length(); attractionIndex++) {
 					String attractionName 
 					= listOfAttractionsFromCurrentCity.getJSONObject(attractionIndex).getString("name");
-//					Log.d("AttractionsActivity", "" + listOfAttractionsFromCurrentCity.length());
+					//					Log.d("AttractionsActivity", "" + listOfAttractionsFromCurrentCity.length());
 					HashMap<String,Object> map = new HashMap<String,Object> ();
 					map.put(NAME, attractionName);
 					map.put(IMAGE, getResources().getDrawable(R.drawable.ic_launcher));
@@ -100,7 +101,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 			public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 				final View v = super.getChildView(groupPosition, childPosition, isLastChild, convertView, parent);
 
-				
+
 				// TODO is to make our custom view here
 				((TextView)v.findViewById(R.id.name)).setText( (String) ((Map<String,Object>)getChild(groupPosition, childPosition)).get(NAME) );
 				((ImageView)v.findViewById(R.id.image)).setImageDrawable( (Drawable) ((Map<String,Object>)getChild(groupPosition, childPosition)).get(IMAGE) );
@@ -119,13 +120,14 @@ public class AttractionsActivity extends ExpandableListActivity {
 	@Override
 	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
 			int childPosition, long id) {
-//		TextView tv = (TextView) findViewById(R.id.name);
-//		tv.setText(""+groupPosition+"/"+childPosition+"/"+id);
-		Log.d("abc", "" + groupPosition);
-		cityId = groupPosition + 1;
-		attractionId = childPosition + 1;
-//		Log.d("Attractions, onchildclick", headerData.get(groupPosition).get(NAME));
-//		Log.d("Attractions, onchildclick", (String) childData.get(groupPosition).get(childPosition).get(NAME));
+		//		TextView tv = (TextView) findViewById(R.id.name);
+		//		tv.setText(""+groupPosition+"/"+childPosition+"/"+id);
+		//		Log.d("abc", "" + groupPosition);
+		//		cityId = groupPosition + 1;
+		//		attractionId = childPosition + 1;
+		//		Log.d("Attractions, onchildclick", headerData.get(groupPosition).get(NAME));
+		//		Log.d("Attractions, onchildclick", (String) childData.get(groupPosition).get(childPosition).get(NAME));
+		attractionName = (String) childData.get(groupPosition).get(childPosition).get(NAME);
 		showAttraction(v);	
 		// use groupPosition and childPosition to locate the current item in the adapter
 		return true;

@@ -27,9 +27,22 @@ public class EachAttractionActivity extends LocalizedActivity {
 		setContentView(R.layout.eachattraction);
 
 
+		//		Log.d("eachattraction debug", "" + AttractionsActivity.cityId);
+		//		Log.d("eachattraction debug", "" + AttractionsActivity.attractionId);
+
 		DatabaseHandler dbHandler = new DatabaseHandler ();
-		JSONArray AttractionDetail = dbHandler.getDataFromSql("select p.uri, p.description from Picture p, Attraction a where a.city_id = " + 
-				AttractionsActivity.cityId + " AND p.attraction_id = " + AttractionsActivity.attractionId );
+		//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select p.uri, p.description from Picture p, Attraction a where a.name = " + 
+		//				AttractionsActivity.attractionName);
+//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture, where attraction_id = " + 
+//				"where id from Attraction where id = \"" + AttractionsActivity.attractionName + "\"");
+		
+		Log.d("abc", "select uri, description from Picture where attraction_id = (select id from Attraction " +
+				"where name = \"" + AttractionsActivity.attractionName + "\") ");
+		
+		
+		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture where attraction_id = (select id from Attraction where name = '" + AttractionsActivity.attractionName + "') ");
+
+		Log.d("eachattraction", AttractionsActivity.attractionName);
 		try {
 			pictureUri = AttractionDetail.getJSONObject(0).getString("uri");
 			description = AttractionDetail.getJSONObject(0).getString("description");
