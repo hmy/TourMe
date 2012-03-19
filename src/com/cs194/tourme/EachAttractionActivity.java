@@ -7,9 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,4 +92,14 @@ public class EachAttractionActivity extends LocalizedActivity {
 			return null;
 		}
 	}
+	
+	public void buttonAudioOnClick(View v) {
+
+		  MediaPlayer mp = MediaPlayer.create(this.getBaseContext(), R.raw.chinatown);  
+
+		  mp.start();
+
+		}
+
+
 }
