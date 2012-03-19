@@ -91,8 +91,9 @@ public class AttractionsActivity extends ExpandableListActivity {
 	@Override
 	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
 	        int childPosition, long id) {
-		TextView tv = (TextView) findViewById(R.id.textViewForExpand);
+		TextView tv = (TextView) findViewById(R.id.name);
 		tv.setText(""+groupPosition+"/"+childPosition+"/"+id);
+		showAttraction(v);
 	    // use groupPosition and childPosition to locate the current item in the adapter
 	    return true;
 	}

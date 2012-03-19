@@ -23,8 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TourMeActivity"
-            android:label="TourMeActivity" >
+            android:name=".TourMeCreahmyActivity"
+            android:label="TourMeCreahmyActivity" >
         </activity>
         <activity
             android:name=".ShowMapsActivity"
@@ -39,7 +39,7 @@
             android:label="AttractionsActivity" >
         </activity>
         <activity
-            android:name=".EachAttractionActivity"
+            android:name="com.cs194.tourme.EachAttractionActivity"
             android:label="EachAttractionActivity" >
         </activity>
         
