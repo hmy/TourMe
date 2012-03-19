@@ -20,24 +20,25 @@ public class DatabaseHandler {
 	private String result = null;
 	private InputStream is = null;
 	private StringBuilder sb=null;
-	private final String PHPSERVERLOCATION = "http://10.10.65.67/test.php";
+	private final String PHPSERVERLOCATION = "http://10.10.65.67/test.php?sql=";
 
 	public JSONArray getDataFromSql(String sql) {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
 		try{
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(PHPSERVERLOCATION);
+			//"\\s" same as " "
+			HttpPost httppost = new HttpPost(PHPSERVERLOCATION + sql.replaceAll("\\s", "+"));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
-	
+			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
 			sb = new StringBuilder();
 			sb.append(reader.readLine() + "\n");
 
-			Log.d("debug for input", sb.toString());
+			Log.d("DBHANDLER", sb.toString());
 
 			String line="0";
 			while ((line = reader.readLine()) != null) {
@@ -47,7 +48,7 @@ public class DatabaseHandler {
 			result=sb.toString();
 			
 			
-			Log.d("final for input", sb.toString());
+			Log.d("DBHANDLER", sb.toString());
 			return new JSONArray(result);
 		}catch(Exception e){
 			return null;
