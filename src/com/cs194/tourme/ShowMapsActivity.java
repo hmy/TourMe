@@ -51,7 +51,7 @@ public class ShowMapsActivity extends MapActivity{
 		currentPos = new GeoPoint ( (int) (currLat * 1E6) , (int) (currLong * 1E6));
 		mc = mapView.getController();
 		mc.animateTo(currentPos);
-		mc.setZoom(16);
+		mc.setZoom(13);
 		mc.setCenter(currentPos);
 		mapView.invalidate();
 	

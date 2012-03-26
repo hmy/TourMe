@@ -35,8 +35,8 @@ public class EachAttractionActivity extends LocalizedActivity {
 		DatabaseHandler dbHandler = new DatabaseHandler ();
 		//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select p.uri, p.description from Picture p, Attraction a where a.name = " + 
 		//				AttractionsActivity.attractionName);
-//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture, where attraction_id = " + 
-//				"where id from Attraction where id = \"" + AttractionsActivity.attractionName + "\"");
+		//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture, where attraction_id = " + 
+		//				"where id from Attraction where id = \"" + AttractionsActivity.attractionName + "\"");
 		
 		Log.d("abc", "select uri, description from Picture where attraction_id = (select id from Attraction " +
 				"where name = \"" + AttractionsActivity.attractionName + "\") ");
@@ -66,19 +66,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 		textView.setText (description); 
-		/*
-				("San Francisco's Chinatown (Chinese: 唐人街; Mandarin Pinyin: tángrénjiē; Jyutping: tong4 jan4 gaai1) is the " +
-				"oldest Chinatown in North America and the largest Chinese community outside Asia. Since its establishment in 1848, " +
-				"it has been highly important and influential in the history and culture of ethnic Chinese immigrants to the United States " +
-				"and North America. Chinatown is an active enclave that continues to retain its own customs, languages, places of worship, " +
-				"social clubs, and identity. Popularly known as a city-within-a-city, it has developed its own government, traditions, over " +
-				"300 restaurants, and as many shops.");
-				textView.setText("The grizzly bear (Ursus arctos horribilis), also known as the silvertip bear, " +
-				"the grizzly, or the North American brown bear, is a subspecies of brown bear (Ursus arctos) that " +
-				"generally lives in the uplands of western North America. This subspecies is thought to descend from" +
-				" Ussuri brown bears which crossed to Alaska from eastern Russia 100,000 years ago, though they did not" +
-				" move south until 13,000 years ago.");
-		 */
+		
 	}
 
 
