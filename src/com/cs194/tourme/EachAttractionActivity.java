@@ -37,17 +37,25 @@ public class EachAttractionActivity extends LocalizedActivity {
 		//				AttractionsActivity.attractionName);
 		//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture, where attraction_id = " + 
 		//				"where id from Attraction where id = \"" + AttractionsActivity.attractionName + "\"");
+		Log.d("abc", AttractionsActivity.attractionName);
+		//Log.d("abc", "select uri, description from Picture where attraction_id = (select id from Attraction " +
+		//		"where name = \"" + AttractionsActivity.attractionName + "\") ");
 		
-		Log.d("abc", "select uri, description from Picture where attraction_id = (select id from Attraction " +
-				"where name = \"" + AttractionsActivity.attractionName + "\") ");
-		
-		
-		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture where attraction_id = (select id from Attraction where name = '" + AttractionsActivity.attractionName + "') ");
+		//save for later
+		//JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture where attraction_id = (select id from Attraction where name = '" + AttractionsActivity.attractionName + "') ");
 
-		Log.d("eachattraction", AttractionsActivity.attractionName);
+		JSONArray AttractionDetail = dbHandler.getDataFromSql("select p.uri from Picture p where p.tour_id = " +
+				"(select t.attraction_id from Tour t where t.attraction_id = " +
+				"(select a.city_id from Attraction a where a.city_id = 1 limit 1) limit 1) limit 1");
+		try{
+		Log.d("eachattraction", AttractionDetail.getJSONObject(0).getString("uri"));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		try {
 			pictureUri = AttractionDetail.getJSONObject(0).getString("uri");
-			description = AttractionDetail.getJSONObject(0).getString("description");
+			//descript is gone now
+		//	description = AttractionDetail.getJSONObject(0).getString("description");
 		} catch(JSONException e1){
 			Log.d("Json error", e1.toString());
 			Toast.makeText(getBaseContext(), "JSONException Has Occured" +
