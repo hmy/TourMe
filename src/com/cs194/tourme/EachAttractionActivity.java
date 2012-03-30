@@ -55,6 +55,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 		try {
 			pictureUri = AttractionDetail.getJSONObject(0).getString("uri");
 			//descript is gone now
+			description = "Pier 39";
 		//	description = AttractionDetail.getJSONObject(0).getString("description");
 		} catch(JSONException e1){
 			Log.d("Json error", e1.toString());
