@@ -37,31 +37,36 @@ public class EachAttractionActivity extends LocalizedActivity {
 		//				AttractionsActivity.attractionName);
 		//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture, where attraction_id = " + 
 		//				"where id from Attraction where id = \"" + AttractionsActivity.attractionName + "\"");
-		Log.d("abc", AttractionsActivity.attractionName);
+		Log.d("ABC", AttractionRouteActivity.poiName);
 		//Log.d("abc", "select uri, description from Picture where attraction_id = (select id from Attraction " +
 		//		"where name = \"" + AttractionsActivity.attractionName + "\") ");
-		
+
 		//save for later
 		//JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture where attraction_id = (select id from Attraction where name = '" + AttractionsActivity.attractionName + "') ");
 
-		JSONArray AttractionDetail = dbHandler.getDataFromSql("select p.uri from Picture p where p.tour_id = " +
-				"(select t.attraction_id from Tour t where t.attraction_id = " +
-				"(select a.city_id from Attraction a where a.city_id = 1 limit 1) limit 1) limit 1");
+		JSONArray AttractionDetail = dbHandler.getDataFromSql("select p.uri, p.description from Picture p where p.poi_id = " +
+				"(select id from POI where POI.name = '" + AttractionRouteActivity.poiName + "')");
+
+		Log.d("sqlquery", "select p.uri, p.description from Picture p where p.poi_id = " +
+				"(select id from POI where POI.name = '" + AttractionRouteActivity.poiName + "')");
+
+		//debug
 		try{
-		Log.d("eachattraction", AttractionDetail.getJSONObject(0).getString("uri"));
+			Log.d("eachattraction", AttractionDetail.getJSONObject(0).getString("uri"));
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		
+		
 		try {
-			pictureUri = AttractionDetail.getJSONObject(0).getString("uri");
-			//descript is gone now
-			description = "Pier 39";
-		//	description = AttractionDetail.getJSONObject(0).getString("description");
+			pictureUri = AttractionDetail.getJSONObject(0).getString("uri");	
+			description = AttractionDetail.getJSONObject(0).getString("description");
 		} catch(JSONException e1){
 			Log.d("Json error", e1.toString());
 			Toast.makeText(getBaseContext(), "JSONException Has Occured" +
 					" in Attractions Activity" ,Toast.LENGTH_LONG).show();
-			pictureUri = "http://thegarageblog.com/garage/wp-content/uploads/noimageavailable.jpg";
+			// no need for below? taken care as default value for this column is this
+			//			pictureUri = "http://thegarageblog.com/garage/wp-content/uploads/noimageavailable.jpg";
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -75,7 +80,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 		textView.setText (description); 
-		
+
 	}
 
 
@@ -89,14 +94,14 @@ public class EachAttractionActivity extends LocalizedActivity {
 			return null;
 		}
 	}
-	
+
 	public void buttonAudioOnClick(View v) {
 
-		  MediaPlayer mp = MediaPlayer.create(this.getBaseContext(), R.raw.chinatown);  
+		MediaPlayer mp = MediaPlayer.create(this.getBaseContext(), R.raw.chinatown);  
 
-		  mp.start();
+		mp.start();
 
-		}
+	}
 
 
 }
