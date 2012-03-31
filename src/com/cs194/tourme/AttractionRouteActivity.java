@@ -5,11 +5,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -19,6 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -29,57 +33,84 @@ public class AttractionRouteActivity extends MapActivity {
 	/** Called when the activity is first created. */
 
 	MapView mapView;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attractionroute);
 
-		
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		Drawable mapMarker = this.getResources().getDrawable(R.drawable.map_marker);
 		
 		ArrayList<GeoPoint> tourGeoPoint = new ArrayList<GeoPoint> ();
-		tourGeoPoint.add(new GeoPoint ((int) (40.7649*1E6), (int) (-73.9734*1E6)));
-		tourGeoPoint.add(new GeoPoint ((int) (40.7746*1E6), (int) (-73.9702*1E6)));
-		tourGeoPoint.add(new GeoPoint ((int) (40.7808*1E6), (int) (-73.9741*1E6)));
-		tourGeoPoint.add(new GeoPoint ((int) (40.7919*1E6), (int) (-73.9587*1E6)));
-		tourGeoPoint.add(new GeoPoint ((int) (40.7965*1E6), (int) (-73.951*1E6)));
-		tourGeoPoint.add(new GeoPoint ((int) (40.7763*1E6), (int) (-73.9641*1E6)));
+		ArrayList<String> tourPOInames = new ArrayList<String> ();
+		
+		//SQL query and handling
+		DatabaseHandler dbHandler = new DatabaseHandler ();
+		JSONArray listOfPOI = dbHandler.getDataFromSql("select p.name, p.geolocX, p.geolocY from POI p where p.tour_id = " +
+				"(select t.id from Tour t where t.attraction_id = " +
+				"(select a.id from Attraction a where a.name = '" +
+				AttractionsActivity.attractionName + "'));");
 
-		//draw Path
+//		HashMap<String, ArrayList<Float>> poiNameAndGeoloc = new HashMap<String, ArrayList<Float>> ();
+		
+		for (int index = 0 ; index < listOfPOI.length(); index++) {
+			
+			String poiName = null ; Float lat = null, lng = null;
+			
+			try {
+				poiName = listOfPOI.getJSONObject(index).getString("name");
+				lat = Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocY"));
+				lng =  Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocX"));
+			} catch (JSONException e) {
+				Log.d("Json error", e.toString());
+				Toast.makeText(getBaseContext(), "JSONException Has Occured" +
+						" in Attractions Route Activity" ,Toast.LENGTH_LONG).show();
+				e.printStackTrace();
+			}
+			
+			tourGeoPoint.add((new GeoPoint ((int) (lat*1E6), (int) (lng*1E6))));
+			ArrayList<Float> tempGeoloc = new ArrayList<Float> ();
+			tempGeoloc.add(lat);
+			tempGeoloc.add(lng);
+			tourPOInames.add(poiName);
+//			poiNameAndGeoloc.put(poiName, tempGeoloc);
+		}
+
+		//draw the paths
 		for (int index = 0 ; index < tourGeoPoint.size()-1; index++){
 			DrawPath(tourGeoPoint.get(index), tourGeoPoint.get(index+1), Color.rgb(150, 150, 150), mapView);
 		}
-
+		
+	
 		//add marker
 		for (int index = 0 ; index < tourGeoPoint.size(); index++){
 			CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(mapMarker, this);
 			OverlayItem overlayitem =
-					new OverlayItem(tourGeoPoint.get(index), null, null);
+					new OverlayItem(tourGeoPoint.get(index), AttractionsActivity.attractionName, 
+									tourPOInames.get(index));
 			itemizedOverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedOverlay);
 		}
+		
 		mapView.getController().animateTo(tourGeoPoint.get(0));
 		mapView.getController().setZoom(15);
 
-		
-		//now fill in the spinner items
-		/*
-		String places[] = new String[3];
-		places[0] = "Central Park SE corner";
-		places[1] = "The Lake";
-		places[2] = "American Museum of Natural History";
-		*/
-		ArrayList<String> places = new ArrayList<String> ();
-		places.add("Central Park");
-		String[] place = places.toArray(new String[places.size()]);
 
+		//now fill in the spinner items
+		//below is how you would make string [] from hashmap
+		/*
+		String [] poiNames = (String[])( poiNameAndGeoloc.keySet()
+							.toArray(new String[poiNameAndGeoloc.size()] ) );
+		*/
 		
-//		ArrayAdapter<CharSequence> placesAdapter = new ArrayAdapter<CharSequence> (this, R.id.spinnerChoosePOI, places);
-//		placesAdapter.setDropDownViewResource(R.id.spinnerChoosePOI);
-		ArrayAdapter<CharSequence> placesAdapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, place);
+		//sorts tourPOInames by alphabetical, inplace not in original order anymore
+		Collections.sort(tourPOInames);
+		String [] poiNames = (String []) tourPOInames.toArray(new String[tourPOInames.size()]);
+
+		//adapter for spinner
+		ArrayAdapter<CharSequence> placesAdapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, poiNames);
 		placesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner spinner = (Spinner) this.findViewById(R.id.spinnerChoosePOI);
 		spinner.setAdapter(placesAdapter);
@@ -89,9 +120,9 @@ public class AttractionRouteActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
-	
+
 	private String mapDirectionUrlBuilder (double srcLat, double srcLong,
-										   double destLat, double destLong) {
+			double destLat, double destLong) {
 		StringBuilder returnUrlString = new StringBuilder();
 		returnUrlString.append("http://maps.google.com/maps?f=d&hl=en");
 		//from
@@ -108,10 +139,10 @@ public class AttractionRouteActivity extends MapActivity {
 
 		return returnUrlString.toString();
 	}
-	
+
 	private void DrawPath(GeoPoint src, GeoPoint dest, int color, MapView myMapView) {
-		
-		
+
+
 		DocumentBuilderFactory dbf = null;
 		DocumentBuilder db = null;
 		Document doc = null;
@@ -119,14 +150,14 @@ public class AttractionRouteActivity extends MapActivity {
 		URL url = null;
 		GeoPoint startGP, endGP = null, gp1, gp2;
 		String urlString = mapDirectionUrlBuilder((double) src.getLatitudeE6(), (double) src.getLongitudeE6(),
-												  (double) dest.getLatitudeE6(), (double) dest.getLongitudeE6()); 
-		
+				(double) dest.getLatitudeE6(), (double) dest.getLongitudeE6()); 
+
 		Log.d("abc", "URL=" + urlString.toString());
 
 		// get the kml (XML) doc. And parse it to get the coordinates(direction route).
-	
+
 		try {
-			
+
 			url = new URL(urlString);
 			urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setRequestMethod("GET");
@@ -140,7 +171,7 @@ public class AttractionRouteActivity extends MapActivity {
 
 			if (doc.getElementsByTagName("GeometryCollection").getLength() > 0) {
 				String path = doc.getElementsByTagName("GeometryCollection").item(0).getFirstChild().getFirstChild()
-																							.getFirstChild().getNodeValue();
+						.getFirstChild().getNodeValue();
 
 				//Log.d("abc", "path=" + path);
 
@@ -150,20 +181,20 @@ public class AttractionRouteActivity extends MapActivity {
 
 				// src
 				startGP = gp2 =  new GeoPoint((int) (Double.parseDouble(longLat[1]) * 1E6), 
-								        	   (int) (Double.parseDouble(longLat[0]) * 1E6));
-				
+						(int) (Double.parseDouble(longLat[0]) * 1E6));
+
 				//below for loop colors all path returned by KML
 				for (int i = 1; i < pairsOfRoute.length; i++) {// the last one would be crash
 					longLat = pairsOfRoute[i].split(",");
 					gp1 = gp2;
 					// watch out! For GeoPoint, first:latitude, second:longitude
 					gp2 = new GeoPoint((int) (Double.parseDouble(longLat[1]) * 1E6),
-									   (int) (Double.parseDouble(longLat[0]) * 1E6));
+							(int) (Double.parseDouble(longLat[0]) * 1E6));
 					myMapView.getOverlays().add(
 							new RouteCustomOverLay(gp1, gp2, 2, color, getBaseContext()));
-//					Log.d("abc", "pair:" + pairsOfRoute[i]);
+					//					Log.d("abc", "pair:" + pairsOfRoute[i]);
 				}
-				
+
 				//connect disconnected roads end to destination
 				myMapView.getOverlays().add(new RouteCustomOverLay(gp2, dest, 2, color, getBaseContext()));
 
@@ -177,7 +208,5 @@ public class AttractionRouteActivity extends MapActivity {
 		} catch (SAXException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }
