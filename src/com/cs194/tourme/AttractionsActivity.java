@@ -115,13 +115,27 @@ public class AttractionsActivity extends ExpandableListActivity {
 	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
 			int childPosition, long id) {
 		attractionName = (String) childData.get(groupPosition).get(childPosition).get(NAME);
-		showAttraction(v);	
+		
+		//TODO: This is version where we went directly to EachAttractionActivity
+		//showAttraction(v);
+		
+		//TODO: This is new where we now go to AttractionRouteActivity
+		showAttractionRoute(v);
 		return true;
 	}
 
+	
+	public void showAttractionRoute(View view) {
+		Intent intent = new Intent (this, AttractionRouteActivity.class);
+		startActivity (intent);
+	}
+	
+	// old
+	/*
 	public void showAttraction(View view) {
 		Intent intent = new Intent(this, EachAttractionActivity.class);
 		startActivity(intent);
-	}	
+	}
+	*/	
 }
 

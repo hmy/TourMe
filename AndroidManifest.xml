@@ -44,6 +44,7 @@
         </activity>
         
         <uses-library android:name="com.google.android.maps" />
+        <activity android:label="AttractionRouteActivity" android:name=".AttractionRouteActivity"></activity>
     </application>
 
 </manifest>
