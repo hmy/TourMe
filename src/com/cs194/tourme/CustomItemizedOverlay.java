@@ -38,10 +38,24 @@ public class CustomItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	protected boolean onTap(int index) {
 		// when you click you can trigger the event
 		OverlayItem item = mapOverlays.get(index);
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-		dialog.setTitle(item.getTitle());
-		dialog.setMessage(item.getSnippet());
+		AlertDialog.Builder dialogBuilding = new AlertDialog.Builder(context);
+		dialogBuilding.setTitle(item.getTitle());
+		dialogBuilding.setMessage(item.getSnippet());
+
+		//button to dismiss
+		/*
+		dialog.setPositiveButton("Dismiss",	new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog,int which) {
+				dialog.cancel();
+			}
+		});
+		*/
+		AlertDialog dialog = dialogBuilding.create();
 		dialog.show();
+		dialog.setCanceledOnTouchOutside(true); 
+
+
 		return true;
 	}
 
