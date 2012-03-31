@@ -58,20 +58,23 @@ public class ShowMapsActivity extends MapActivity{
 		mapView.invalidate();
 
 
-		List<Overlay> mapOverlays = mapView.getOverlays();
+//		List<Overlay> mapOverlays = mapView.getOverlays();
+
 		// draw star at berkeley, if you click the star then the message pops up
 		// or you can customize 
 		Drawable drawable = this.getResources().getDrawable(R.drawable.star_small);
-		CustomItemizedOverlay itemizedOverlay =
-				new CustomItemizedOverlay(drawable, this);
+		CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(drawable, this);
 
 		GeoPoint point = new GeoPoint(37873090, -122259210);
+
 		OverlayItem overlayitem =
 				new OverlayItem(point, "Attraction", "Berkeley City");
 
 		itemizedOverlay.addOverlay(overlayitem);
-		mapOverlays.add(itemizedOverlay);
-
+		
+//		mapOverlays.add(itemizedOverlay);
+		mapView.getOverlays().add(itemizedOverlay);
+		
 		MapController mapController = mapView.getController();
 
 		mapController.animateTo(point);
