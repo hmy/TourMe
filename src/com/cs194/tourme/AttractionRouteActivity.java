@@ -16,10 +16,14 @@ import org.json.JSONException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,19 +37,24 @@ public class AttractionRouteActivity extends MapActivity {
 	/** Called when the activity is first created. */
 
 	MapView mapView;
-
+	static String poiName;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attractionroute);
-
+		
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		Drawable mapMarker = this.getResources().getDrawable(R.drawable.map_marker);
-		
+
 		ArrayList<GeoPoint> tourGeoPoint = new ArrayList<GeoPoint> ();
 		ArrayList<String> tourPOInames = new ArrayList<String> ();
-		
+
+		//in the spinner We would like to put name of Tour first!!!!
+
+		tourPOInames.add(AttractionsActivity.attractionName);
+
 		//SQL query and handling
 		DatabaseHandler dbHandler = new DatabaseHandler ();
 		JSONArray listOfPOI = dbHandler.getDataFromSql("select p.name, p.geolocX, p.geolocY from POI p where p.tour_id = " +
@@ -53,12 +62,12 @@ public class AttractionRouteActivity extends MapActivity {
 				"(select a.id from Attraction a where a.name = '" +
 				AttractionsActivity.attractionName + "'));");
 
-//		HashMap<String, ArrayList<Float>> poiNameAndGeoloc = new HashMap<String, ArrayList<Float>> ();
-		
+		//		HashMap<String, ArrayList<Float>> poiNameAndGeoloc = new HashMap<String, ArrayList<Float>> ();
+
 		for (int index = 0 ; index < listOfPOI.length(); index++) {
-			
+
 			String poiName = null ; Float lat = null, lng = null;
-			
+
 			try {
 				poiName = listOfPOI.getJSONObject(index).getString("name");
 				lat = Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocY"));
@@ -69,31 +78,34 @@ public class AttractionRouteActivity extends MapActivity {
 						" in Attractions Route Activity" ,Toast.LENGTH_LONG).show();
 				e.printStackTrace();
 			}
-			
+
 			tourGeoPoint.add((new GeoPoint ((int) (lat*1E6), (int) (lng*1E6))));
-			ArrayList<Float> tempGeoloc = new ArrayList<Float> ();
-			tempGeoloc.add(lat);
-			tempGeoloc.add(lng);
+
+			//I dont think i use below 3 lines yet!
+			//			ArrayList<Float> tempGeoloc = new ArrayList<Float> ();
+			//			tempGeoloc.add(lat);
+			//			tempGeoloc.add(lng);
+
 			tourPOInames.add(poiName);
-//			poiNameAndGeoloc.put(poiName, tempGeoloc);
+			//			poiNameAndGeoloc.put(poiName, tempGeoloc);
 		}
 
 		//draw the paths
 		for (int index = 0 ; index < tourGeoPoint.size()-1; index++){
 			DrawPath(tourGeoPoint.get(index), tourGeoPoint.get(index+1), Color.rgb(150, 150, 150), mapView);
 		}
-		
-	
+
+
 		//add marker
 		for (int index = 0 ; index < tourGeoPoint.size(); index++){
 			CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(mapMarker, this);
 			OverlayItem overlayitem =
 					new OverlayItem(tourGeoPoint.get(index), AttractionsActivity.attractionName, 
-									tourPOInames.get(index));
+							tourPOInames.get(index));
 			itemizedOverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedOverlay);
 		}
-		
+
 		mapView.getController().animateTo(tourGeoPoint.get(0));
 		mapView.getController().setZoom(15);
 
@@ -103,17 +115,19 @@ public class AttractionRouteActivity extends MapActivity {
 		/*
 		String [] poiNames = (String[])( poiNameAndGeoloc.keySet()
 							.toArray(new String[poiNameAndGeoloc.size()] ) );
-		*/
-		
+		 */
+
 		//sorts tourPOInames by alphabetical, inplace not in original order anymore
-		Collections.sort(tourPOInames);
+		Collections.sort(tourPOInames.subList(1, tourPOInames.size()-1));
 		String [] poiNames = (String []) tourPOInames.toArray(new String[tourPOInames.size()]);
 
 		//adapter for spinner
-		ArrayAdapter<CharSequence> placesAdapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, poiNames);
+		ArrayAdapter<CharSequence> placesAdapter = 
+				new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, poiNames);
 		placesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner spinner = (Spinner) this.findViewById(R.id.spinnerChoosePOI);
 		spinner.setAdapter(placesAdapter);
+		spinner.setOnItemSelectedListener(new AttractionRouteCustomItemSelectedListener());
 	}
 
 	@Override
@@ -209,4 +223,33 @@ public class AttractionRouteActivity extends MapActivity {
 			e.printStackTrace();
 		}
 	}
+
+	//to be used with listener below
+	public void showEachAttraction(View view) {
+		Intent intent = new Intent (this, EachAttractionActivity.class);
+		startActivity (intent);
+	}
+	
+	public class AttractionRouteCustomItemSelectedListener implements OnItemSelectedListener {
+
+		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+			switch (pos) {
+			case 0 : 
+				for (int i=0; i < 2; i++) {
+					Toast.makeText(parent.getContext(), "You are looking at the Tour Route Map for "+
+							parent.getItemAtPosition(pos).toString() + " !", Toast.LENGTH_LONG).show();
+				}
+				break;
+				
+			default : 
+				poiName = parent.getItemAtPosition(pos).toString();
+				showEachAttraction(view);
+				break;
+			}
+		}
+		public void onNothingSelected(AdapterView parent) {
+			// Do nothing.
+		}		
+	}
+
 }
