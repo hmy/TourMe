@@ -100,6 +100,12 @@ public class ShowMapsActivity extends MapActivity{
 		mapView.invalidate();
 
 	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		mlocManager.removeUpdates(mlocListener);
+	}
 
 }
 
