@@ -104,21 +104,14 @@ public class AttractionRouteActivity extends MapActivity {
 			CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(mapMarker, this);
 			OverlayItem overlayitem =
 					new OverlayItem(tourGeoPoint.get(index), AttractionsActivity.attractionName, 
-							tourPOInames.get(index));
+							tourPOInames.get(index+1));
+			//here index+1 b/c index 0 is name of the tour itself
 			itemizedOverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedOverlay);
 		}
 
 		mapView.getController().animateTo(tourGeoPoint.get(0));
 		mapView.getController().setZoom(15);
-
-
-		//now fill in the spinner items
-		//below is how you would make string [] from hashmap
-		/*
-		String [] poiNames = (String[])( poiNameAndGeoloc.keySet()
-							.toArray(new String[poiNameAndGeoloc.size()] ) );
-		 */
 
 		//sorts tourPOInames by alphabetical, inplace not in original order anymore
 		Collections.sort(tourPOInames.subList(1, tourPOInames.size()-1));
