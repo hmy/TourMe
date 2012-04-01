@@ -40,11 +40,12 @@ public class ShowMapsActivity extends MapActivity{
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		mcForListener = mapView.getController();
+		mcForListener.setZoom(14);
 
 		//gps related
 		mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		mlocListener = new MyLocationListener(getApplicationContext());
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 30*1000, 0, mlocListener);  
+		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1*1000, 0, mlocListener);  
 
 		//updates whenever you change location
 		setMarkerNewLocation ();
@@ -57,7 +58,6 @@ public class ShowMapsActivity extends MapActivity{
 
 	protected void zoomToNewLocation (GeoPoint loc, MapController mc) {
 		mc.animateTo(loc);
-		mc.setZoom(13);
 		mc.setCenter(loc);
 	}
 
@@ -79,7 +79,7 @@ public class ShowMapsActivity extends MapActivity{
 			currLat = 37.87309;
 			currLong = -122.25921;
 		}
-		GeoPoint currentPos = new GeoPoint ( (int) (currLat * 1E6) , (int) (currLong * 1E6));
+		GeoPoint currentPos = new GeoPoint ((int) (currLat * 1E6) , (int) (currLong * 1E6));
 
 		//gets approximte city name using getApproximateCity function
 		currCityName = getApproximateCity(currentPos);
@@ -106,6 +106,14 @@ public class ShowMapsActivity extends MapActivity{
 		super.onPause();
 		mlocManager.removeUpdates(mlocListener);
 	}
+	
+	/* not sure if needed
+	@Override
+	public void onResume() {
+		super.onResume();
+		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1*1000, 0, mlocListener);  
+	}
+	*/
 
 }
 

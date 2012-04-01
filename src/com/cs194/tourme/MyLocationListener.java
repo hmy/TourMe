@@ -22,23 +22,22 @@ public class MyLocationListener extends ShowMapsActivity implements LocationList
 	@Override
 	public void onLocationChanged(Location loc)	{
 
+		//debug purpose only
 		String Text = "My location changed to:" +
 				" Latitude = " + loc.getLatitude() +
-				" Longitude = " + loc.getLongitude() ;
+				" Longitude = " + loc.getLongitude() + 
+				"For debugging purpose only" ;
 		
 		Toast.makeText (currentContext, Text, Toast.LENGTH_SHORT).show();
-				
+		// until here
+		
 		GeoPoint newloc = new GeoPoint ((int) (loc.getLatitude()*1E6), 
 				(int) (loc.getLongitude()*1E6)); 
 
 		//this fixes the bug that moves the map when you are in diff. activity 
 		if(MyLocationListener.animateToMap) {
 			super.setMarkerNewLocation();
-		}
-		
-		//deprecated animate
-		//super.zoomToNewLocation(newloc, ShowMapsActivity.mcForListener);
-		
+		}		
 	}
 
 
