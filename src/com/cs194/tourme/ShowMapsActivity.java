@@ -1,6 +1,6 @@
 package com.cs194.tourme;
 
-import java.util.List;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -8,12 +8,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 public class ShowMapsActivity extends MapActivity{
@@ -34,12 +34,8 @@ public class ShowMapsActivity extends MapActivity{
 		mapView.setBuiltInZoomControls(true);
 
 		mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
-
 		mlocListener = new MyLocationListener(getApplicationContext());
-
 		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 30*10000, 0, mlocListener);
-
-		//		Berkeley GeoLocation 37.87309	-122.25921
 
 		try {
 			currLat = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
@@ -51,18 +47,71 @@ public class ShowMapsActivity extends MapActivity{
 		}
 
 		currentPos = new GeoPoint ( (int) (currLat * 1E6) , (int) (currLong * 1E6));
+		/*
 		mc = mapView.getController();
 		mc.animateTo(currentPos);
-		mc.setZoom(10);
+		mc.setZoom(15);
 		mc.setCenter(currentPos);
 		mapView.invalidate();
+		 */
+		
+		
+		// Reverse Geocoding language hard-coded to be us, but change laterO
+		JSONObject reverseGeo = ReverseGeoloc.getLocationInfo(currentPos, "us");
+		String cityName = ReverseGeoloc.getCityName(reverseGeo);
+		Log.d("debugging", cityName);
+		
+		//marker to let you know where you are at
+		Drawable drawable = this.getResources().getDrawable(R.drawable.person_marker);
+		CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(drawable, this);
+		OverlayItem overlayitem =
+				new OverlayItem(currentPos, "Your Current Location", cityName);
+		itemizedOverlay.addOverlay(overlayitem);
 
+		mapView.getOverlays().add(itemizedOverlay);
 
-//		List<Overlay> mapOverlays = mapView.getOverlays();
+		MapController mapController = mapView.getController();
+
+		mapController.animateTo(currentPos);
+		mapController.setZoom(13);
+		mapController.setCenter(currentPos);
+		mapView.invalidate();
+
+		Toast.makeText(this.getApplicationContext(), "Click on the marker for Approximate Location", Toast.LENGTH_LONG).show();
+		
+
+		
+
+		/* This below code should work on the actual device itself
+		 * however it does not work on emulator (known bug)
+		 * please see http://code.google.com/p/android/issues/detail?id=8816
+		 * used workaround using google map api directly
+		 * http://code.google.com/p/android/issues/detail?id=8816 under 21st comment
+		 * 
+		Geocoder gcd = new Geocoder(this.getApplicationContext(), Locale.getDefault());
+		List<Address> addresses  = null;
+		try {
+			addresses = gcd.getFromLocation(currentPos.getLatitudeE6()/1.0E6, currentPos.getLongitudeE6()/1.0E6, 1);
+		} catch (IOException e) {
+			Log.e("IOException reverse geocoding", e.getMessage());
+		} catch (Exception e) {
+			Log.e("Exception reverse geocoding", e.getMessage());
+		}
+		if (addresses.size() > 0) 
+			Log.d("GPSactivity", addresses.get(0).getLocality());
+		 */
+
+	
+
+		/** below done by ji
+		//		List<Overlay> mapOverlays = mapView.getOverlays();
 
 		// draw star at berkeley, if you click the star then the message pops up
 		// or you can customize 
-		Drawable drawable = this.getResources().getDrawable(R.drawable.star_small);
+
+
+
+		Drawable drawable = this.getResources().getDrawable(R.drawable.person_marker);
 		CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(drawable, this);
 
 		GeoPoint point = new GeoPoint(37873090, -122259210);
@@ -71,17 +120,24 @@ public class ShowMapsActivity extends MapActivity{
 				new OverlayItem(point, "Attraction", "Berkeley City");
 
 		itemizedOverlay.addOverlay(overlayitem);
-		
+
 //		mapOverlays.add(itemizedOverlay);
 		mapView.getOverlays().add(itemizedOverlay);
-		
+
 		MapController mapController = mapView.getController();
 
 		mapController.animateTo(point);
+		mapController.setZoom(15);
+
+		 */
 	}
 
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
-	}
+	}	
 }
+
+
+
+//		Berkeley GeoLocation 37.87309	-122.25921
