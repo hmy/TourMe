@@ -51,8 +51,11 @@ public class AttractionRouteActivity extends MapActivity {
 		ArrayList<GeoPoint> tourGeoPoint = new ArrayList<GeoPoint> ();
 		ArrayList<String> tourPOInames = new ArrayList<String> ();
 
+		//for now I will put is as false
+		//later put an toast or message to choose
+		MyLocationListener.animateToMap = false;
+		
 		//in the spinner We would like to put name of Tour first!!!!
-
 		tourPOInames.add(AttractionsActivity.attractionName);
 
 		//SQL query and handling

@@ -63,5 +63,13 @@ public class CustomItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		mapOverlays.add(overlay);
 		this.populate();
 	}
+	
+	//Not a great coding style, uses the fact that I will always put 
+	//current pos overlay in 0th index, replaces old pos with new one in 0th index
+	public void replaceOverlay(OverlayItem newOverlay) {
+		mapOverlays.remove(0);
+		mapOverlays.add(0, newOverlay);
+		this.populate();
+	}
 
 }

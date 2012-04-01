@@ -12,6 +12,7 @@ import com.google.android.maps.MapController;
 
 public class MyLocationListener extends ShowMapsActivity implements LocationListener {
 
+	static public boolean animateToMap;
 	Context currentContext;
 	
 	public MyLocationListener (Context appContext) {
@@ -26,15 +27,17 @@ public class MyLocationListener extends ShowMapsActivity implements LocationList
 				" Longitude = " + loc.getLongitude() ;
 		
 		Toast.makeText (currentContext, Text, Toast.LENGTH_SHORT).show();
-		
-
-		
+				
 		GeoPoint newloc = new GeoPoint ((int) (loc.getLatitude()*1E6), 
 				(int) (loc.getLongitude()*1E6)); 
+
+		//this fixes the bug that moves the map when you are in diff. activity 
+		if(MyLocationListener.animateToMap) {
+			super.setMarkerNewLocation();
+		}
 		
-		//Log.d("ABC", newloc.toString());
-		
-		super.zoomToNewLocation(newloc, ShowMapsActivity.mcForListener);
+		//deprecated animate
+		//super.zoomToNewLocation(newloc, ShowMapsActivity.mcForListener);
 		
 	}
 
