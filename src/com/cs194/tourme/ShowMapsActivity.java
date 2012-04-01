@@ -18,12 +18,16 @@ import com.google.android.maps.OverlayItem;
 
 public class ShowMapsActivity extends MapActivity{
 
+	static MapController mcForListener;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		//definitions
 		double currLat = 0.0, currLong = 0.0;
 		GeoPoint currentPos;
-		MapController mc;
+		MapController mapController;
 		MapView mapView;
+
 		LocationManager mlocManager;
 		LocationListener mlocListener;
 
@@ -32,10 +36,13 @@ public class ShowMapsActivity extends MapActivity{
 
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
+		mapController = mapView.getController();
+		mcForListener = mapController;
 
+		//gps related
 		mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		mlocListener = new MyLocationListener(getApplicationContext());
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 30*10000, 0, mlocListener);
+		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1000, 0, mlocListener);  
 
 		try {
 			currLat = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
@@ -54,13 +61,13 @@ public class ShowMapsActivity extends MapActivity{
 		mc.setCenter(currentPos);
 		mapView.invalidate();
 		 */
-		
-		
+
+
 		// Reverse Geocoding language hard-coded to be us, but change laterO
 		JSONObject reverseGeo = ReverseGeoloc.getLocationInfo(currentPos, "us");
 		String cityName = ReverseGeoloc.getCityName(reverseGeo);
 		Log.d("debugging", cityName);
-		
+
 		//marker to let you know where you are at
 		Drawable drawable = this.getResources().getDrawable(R.drawable.person_marker);
 		CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(drawable, this);
@@ -70,17 +77,16 @@ public class ShowMapsActivity extends MapActivity{
 
 		mapView.getOverlays().add(itemizedOverlay);
 
-		MapController mapController = mapView.getController();
+		//redundant can remove if you wnat
+//		mapController = mapView.getController();
 
-		mapController.animateTo(currentPos);
-		mapController.setZoom(13);
-		mapController.setCenter(currentPos);
+		this.zoomToNewLocation(currentPos, mapController);
 		mapView.invalidate();
 
 		Toast.makeText(this.getApplicationContext(), "Click on the marker for Approximate Location", Toast.LENGTH_LONG).show();
-		
 
-		
+
+
 
 		/* This below code should work on the actual device itself
 		 * however it does not work on emulator (known bug)
@@ -101,7 +107,7 @@ public class ShowMapsActivity extends MapActivity{
 			Log.d("GPSactivity", addresses.get(0).getLocality());
 		 */
 
-	
+
 
 		/** below done by ji
 		//		List<Overlay> mapOverlays = mapView.getOverlays();
@@ -136,6 +142,13 @@ public class ShowMapsActivity extends MapActivity{
 	protected boolean isRouteDisplayed() {
 		return false;
 	}	
+
+	protected void zoomToNewLocation (GeoPoint loc, MapController mc) {
+		mc.animateTo(loc);
+		mc.setZoom(13);
+		mc.setCenter(loc);
+	}
+	
 }
 
 
