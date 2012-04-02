@@ -3,6 +3,7 @@ package com.cs194.tourme;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -28,7 +29,13 @@ public class DatabaseHandler {
 		try{
 			HttpClient httpclient = new DefaultHttpClient();
 			//"\\s" same as " "
-			HttpPost httppost = new HttpPost(PHPSERVERLOCATION + sql.replaceAll("\\s", "+"));
+			
+			//caret signs need this....
+			String lessThan = URLEncoder.encode("<", "UTF-8");
+			String greaterThan = URLEncoder.encode(">", "UTF-8");
+			String query = sql.replaceAll("\\s", "%20").replaceAll("<", lessThan).replaceAll(">", greaterThan);
+			
+			HttpPost httppost = new HttpPost(PHPSERVERLOCATION + query);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
@@ -50,7 +57,9 @@ public class DatabaseHandler {
 			
 			Log.d("DBHANDLER", sb.toString());
 			return new JSONArray(result);
-		}catch(Exception e){
+		} catch(Exception e){
+			Log.d("DBHANDLER ERROR", "caught Exception e");
+			e.printStackTrace();
 			return null;
 		}
 	}

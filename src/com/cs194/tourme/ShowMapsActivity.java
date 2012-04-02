@@ -1,5 +1,9 @@
 package com.cs194.tourme;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -26,13 +30,70 @@ public class ShowMapsActivity extends MapActivity{
 	static protected LocationListener mlocListener;
 	static protected MapView mapView;
 
+	protected Drawable poiMarker;
+	private Context currentContext;
+	
+	private Runnable waitForMapTimeTask = new Runnable() {
+		public void run() {
+			if(mapView.getLatitudeSpan()==0||mapView.getLongitudeSpan()== 360000000) {
+				mapView.postDelayed(this, 100);
+			} else {
+
+				GeoPoint geoPointNW = mapView.getProjection().fromPixels(0, 0);
+				GeoPoint geoPointSE = new GeoPoint (geoPointNW.getLatitudeE6() + mapView.getLatitudeSpan(),
+						geoPointNW.getLongitudeE6() + mapView.getLongitudeSpan());
+
+				ArrayList<GeoPoint> listOfPOIGeoPoint = new ArrayList<GeoPoint> ();
+				ArrayList<String> listOfPOIName = new ArrayList<String> ();
+				
+				DatabaseHandler dbHandler = new DatabaseHandler ();
+				JSONArray listOfPOI = dbHandler.getDataFromSql("select p.name, p.geolocX, p.geolocY " +
+						"from POI p where p.tour_id = " +
+						"any (select t.id from Tour t where t.attraction_id = " +
+						"any (select a.id from Attraction a where a.geolocX > 37 and a.geolocX < 38 " +
+						"and a.geolocY > -123 and a.geolocY < -122))");
+				
+				for (int index = 0 ; index < listOfPOI.length(); index++) {
+					String poiName = null ; Float lat = null, lng = null;
+
+					try {
+						poiName = listOfPOI.getJSONObject(index).getString("name");
+						lat = Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocY"));
+						lng =  Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocX"));
+					} catch (JSONException e) {
+						Log.d("Json error", e.toString());
+						Toast.makeText(currentContext, "JSONException Has Occured" +
+								" in Attractions Route Activity" ,Toast.LENGTH_LONG).show();
+						e.printStackTrace();
+					}
+
+					listOfPOIGeoPoint.add((new GeoPoint ((int) (lat*1E6), (int) (lng*1E6))));
+					listOfPOIName.add(poiName);
+				}
+
+				//add marker
+				for (int index = 0 ; index < listOfPOIGeoPoint.size(); index++){
+					CustomItemizedOverlay nearByPOIOverlay = new CustomItemizedOverlay(poiMarker, currentContext);
+					OverlayItem overlayitem =
+							new OverlayItem(listOfPOIGeoPoint.get(index), "Point of Interest", 
+									listOfPOIName.get(index));
+					Log.d("ABCDDD", listOfPOIGeoPoint.get(index) + " " + listOfPOIName.get(index));
+					nearByPOIOverlay.addOverlay(overlayitem);
+					mapView.getOverlays().add(nearByPOIOverlay);
+				}
+			}
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		MyLocationListener.animateToMap = true;
 		currentPosMarker =
 				this.getResources().getDrawable(R.drawable.person_marker);
-
+		poiMarker = this.getResources().getDrawable(R.drawable.map_marker2);
+		currentContext = this;
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maps);
 
@@ -47,8 +108,14 @@ public class ShowMapsActivity extends MapActivity{
 		mlocListener = new MyLocationListener(getApplicationContext());
 		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1*1000, 0, mlocListener);  
 
+		mapView.postDelayed(waitForMapTimeTask, 100);
+
 		//updates whenever you change location
+
 		setMarkerNewLocation ();
+
+
+
 	}
 
 	@Override
@@ -100,20 +167,25 @@ public class ShowMapsActivity extends MapActivity{
 		mapView.invalidate();
 
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
 		mlocManager.removeUpdates(mlocListener);
 	}
-	
-	/* not sure if needed
+
+	// not sure if needed
+	/*
 	@Override
 	public void onResume() {
 		super.onResume();
 		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1*1000, 0, mlocListener);  
 	}
-	*/
+	 */
+
+
+
+
 
 }
 
