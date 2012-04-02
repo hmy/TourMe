@@ -15,34 +15,43 @@ public final class R {
     }
     public static final class drawable {
         public static final int background=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int logo=0x7f020002;
-        public static final int map_marker=0x7f020003;
-        public static final int map_marker2=0x7f020004;
-        public static final int person_marker=0x7f020005;
-        public static final int star=0x7f020006;
-        public static final int star_small=0x7f020007;
-        public static final int wallpaper=0x7f020008;
+        public static final int background_simple=0x7f020001;
+        public static final int blue_menu_btn=0x7f020002;
+        public static final int button_next_64=0x7f020003;
+        public static final int button_pause_64=0x7f020004;
+        public static final int button_play_64=0x7f020005;
+        public static final int button_previous_64=0x7f020006;
+        public static final int camera_48=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int logo=0x7f020009;
+        public static final int map_marker=0x7f02000a;
+        public static final int map_marker2=0x7f02000b;
+        public static final int person_marker=0x7f02000c;
+        public static final int star=0x7f02000d;
+        public static final int star_small=0x7f02000e;
+        public static final int wallpaper=0x7f02000f;
+        public static final int yellow_menu_btn=0x7f020010;
     }
     public static final class id {
         public static final int ScrollViewForImage=0x7f070004;
         public static final int ScrollViewForLongText=0x7f070006;
-        public static final int buttonLinkToAttractions=0x7f07000e;
-        public static final int buttonLinkToMap=0x7f07000f;
-        public static final int buttonPlayAudio=0x7f07000b;
-        public static final int buttonPlayVideo=0x7f07000a;
-        public static final int buttonShowInstruction=0x7f070010;
-        public static final int buttonTakePicture=0x7f07000c;
+        public static final int buttonLinkToAttractions=0x7f07000f;
+        public static final int buttonLinkToMap=0x7f070010;
+        public static final int buttonNext=0x7f07000c;
+        public static final int buttonPause=0x7f07000b;
+        public static final int buttonPlay=0x7f07000a;
+        public static final int buttonPrevious=0x7f070009;
+        public static final int buttonShowInstruction=0x7f070011;
+        public static final int buttonTakePicture=0x7f07000d;
         public static final int image=0x7f070002;
         public static final int imageView1=0x7f070005;
-        public static final int linearLayout1=0x7f070008;
-        public static final int linearLayout2=0x7f070009;
+        public static final int linearLayout=0x7f070008;
         public static final int mapview=0x7f070000;
         public static final int name=0x7f070003;
-        public static final int spinnerChooseLanguage=0x7f070011;
+        public static final int spinnerChooseLanguage=0x7f070012;
         public static final int spinnerChoosePOI=0x7f070001;
         public static final int textViewAttractionDescription=0x7f070007;
-        public static final int videoView1=0x7f07000d;
+        public static final int videoView1=0x7f07000e;
     }
     public static final class layout {
         public static final int attractionroute=0x7f030000;

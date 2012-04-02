@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@drawable/background_simple"  
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ScrollView
         android:id="@+id/ScrollViewForImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:layout_weight="0.05" >
 
         <ImageView
@@ -28,37 +29,46 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.92"
             android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium" android:textColor="#000000"
+            						android:padding="10px"/>
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp" >
 
         <Button
-            android:id="@+id/buttonPlayVideo"
+            android:id="@+id/buttonPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/buttonPlayVideo" />
-
+            android:background="@drawable/button_previous_64" />
+		
         <Button
-            android:id="@+id/buttonPlayAudio"
+            android:id="@+id/buttonPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/buttonPlayAudio" android:onClick="buttonAudioOnClick"/>
+            android:onClick="buttonAudioOnClick"
+            android:background="@drawable/button_play_64" />
+        
+        <Button
+            android:id="@+id/buttonPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_pause_64" />
+        
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_next_64" />
 
         <Button
             android:id="@+id/buttonTakePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/buttonTakePicture" />
+            android:background="@drawable/camera_48" />
     </LinearLayout>
 
 </LinearLayout>

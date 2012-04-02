@@ -38,12 +38,12 @@ public class AttractionRouteActivity extends MapActivity {
 
 	MapView mapView;
 	static String poiName;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attractionroute);
-		
+
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		Drawable mapMarker = this.getResources().getDrawable(R.drawable.map_marker);
@@ -54,7 +54,7 @@ public class AttractionRouteActivity extends MapActivity {
 		//for now I will put is as false
 		//later put an toast or message to choose
 		MyLocationListener.animateToMap = false;
-		
+
 		//in the spinner We would like to put name of Tour first!!!!
 		tourPOInames.add(AttractionsActivity.attractionName);
 
@@ -225,18 +225,16 @@ public class AttractionRouteActivity extends MapActivity {
 		Intent intent = new Intent (this, EachAttractionActivity.class);
 		startActivity (intent);
 	}
-	
+
 	public class AttractionRouteCustomItemSelectedListener implements OnItemSelectedListener {
 
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 			switch (pos) {
 			case 0 : 
-				for (int i=0; i < 2; i++) {
-					Toast.makeText(parent.getContext(), "You are looking at the Tour Route Map for "+
-							parent.getItemAtPosition(pos).toString() + " !", Toast.LENGTH_LONG).show();
-				}
+				Toast.makeText(parent.getContext(), "You are looking at the Tour Route Map for "+
+						parent.getItemAtPosition(pos).toString() + " !", Toast.LENGTH_LONG).show();
 				break;
-				
+
 			default : 
 				poiName = parent.getItemAtPosition(pos).toString();
 				showEachAttraction(view);

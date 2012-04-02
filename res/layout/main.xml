@@ -2,29 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background"
     android:orientation="vertical" >
 
     <Button
         android:id="@+id/buttonLinkToAttractions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/stringButtonAttractions" android:onClick="showAttractions"/>
+        android:layout_width="230dp"
+        android:layout_height="45dp"
+ 		android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        android:onClick="showAttractions"
+        android:textStyle="bold" 
+        android:background="@drawable/blue_menu_btn"
+        android:text="@string/stringButtonAttractions" />
 
-    <Button 
+    <Button
         android:id="@+id/buttonLinkToMap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/stringButtonMaps" android:onClick="showMaps"/>
+        android:layout_width="230dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold" 
+        android:layout_marginBottom="5dp"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        android:background="@drawable/blue_menu_btn"
+        android:onClick="showMaps"
+        android:text="@string/stringButtonMaps" />
 
     <Button
         android:id="@+id/buttonShowInstruction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/stringButtonInstruction" android:onClick="showInstruction"/>
+        android:layout_width="230dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold" 
+        android:layout_marginBottom="5dp"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        android:background="@drawable/blue_menu_btn"
+        android:onClick="showInstruction"
+        android:text="@string/stringButtonInstruction" />
 
     <Spinner
         android:id="@+id/spinnerChooseLanguage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:entries="@array/languageList"/>
+        android:layout_width="230dp"
+        android:layout_height="45dp"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/blue_menu_btn"
+        android:textStyle="bold" 
+        android:entries="@array/languageList" />
 
 </LinearLayout>
