@@ -105,7 +105,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 
 			@Override
 			public View newChildView(boolean isLastChild, ViewGroup parent) {
-				return layoutInflater.inflate(R.layout.attractions, null, false);
+				return layoutInflater.inflate(R.layout.childview, null, false);
 			}
 		}
 				);		

@@ -56,11 +56,12 @@ public final class R {
     public static final class layout {
         public static final int attractionroute=0x7f030000;
         public static final int attractions=0x7f030001;
-        public static final int eachattraction=0x7f030002;
-        public static final int instruction=0x7f030003;
-        public static final int landing=0x7f030004;
-        public static final int main=0x7f030005;
-        public static final int maps=0x7f030006;
+        public static final int childview=0x7f030002;
+        public static final int eachattraction=0x7f030003;
+        public static final int instruction=0x7f030004;
+        public static final int landing=0x7f030005;
+        public static final int main=0x7f030006;
+        public static final int maps=0x7f030007;
     }
     public static final class raw {
         public static final int chinatown=0x7f040000;
