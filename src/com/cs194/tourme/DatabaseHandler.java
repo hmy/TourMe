@@ -21,7 +21,7 @@ public class DatabaseHandler {
 	private String result = null;
 	private InputStream is = null;
 	private StringBuilder sb=null;
-	private final String PHPSERVERLOCATION = "http://192.168.2.103/test.php?sql=";
+	private final String PHPSERVERLOCATION = "http://192.168.1.2/test.php?sql=";
 
 	public JSONArray getDataFromSql(String sql) {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -58,7 +58,7 @@ public class DatabaseHandler {
 			Log.d("DBHANDLER", sb.toString());
 			return new JSONArray(result);
 		} catch(Exception e){
-			Log.d("DBHANDLER ERROR", "caught Exception e");
+			Log.d("DBHANDLER ERROR", "caught Exception e, Most likely Query returned a null");
 			e.printStackTrace();
 			return null;
 		}
