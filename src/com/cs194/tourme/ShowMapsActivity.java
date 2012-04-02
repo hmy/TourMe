@@ -7,99 +7,42 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 public class ShowMapsActivity extends MapActivity{
 
-	static protected MapController mcForListener;
-	static protected Drawable currentPosMarker;
-	static protected CustomItemizedOverlay currentPositionOverlay = null;
-	static protected String currCityName;
-	static protected LocationManager mlocManager;
-	static protected LocationListener mlocListener;
-	static protected MapView mapView;
+	protected MapController mcForListener;
+	protected Drawable currentPosMarker;
+	protected CustomItemizedOverlay currentPositionOverlay = null;
+	protected String currCityName;
+	protected LocationManager mlocManager;
+	protected LocationListener mlocListener;
+	protected DetectMovementMapView mapView;
 
 	protected Drawable poiMarker;
 	private Context currentContext;
+
+	static CustomItemizedOverlay nearByPOIOverlay = null;
 
 	private Runnable waitForMapTimeTask = new Runnable() {
 		public void run() {
 			if(mapView.getLatitudeSpan()==0||mapView.getLongitudeSpan()== 360000000) {
 				mapView.postDelayed(this, 100);
 			} else {
-
-				GeoPoint geoPointNW = mapView.getProjection().fromPixels(0, 0);
-				GeoPoint geoPointSE = mapView.getProjection().fromPixels(mapView.getWidth(), mapView.getHeight());
-				
-				ArrayList<GeoPoint> listOfPOIGeoPoint = new ArrayList<GeoPoint> ();
-				ArrayList<String> listOfPOIName = new ArrayList<String> ();
-
-				DatabaseHandler dbHandler = new DatabaseHandler ();
-				JSONArray listOfPOI = dbHandler.getDataFromSql("select p.name, p.geolocX, p.geolocY " +
-						"from POI p where p.tour_id = " +
-						"any (select t.id from Tour t where t.attraction_id = " +
-						"any (select a.id from Attraction a where " +
-						"a.geolocY < " + geoPointNW.getLatitudeE6()/1.0E6 + 
-						" and a.geolocY > " + geoPointSE.getLatitudeE6()/1.0E6 +
-						" and a.geolocX < " + geoPointSE.getLongitudeE6()/1.0E6 +
-						" and a.geolocX > " + geoPointNW.getLongitudeE6()/1.0E6 + 
-						"))");
-
-				/*
-				Log.d("ABCDD" , "select p.name, p.geolocX, p.geolocY " +
-						"from POI p where p.tour_id = " +
-						"any (select t.id from Tour t where t.attraction_id = " +
-						"any (select a.id from Attraction a where " +
-						"a.geolocY < " + geoPointNW.getLatitudeE6()/1.0E6 + 
-						" and a.geolocY > " + geoPointSE.getLatitudeE6()/1.0E6 +
-						" and a.geolocX < " + geoPointSE.getLongitudeE6()/1.0E6 +
-						" and a.geolocX > " + geoPointNW.getLongitudeE6()/1.0E6 + 
-						"))");
-				*/
-				
-				
-				//if listOfPOI is null then no need to put markers and such
-				if (listOfPOI != null) {
-					for (int index = 0 ; index < listOfPOI.length(); index++) {
-						String poiName = null ; Float lat = null, lng = null;
-
-						try {
-							poiName = listOfPOI.getJSONObject(index).getString("name");
-							lat = Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocY"));
-							lng =  Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocX"));
-						} catch (JSONException e) {
-							Log.d("Json error", e.toString());
-							Toast.makeText(currentContext, "JSONException Has Occured" +
-									" in Attractions Route Activity" ,Toast.LENGTH_LONG).show();
-							e.printStackTrace();
-						}
-
-						listOfPOIGeoPoint.add((new GeoPoint ((int) (lat*1E6), (int) (lng*1E6))));
-						listOfPOIName.add(poiName);
-					}
-
-					//add marker
-					for (int index = 0 ; index < listOfPOIGeoPoint.size(); index++){
-						CustomItemizedOverlay nearByPOIOverlay = new CustomItemizedOverlay(poiMarker, currentContext);
-						OverlayItem overlayitem =
-								new OverlayItem(listOfPOIGeoPoint.get(index), "Point of Interest", 
-										listOfPOIName.get(index));
-						Log.d("ABCDDD", listOfPOIGeoPoint.get(index) + " " + listOfPOIName.get(index));
-						nearByPOIOverlay.addOverlay(overlayitem);
-						mapView.getOverlays().add(nearByPOIOverlay);
-					}
-				}
+				setCloseByPOIMarkers();
 			}
 		}
 	};
@@ -117,7 +60,7 @@ public class ShowMapsActivity extends MapActivity{
 		setContentView(R.layout.maps);
 
 		//setting mapview and controller
-		mapView = (MapView) findViewById(R.id.mapview);
+		mapView = (DetectMovementMapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		mcForListener = mapView.getController();
 		mcForListener.setZoom(13);
@@ -130,10 +73,10 @@ public class ShowMapsActivity extends MapActivity{
 		mapView.postDelayed(waitForMapTimeTask, 100);
 
 		//updates whenever you change location	
-
 		setMarkerNewLocation ();
-
-
+		
+		
+		
 
 	}
 
@@ -154,7 +97,7 @@ public class ShowMapsActivity extends MapActivity{
 	}
 
 	protected void setMarkerNewLocation() {
-		//getting current location
+		//getting current location 
 		double currLat = 0.0, currLong = 0.0;
 		try {
 			currLat = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
@@ -173,7 +116,7 @@ public class ShowMapsActivity extends MapActivity{
 		//creating new current position marker
 		OverlayItem overlayitem =
 				new OverlayItem(currentPos, "Your Current Location", currCityName);
-		if (ShowMapsActivity.currentPositionOverlay == null) {
+		if (currentPositionOverlay == null) {
 			currentPositionOverlay = new CustomItemizedOverlay(currentPosMarker, this);
 			currentPositionOverlay.addOverlay(overlayitem);
 		} else {
@@ -202,10 +145,74 @@ public class ShowMapsActivity extends MapActivity{
 	}
 	 */
 
+	public void setCloseByPOIMarkers () {
 
+		//I want this as I want to remove existing overlays
+		mapView.getOverlays().remove(ShowMapsActivity.nearByPOIOverlay);
 
+		GeoPoint geoPointNW = mapView.getProjection().fromPixels(0, 0);
+		GeoPoint geoPointSE = mapView.getProjection().fromPixels(mapView.getWidth(), mapView.getHeight());
 
+		ArrayList<GeoPoint> listOfPOIGeoPoint = new ArrayList<GeoPoint> ();
+		ArrayList<String> listOfPOIName = new ArrayList<String> ();
 
+		DatabaseHandler dbHandler = new DatabaseHandler ();
+		JSONArray listOfPOI = dbHandler.getDataFromSql("select p.name, p.geolocX, p.geolocY " +
+				"from POI p where p.tour_id = " +
+				"any (select t.id from Tour t where t.attraction_id = " +
+				"any (select a.id from Attraction a where " +
+				"a.geolocY < " + geoPointNW.getLatitudeE6()/1.0E6 + 
+				" and a.geolocY > " + geoPointSE.getLatitudeE6()/1.0E6 +
+				" and a.geolocX < " + geoPointSE.getLongitudeE6()/1.0E6 +
+				" and a.geolocX > " + geoPointNW.getLongitudeE6()/1.0E6 + 
+				"))");
+
+		/*
+		Log.d("ABCDD" , "select p.name, p.geolocX, p.geolocY " +
+				"from POI p where p.tour_id = " +
+				"any (select t.id from Tour t where t.attraction_id = " +
+				"any (select a.id from Attraction a where " +
+				"a.geolocY < " + geoPointNW.getLatitudeE6()/1.0E6 + 
+				" and a.geolocY > " + geoPointSE.getLatitudeE6()/1.0E6 +
+				" and a.geolocX < " + geoPointSE.getLongitudeE6()/1.0E6 +
+				" and a.geolocX > " + geoPointNW.getLongitudeE6()/1.0E6 + 
+				"))");
+		 */
+
+		//if listOfPOI is null then no need to put markers and such
+		if (listOfPOI != null) {
+			for (int index = 0 ; index < listOfPOI.length(); index++) {
+				String poiName = null ; Float lat = null, lng = null;
+
+				try {
+					poiName = listOfPOI.getJSONObject(index).getString("name");
+					lat = Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocY"));
+					lng =  Float.parseFloat(listOfPOI.getJSONObject(index).getString("geolocX"));
+				} catch (JSONException e) {
+					Log.d("Json error", e.toString());
+					Toast.makeText(currentContext, "JSONException Has Occured" +
+							" in Attractions Route Activity" ,Toast.LENGTH_LONG).show();
+					e.printStackTrace();
+				}
+
+				listOfPOIGeoPoint.add((new GeoPoint ((int) (lat*1E6), (int) (lng*1E6))));
+				listOfPOIName.add(poiName);
+			}
+
+			//add marker
+			for (int index = 0 ; index < listOfPOIGeoPoint.size(); index++){
+				nearByPOIOverlay = new CustomItemizedOverlay(poiMarker, currentContext);
+				OverlayItem overlayitem =
+						new OverlayItem(listOfPOIGeoPoint.get(index), "Point of Interest", 
+								listOfPOIName.get(index));
+				Log.d("ABCDDD", listOfPOIGeoPoint.get(index) + " " + listOfPOIName.get(index));
+				nearByPOIOverlay.addOverlay(overlayitem);
+				mapView.getOverlays().add(nearByPOIOverlay);
+
+			}
+		}
+	}
+	
 }
 
 //		Berkeley GeoLocation 37.87309	-122.25921
