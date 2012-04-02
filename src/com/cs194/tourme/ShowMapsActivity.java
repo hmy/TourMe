@@ -22,24 +22,25 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.OverlayItem;
 
-public class ShowMapsActivity extends MapActivity{
+public class ShowMapsActivity extends MapActivity implements MapViewMovementListener {
 
-	protected MapController mcForListener;
-	protected Drawable currentPosMarker;
-	protected CustomItemizedOverlay currentPositionOverlay = null;
-	protected String currCityName;
-	protected LocationManager mlocManager;
-	protected LocationListener mlocListener;
-	protected DetectMovementMapView mapView;
-
+	static protected MapController mcForListener;
+	static protected Drawable currentPosMarker;
+	static protected CustomItemizedOverlay currentPositionOverlay = null;
+	static protected String currCityName;
+	static protected LocationManager mlocManager;
+	static protected LocationListener mlocListener;
+	static protected DetectMovementMapView mapView;
+	
 	protected Drawable poiMarker;
 	private Context currentContext;
 
 	static CustomItemizedOverlay nearByPOIOverlay = null;
+	
 
 	private Runnable waitForMapTimeTask = new Runnable() {
 		public void run() {
-			if(mapView.getLatitudeSpan()==0||mapView.getLongitudeSpan()== 360000000) {
+			if(mapView.getLatitudeSpan()==0 || mapView.getLongitudeSpan()== 360000000) {
 				mapView.postDelayed(this, 100);
 			} else {
 				setCloseByPOIMarkers();
@@ -75,9 +76,9 @@ public class ShowMapsActivity extends MapActivity{
 		//updates whenever you change location	
 		setMarkerNewLocation ();
 		
+		mapView.setOnPanListener(this);
 		
-		
-
+	
 	}
 
 	@Override
@@ -211,6 +212,11 @@ public class ShowMapsActivity extends MapActivity{
 
 			}
 		}
+	}
+
+	@Override
+	public void onChange() {
+		this.setCloseByPOIMarkers();
 	}
 	
 }

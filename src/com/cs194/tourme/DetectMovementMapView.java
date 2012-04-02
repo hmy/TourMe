@@ -3,41 +3,55 @@ package com.cs194.tourme;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
-public class DetectMovementMapView extends com.google.android.maps.MapView {
-	
-	private int oldZoomLevel=-1;
-	
-	public DetectMovementMapView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapView;
 
-	public DetectMovementMapView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
+public class DetectMovementMapView extends MapView {
 
-	public DetectMovementMapView(Context context, String apiKey) {
-		super(context, apiKey);
-	}
+    private int oldZoomLevel = -1;
+    private GeoPoint oldCenterGeoPoint;
+    private MapViewMovementListener mListener;
 
-	//touch event
-	public boolean onTouchEvent(MotionEvent ev) {
-		if (ev.getAction() == MotionEvent.ACTION_UP) {
+    public DetectMovementMapView(Context context, String apiKey) {
+        super(context, apiKey);
+    }
 
-			Log.d("DetectMovementMapView", "hello1");
-		}
-		return super.onTouchEvent(ev);
-	}
+    public DetectMovementMapView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	//zooming
-	public void dispatchDraw(Canvas canvas) {
-		super.dispatchDraw(canvas);
-		if (getZoomLevel() != oldZoomLevel) {
-			Log.d("DetectMovementMapView", "hello2");
-			oldZoomLevel = getZoomLevel();
-		}
-	}
+    public DetectMovementMapView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    public void setOnPanListener(MapViewMovementListener listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            GeoPoint centerGeoPoint = this.getMapCenter();
+            if (oldCenterGeoPoint == null || 
+                    (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6()) ||
+                    (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6()) ) {
+                mListener.onChange();
+            }
+            oldCenterGeoPoint = this.getMapCenter();
+        }
+        return super.onTouchEvent(ev);
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        if (getZoomLevel() != oldZoomLevel) {
+            mListener.onChange();
+            oldZoomLevel = getZoomLevel();
+        }
+    }
+
 
 }
