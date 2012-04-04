@@ -1,7 +1,4 @@
-TourMe
-------
-
-CS194 Spring 2012 Project
+TourMe, a CS194 Spring 2012 Project
 --------------------------
 * Members :
   - [Hee Min Yoo]
@@ -9,8 +6,9 @@ CS194 Spring 2012 Project
   - [Anastasia Ingargiola]
   - [Clint Anderson]
 
-Project Proposal : [link][link to proposal]
--------------------------
+## Project Proposal : [link][link to proposal]
+
+## Coding Style : [link][link to coding style]
 
 Iteration By Iteration
 -----------------------
@@ -48,8 +46,7 @@ What To Improve On
 * Double-Tap Feature on Map
 * Cleaning Up the Code
 
-Disclaimer : As of now, DB is local so it cannot be accessed via internet
--------------------------------------------------------------------------
+### Disclaimer : As of now, DB is local so it cannot be accessed via internet
 
 ```
   Last (Meaningfully) Updated on 4/4/12 by hmy
@@ -60,3 +57,5 @@ Disclaimer : As of now, DB is local so it cannot be accessed via internet
   [Anastasia Ingargiola]: https://github.com/velvet117 "GitHub Page"
   [Clint Anderson]: https://github.com/clintanderson "GitHub Page"
   [link to proposal]: http://vmphone2.cs.berkeley.edu/cs194-22sp12/projects/TourMe.pdf 
+  [link to coding style]: https://github.com/hmy/ReadMePractice/blob/master/CODINGSTYLE.md
+
