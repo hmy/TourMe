@@ -43,10 +43,10 @@
 * Double-Tap Feature on Map
 * Cleaning Up the Code
 
+### Disclaimer : As of now, DB is local so it cannot be accessed via internet
+
 ```
-  Last (Meaningfully) Updated 
-                          on 4/3/12 
-                              by hmy
+  Last (Meaningfully) Updated on 4/4/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"
