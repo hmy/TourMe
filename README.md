@@ -44,7 +44,7 @@
 * Cleaning Up the Code
 
 ```
-  (Meaningfully) Last Updated 4/3/12 by hmy
+  Last (Meaningfully) Updated 4/3/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"
