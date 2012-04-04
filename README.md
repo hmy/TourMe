@@ -1,15 +1,19 @@
-# TourMe
-### CS194 Spring 2012 Project
+TourMe
+------
 
+CS194 Spring 2012 Project
+--------------------------
 * Members :
   - [Hee Min Yoo]
   - [Ji Hun Cho]
   - [Anastasia Ingargiola]
   - [Clint Anderson]
 
-### Project Proposal : [link][link to proposal]
+Project Proposal : [link][link to proposal]
+-------------------------
 
-### Iteration By Iteration
+Iteration By Iteration
+-----------------------
 
 * First Iteration Achievements:
   - Map locates user's position using *GPS*
@@ -31,7 +35,8 @@
   - TBD
   - Date : 4/16/12 Monday (Expected)
 
-### What To Improve On
+What To Improve On
+------------------
 
 * Outsourcing
 * Move DB to actual web (?)
@@ -43,7 +48,8 @@
 * Double-Tap Feature on Map
 * Cleaning Up the Code
 
-### Disclaimer : As of now, DB is local so it cannot be accessed via internet
+Disclaimer : As of now, DB is local so it cannot be accessed via internet
+-------------------------------------------------------------------------
 
 ```
   Last (Meaningfully) Updated on 4/4/12 by hmy
