@@ -5,17 +5,21 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="10" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
+        <uses-library android:name="com.google.android.maps" />
+
         <activity
             android:name=".LandingPageActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,27 +28,34 @@
         </activity>
         <activity
             android:name=".TourMeActivity"
-            android:label="TourMeActivity" >
+            android:label="Main Menu"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".ShowMapsActivity"
-            android:label="ShowMapsActivity" >
+            android:label="ShowMapsActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".InstructionActivity"
-            android:label="InstructionActivity" >
+            android:label="InstructionActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".AttractionsActivity"
-            android:label="AttractionsActivity" >
+            android:label="AttractionsActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".EachAttractionActivity"
-            android:label="EachAttractionActivity" >
+            android:label="EachAttractionActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        
-        <uses-library android:name="com.google.android.maps" />
-        <activity android:label="AttractionRouteActivity" android:name=".AttractionRouteActivity"></activity>
+        <activity
+            android:name=".AttractionRouteActivity"
+            android:label="AttractionRouteActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>
