@@ -9,51 +9,54 @@
         android:id="@+id/buttonLinkToAttractions"
         android:layout_width="230dp"
         android:layout_height="45dp"
- 		android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/blue_menu_btn"
+        android:onClick="showAttractions"
+        android:text="@string/stringButtonAttractions"
         android:textColor="#FFFF00"
         android:textSize="20sp"
-        android:onClick="showAttractions"
-        android:textStyle="bold" 
-        android:background="@drawable/blue_menu_btn"
-        android:text="@string/stringButtonAttractions" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/buttonLinkToMap"
         android:layout_width="230dp"
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
-        android:textStyle="bold" 
         android:layout_marginBottom="5dp"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
         android:background="@drawable/blue_menu_btn"
         android:onClick="showMaps"
-        android:text="@string/stringButtonMaps" />
+        android:text="@string/stringButtonMaps"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/buttonShowInstruction"
         android:layout_width="230dp"
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
-        android:textStyle="bold" 
         android:layout_marginBottom="5dp"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
         android:background="@drawable/blue_menu_btn"
         android:onClick="showInstruction"
-        android:text="@string/stringButtonInstruction" />
+        android:text="@string/stringButtonInstruction"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/spinnerChooseLanguage"
         android:layout_width="230dp"
         android:layout_height="45dp"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/blue_menu_btn"
-        android:textStyle="bold" 
-        android:entries="@array/languageList" />
+        android:prompt="@string/chooseALanguage"
+        android:textStyle="bold" />
+
+    <!--
+ android:textColor="#FFFF00"
+        android:textSize="20sp"
+    -->
 
 </LinearLayout>

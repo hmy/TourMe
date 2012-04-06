@@ -11,14 +11,16 @@
     <string name="languageListEnglish">English</string>
     <string name="languageListKorean">Korean</string>
     <string name="languageListChinese">Chinese</string>
-    
+
+    <string name="chooseALanguage">Choose a Language</string>
     <string-array name="languageList">
         <item>@string/languageListEnglish</item>
         <item>@string/languageListKorean</item>
         <item>@string/languageListChinese</item>
     </string-array>
-        <string name="buttonPlayVideo">Play Video</string>
-        <string name="buttonPlayAudio">Play Audio</string>
-        <string name="buttonTakePicture">Take Picture</string>
+
+    <string name="buttonPlayVideo">Play Video</string>
+    <string name="buttonPlayAudio">Play Audio</string>
+    <string name="buttonTakePicture">Take Picture</string>
 
 </resources>

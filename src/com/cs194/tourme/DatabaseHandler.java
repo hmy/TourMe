@@ -24,7 +24,7 @@ public class DatabaseHandler {
 	private String result = null;
 	private InputStream is = null;
 	private StringBuilder sb=null;
-	private final String PHPSERVERLOCATION = "http://10.10.67.241/test.php?sql=";
+	private final String PHPSERVERLOCATION = "http://10.10.67.245/test.php?sql=";
 
 	public JSONArray getDataFromSql(String sql) {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();

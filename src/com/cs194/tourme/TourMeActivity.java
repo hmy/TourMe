@@ -2,8 +2,6 @@ package com.cs194.tourme;
 
 import java.util.Locale;
 
-import com.cs194.tourme.R;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,50 +10,58 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 public class TourMeActivity extends LocalizedActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.main);
-		
-		Spinner spinner = (Spinner) findViewById(R.id.spinnerChooseLanguage);
-		
+
+		Spinner languageSpinner = (Spinner) findViewById(R.id.spinnerChooseLanguage);
+
+		ArrayAdapter<CharSequence> languageSpinnerAdapter = 
+				ArrayAdapter.createFromResource(
+						this, R.array.languageList, R.layout.languagespinner);
+
+		languageSpinnerAdapter.setDropDownViewResource(
+				android.R.layout.simple_spinner_dropdown_item);
+		languageSpinner.setAdapter(languageSpinnerAdapter);
+
 		if (LocalizedActivity.locale == Locale.KOREAN) {
-          spinner.setSelection(1);
+			languageSpinner.setSelection(1);
 		} else if (LocalizedActivity.locale == Locale.CHINESE) {
-          spinner.setSelection(2);
+			languageSpinner.setSelection(2);
 		} else { 
-          spinner.setSelection(0);
+			languageSpinner.setSelection(0);
 		}
-		
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-		    @Override
-		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		    	switch (position) {
-	            case 0:  setLocale(Locale.ENGLISH);
-	                     break;
-	            case 1:  setLocale(Locale.KOREAN);
-	                     break;
-	            case 2:  setLocale(Locale.CHINESE);
-	                     break;
-		    	} 
-		    }
+
+		languageSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, 
+					View selectedItemView, int position, long id) {
+				switch (position) {
+				case 0:  setLocale(Locale.ENGLISH);
+				break;
+				case 1:  setLocale(Locale.KOREAN);
+				break;
+				case 2:  setLocale(Locale.CHINESE);
+				break;
+				} 
+			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
-				
 			}
 		});
-		
+
+
 	}
-	
+
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 		switch(keyCode){
 		case KeyEvent.KEYCODE_BACK:
