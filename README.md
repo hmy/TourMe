@@ -1,4 +1,4 @@
-TourMe, a CS194 Spring 2012 Project
+TourMe, a [CS194][CS194] Spring 2012 Project
 --------------------------
 * Members :
   - [Hee Min Yoo]
@@ -6,9 +6,12 @@ TourMe, a CS194 Spring 2012 Project
   - [Anastasia Ingargiola]
   - [Clint Anderson]
 
-## Project Proposal : [link][link to proposal]
 
-## Coding Style : [link][link to coding style]
+### Project Proposal : [link][link to proposal]
+
+
+### Coding Style : [link][link to coding style]
+
 
 Iteration By Iteration
 -----------------------
@@ -29,9 +32,13 @@ Iteration By Iteration
   - Default (safety) values for images and descriptions in DB
   - Timeouts in connecting the DB
   - Various UI Improvements
-* Third iteration Achievements:
-  - TBD
+* Third Iteration Achievements:
   - Date : 4/16/12 Monday (Expected)
+  - TBD
+* Fourth Iteration Achievements:
+  - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM)
+  - TBD
+  - Last Iteration (Poster Session)
 
 What To Improve On
 ------------------
@@ -46,10 +53,11 @@ What To Improve On
 * Double-Tap Feature on Map
 * Cleaning Up the Code
 
-### Disclaimer : As of now, DB is local so it cannot be accessed via internet
+### Disclaimer : As of now, DB is local And it cannot be accessed via internet
 
+### Most Recent Version : [might live here][most recent version]
 ```
-  Last (Meaningfully) Updated on 4/4/12 by hmy
+  Last Updated on 4/5/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"
@@ -58,4 +66,5 @@ What To Improve On
   [Clint Anderson]: https://github.com/clintanderson "GitHub Page"
   [link to proposal]: http://vmphone2.cs.berkeley.edu/cs194-22sp12/projects/TourMe.pdf 
   [link to coding style]: https://github.com/hmy/ReadMePractice/blob/master/CODINGSTYLE.md
-
+  [CS194]: http://phone.cs.berkeley.edu/dokuwiki/doku.php?id=194-22:sp2012
+  [most recent version]: https://github.com/hmy/TourMeReadMe/blob/master/README.md
