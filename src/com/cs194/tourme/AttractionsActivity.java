@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ExpandableListActivity;
 import android.content.Context;
@@ -48,6 +49,19 @@ public class AttractionsActivity extends ExpandableListActivity {
 			//change the query make space into +
 			JSONArray listOfCities = dbHandler.getDataFromSql("select City.id, City.city from City");
 
+			//hard code remove later
+			//hard code remove later
+			//hard code remove later
+			if (listOfCities.length() == 0) {
+				listOfCities = new JSONArray();
+				JSONObject json = new JSONObject();
+				json.put("city","New York");
+//				listOfCities.put(json);
+				json.put("id", 1);
+				listOfCities.put(json);
+				Log.d("abc", json.toString());
+			}
+			
 			for (int cityIndex = 0 ; cityIndex < listOfCities.length(); cityIndex++) {
 				String cityName = listOfCities.getJSONObject(cityIndex).getString("city");
 				Integer cityId = listOfCities.getJSONObject(cityIndex).getInt("id");
@@ -60,6 +74,20 @@ public class AttractionsActivity extends ExpandableListActivity {
 
 				JSONArray listOfAttractionsFromCurrentCity = 
 						dbHandler.getDataFromSql("select a.name from Attraction a where a.city_id = " +  cityId);
+				
+				//hard code remove later
+				//hard code remove later
+				//hard code remove later
+				if (listOfAttractionsFromCurrentCity.length() == 0) {
+					listOfAttractionsFromCurrentCity = new JSONArray();
+					JSONObject json = new JSONObject();
+					json.put("name","Central Park Attractions");
+					Log.d("abc", json.toString());
+					listOfAttractionsFromCurrentCity.put(json);
+				}
+				
+				
+				
 				for (int attractionIndex = 0 ; attractionIndex 
 						< listOfAttractionsFromCurrentCity.length(); attractionIndex++) {
 					String attractionName 

@@ -18,5 +18,10 @@
         android:id="@+id/spinnerChoosePOI"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
+ <!-- 
+JiHun's API KEY: "0dgd5OyVlVXFsj4ShcDB5QR54vQvT9FO-HN9ehA"
+HeeMin's API KEY: "0AcqqbnRdMZcvqFgfexfA5FuRjJmxo2K6TnGp4A"
+-->
 
 </LinearLayout>

@@ -9,13 +9,13 @@
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:apiKey="0dgd5OyVlVXFsj4ShcDB5QR54vQvT9FO-HN9ehA"
+        android:apiKey="0AcqqbnRdMZcvqFgfexfA5FuRjJmxo2K6TnGp4A"
         android:clickable="true" >
     </com.cs194.tourme.DetectMovementMapView>
 
 <!-- 
 JiHun's API KEY: "0dgd5OyVlVXFsj4ShcDB5QR54vQvT9FO-HN9ehA"
 HeeMin's API KEY: "0AcqqbnRdMZcvqFgfexfA5FuRjJmxo2K6TnGp4A"
--->
+--> 
 
 </LinearLayout>
