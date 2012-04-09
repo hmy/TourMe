@@ -1,7 +1,7 @@
 TourMe, a [CS194][CS194] Spring 2012 Project
 --------------------------
 
-### Most Recent Version : [might live here][most recent version]
+### ~~Most Recent Version : [might live here][most recent version]~~ Deprecated
 
 * Members :
   - [Hee Min Yoo]
