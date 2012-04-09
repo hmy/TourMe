@@ -1,5 +1,8 @@
 TourMe, a [CS194][CS194] Spring 2012 Project
 --------------------------
+
+### Most Recent Version : [might live here][most recent version]
+
 * Members :
   - [Hee Min Yoo]
   - [Ji Hun Cho]
@@ -55,9 +58,8 @@ What To Improve On
 
 ### Disclaimer : As of now, DB is local And it cannot be accessed via internet
 
-### Most Recent Version : [might live here][most recent version]
 ```
-  Last Updated on 4/5/12 by hmy
+  Last Updated on 4/6/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"
@@ -65,6 +67,6 @@ What To Improve On
   [Anastasia Ingargiola]: https://github.com/velvet117 "GitHub Page"
   [Clint Anderson]: https://github.com/clintanderson "GitHub Page"
   [link to proposal]: http://vmphone2.cs.berkeley.edu/cs194-22sp12/projects/TourMe.pdf 
-  [link to coding style]: https://github.com/hmy/ReadMePractice/blob/master/CODINGSTYLE.md
+  [link to coding style]: https://github.com/hmy/TourMeReadMe/blob/master/CODINGSTYLE.md
   [CS194]: http://phone.cs.berkeley.edu/dokuwiki/doku.php?id=194-22:sp2012
   [most recent version]: https://github.com/hmy/TourMeReadMe/blob/master/README.md
