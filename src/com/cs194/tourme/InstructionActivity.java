@@ -1,8 +1,6 @@
 package com.cs194.tourme;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.VideoView;
 
 public class InstructionActivity extends LocalizedActivity {
 
