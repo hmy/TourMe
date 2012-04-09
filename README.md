@@ -12,9 +12,9 @@ TourMe, a [CS194][CS194] Spring 2012 Project
 
 ### Project Proposal : [link][link to proposal]
 
-
 ### Coding Style : [link][link to coding style]
 
+### Disclaimer : As of now, DB is local And it cannot be accessed via internet
 
 Iteration By Iteration
 -----------------------
@@ -56,7 +56,6 @@ What To Improve On
 * Double-Tap Feature on Map
 * Cleaning Up the Code
 
-### Disclaimer : As of now, DB is local And it cannot be accessed via internet
 
 ```
   Last Updated on 4/6/12 by hmy
