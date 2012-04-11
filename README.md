@@ -36,7 +36,8 @@ Iteration By Iteration
   - Timeouts in connecting the DB
   - Various UI Improvements
 * Third Iteration Achievements:
-  - Moved DB to the web (Amazon EC2)
+  - Moved DB to the web (Amazon EC2) : [link][ec2db]
+  - Developing new service on the web : [link][webservice]
   - Date : 4/16/12 Monday (Expected)
   - TBD
 * Fourth Iteration Achievements:
@@ -71,3 +72,5 @@ What To Improve On
   [link to coding style]: https://github.com/hmy/TourMeReadMe/blob/master/CODINGSTYLE.md
   [CS194]: http://phone.cs.berkeley.edu/dokuwiki/doku.php?id=194-22:sp2012
   [most recent version]: https://github.com/hmy/TourMeReadMe/blob/master/README.md
+  [ec2db]: http://ec2-23-20-205-81.compute-1.amazonaws.com/phpmyadmin/ "EC2 DB"
+  [webservice]: http://ec2-23-20-205-81.compute-1.amazonaws.com:2222/ "New Web Service"
