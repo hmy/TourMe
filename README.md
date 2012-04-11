@@ -1,7 +1,7 @@
 TourMe, a [CS194][CS194] Spring 2012 Project
 --------------------------
 
-### ~~Most Recent Version : [might live here][most recent version]~~ Deprecated
+### Most Recent Version : [might live here][most recent version]
 
 * Members :
   - [Hee Min Yoo]
@@ -12,9 +12,9 @@ TourMe, a [CS194][CS194] Spring 2012 Project
 
 ### Project Proposal : [link][link to proposal]
 
+
 ### Coding Style : [link][link to coding style]
 
-### Disclaimer : As of now, DB is local And it cannot be accessed via internet
 
 Iteration By Iteration
 -----------------------
@@ -36,6 +36,7 @@ Iteration By Iteration
   - Timeouts in connecting the DB
   - Various UI Improvements
 * Third Iteration Achievements:
+  - Moved DB to the web (Amazon EC2)
   - Date : 4/16/12 Monday (Expected)
   - TBD
 * Fourth Iteration Achievements:
@@ -47,7 +48,7 @@ What To Improve On
 ------------------
 
 * Outsourcing
-* Move DB to actual web (?)
+* ~~Move DB to actual web (?)~~
 * Need Actual Instruction Video
 * More Contents
 * UI Improvements (Integrating)
@@ -56,9 +57,10 @@ What To Improve On
 * Double-Tap Feature on Map
 * Cleaning Up the Code
 
+### Disclaimer : As of now, DB is local And it cannot be accessed via internet
 
 ```
-  Last Updated on 4/6/12 by hmy
+  Last Updated on 4/10/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"

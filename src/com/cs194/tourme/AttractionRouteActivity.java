@@ -68,29 +68,6 @@ public class AttractionRouteActivity extends MapActivity {
 
 		//		HashMap<String, ArrayList<Float>> poiNameAndGeoloc = new HashMap<String, ArrayList<Float>> ();
 
-
-		//hard code remove later
-		//hard code remove later
-		//hard code remove later
-		if (listOfPOI.length() == 0) {
-			listOfPOI = new JSONArray();
-			JSONObject json = new JSONObject();
-			try {
-				json.put("name","Central Park");
-				json.put("geolocY", 40.77464);
-				json.put("geolocX", -73.97020);
-			} catch (Exception e) {
-
-			}
-			listOfPOI.put(json);
-			Log.d("abc", json.toString());
-		}
-		//hard code remove later
-		//hard code remove later
-		//hard code remove later
-		
-
-
 		for (int index = 0 ; index < listOfPOI.length(); index++) {
 
 			String poiName = null ; Float lat = null, lng = null;

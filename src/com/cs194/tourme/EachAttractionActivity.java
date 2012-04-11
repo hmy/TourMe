@@ -50,27 +50,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		Log.d("sqlquery", "select p.uri, p.description from Picture p where p.poi_id = " +
 				"(select id from POI where POI.name = '" + AttractionRouteActivity.poiName + "')");
-
-		
-		//hard code remove later
-		//hard code remove later
-		//hard code remove later
-		if (AttractionDetail.length() == 0) {
-			AttractionDetail = new JSONArray();
-			JSONObject json = new JSONObject();
-			try {
-				json.put("uri","http://cache2.artprintimages.com/lrg/26/2681/HXIUD00Z.jpg");
-				json.put("description", "No Description available");
-			} catch (Exception e) {
-
-			}
-			AttractionDetail.put(json);
-			Log.d("abc", json.toString());
-		}
-		//hard code remove later
-		//hard code remove later
-		//hard code remove later
-		
+	
 		//debug
 		try{
 			Log.d("eachattraction", AttractionDetail.getJSONObject(0).getString("uri"));
