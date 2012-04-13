@@ -61,8 +61,8 @@ public class AttractionsActivity extends ExpandableListActivity {
 
 				JSONArray listOfAttractionsFromCurrentCity = 
 						dbHandler.getDataFromSql("select a.name from Attraction a where a.city_id = " +  cityId);
-				
-				
+
+
 				for (int attractionIndex = 0 ; attractionIndex 
 						< listOfAttractionsFromCurrentCity.length(); attractionIndex++) {
 					String attractionName 
@@ -83,12 +83,15 @@ public class AttractionsActivity extends ExpandableListActivity {
 			e1.printStackTrace();
 		}
 
+
+
+
 		setListAdapter( new SimpleExpandableListAdapter(
 				this,
 				headerData,
-				android.R.layout.simple_expandable_list_item_1,
+				R.layout.parentview,
 				new String[] { NAME },            // the name of the field data
-				new int[] { android.R.id.text1 }, // the text field to populate with the field data
+				new int[] { R.id.attractionParentGroupName }, // the text field to populate with the field data
 				childData,
 				0,
 				null,
@@ -118,27 +121,15 @@ public class AttractionsActivity extends ExpandableListActivity {
 	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
 			int childPosition, long id) {
 		attractionName = (String) childData.get(groupPosition).get(childPosition).get(NAME);
-		
-		//TODO: This is version where we went directly to EachAttractionActivity
-		//showAttraction(v);
-		
-		//TODO: This is new where we now go to AttractionRouteActivity
 		showAttractionRoute(v);
 		return true;
 	}
 
-	
+
 	public void showAttractionRoute(View view) {
 		Intent intent = new Intent (this, AttractionRouteActivity.class);
 		startActivity (intent);
 	}
-	
-	// old
-	/*
-	public void showAttraction(View view) {
-		Intent intent = new Intent(this, EachAttractionActivity.class);
-		startActivity(intent);
-	}
-	*/	
+
 }
 
