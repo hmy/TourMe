@@ -6,12 +6,12 @@ import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,8 +36,17 @@ public class AttractionsActivity extends ExpandableListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attractions);
+
+
+		//getting gps
+		ShowMapsActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
+		ShowMapsActivity.mlocListener = new MyLocationListener(getApplicationContext());
+		ShowMapsActivity.mlocManager.requestLocationUpdates
+		( LocationManager.GPS_PROVIDER, 60*1000, 0, ShowMapsActivity.mlocListener);  
+
 
 		layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		headerData = new ArrayList<HashMap<String, String>>();
@@ -45,9 +54,45 @@ public class AttractionsActivity extends ExpandableListActivity {
 
 		try {
 
+			double currLat = 0.0, currLong = 0.0;
+			try {
+				currLat = ShowMapsActivity.mlocManager.
+						getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+				currLong = ShowMapsActivity.mlocManager.
+						getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+			} catch (Exception e) {
+				Log.d("error in loc", "error in AttractionActivity");
+				e.printStackTrace();
+				currLat = 37.87309;
+				currLong = -122.25921;
+			}
+
 			DatabaseHandler dbHandler = new DatabaseHandler ();
-			//change the query make space into +
-			JSONArray listOfCities = dbHandler.getDataFromSql("select City.id, City.city from City");
+
+			/*
+			select c.id, c.city
+			from City c
+			order by 
+			abs((c.geolocX+180)^2-12081.506) + abs((c.geolocY+180)^2-48585.860)
+			asc
+			 */
+			JSONArray listOfCities = dbHandler.getDataFromSql("select c.id, c.city " +
+					"from City c " +
+					"order by " +
+					"(((c.geolocX)-" + currLong + ") * ((c.geolocX)-" + currLong + "))" +
+					"+(((c.geolocY)-" + currLat + ") * ((c.geolocY)-" + currLat + "))"
+					+ " asc");
+
+			Log.d("AttractionActivity SQL","select c.id, c.city " +
+					"from City c " +
+					"order by " +
+					"(((c.geolocX)-" + currLong + ") * ((c.geolocX)-" + currLong + "))" +
+					"+(((c.geolocY)-" + currLat + ") * ((c.geolocY)-" + currLat + "))"
+					+ " asc");
+
+			for (int i = 0 ; i < listOfCities.length(); i++) {
+				Log.d("AttractionActivity" , listOfCities.getJSONObject(i).toString());
+			}
 
 			for (int cityIndex = 0 ; cityIndex < listOfCities.length(); cityIndex++) {
 				String cityName = listOfCities.getJSONObject(cityIndex).getString("city");
@@ -59,8 +104,21 @@ public class AttractionsActivity extends ExpandableListActivity {
 				ArrayList<HashMap<String, Object>> eachCityData = new ArrayList<HashMap<String, Object>> ();
 				childData.add(eachCityData);
 
+
 				JSONArray listOfAttractionsFromCurrentCity = 
-						dbHandler.getDataFromSql("select a.name from Attraction a where a.city_id = " +  cityId);
+						dbHandler.getDataFromSql("select a.name from Attraction a where a.city_id = " 
+								+  cityId + " " +
+								"order by " +
+								"(((a.geolocX)-" + currLong + ") * ((a.geolocX)-" + currLong + "))" +
+								"+(((a.geolocY)-" + currLat + ") * ((a.geolocY)-" + currLat + "))"
+								+ " asc");
+
+				Log.d("AttractionActivity SQL","select a.name from Attraction a where a.city_id = " 
+						+  cityId + " " +
+						"order by " +
+						"(((a.geolocX)-" + currLong + ") * ((a.geolocX)-" + currLong + "))" +
+						"+(((a.geolocY)-" + currLat + ") * ((a.geolocY)-" + currLat + "))"
+						+ " asc");
 
 
 				for (int attractionIndex = 0 ; attractionIndex 
@@ -84,8 +142,6 @@ public class AttractionsActivity extends ExpandableListActivity {
 		}
 
 
-
-
 		setListAdapter( new SimpleExpandableListAdapter(
 				this,
 				headerData,
@@ -103,8 +159,10 @@ public class AttractionsActivity extends ExpandableListActivity {
 
 
 				// TODO is to make our custom view here
-				((TextView)v.findViewById(R.id.name)).setText( (String) ((Map<String,Object>)getChild(groupPosition, childPosition)).get(NAME) );
-				((ImageView)v.findViewById(R.id.image)).setImageDrawable( (Drawable) ((Map<String,Object>)getChild(groupPosition, childPosition)).get(IMAGE) );
+				((TextView)v.findViewById(R.id.name)).setText( 
+						(String) ((Map<String,Object>)getChild(groupPosition, childPosition)).get(NAME) );
+				((ImageView)v.findViewById(R.id.image)).setImageDrawable(
+						(Drawable) ((Map<String,Object>)getChild(groupPosition, childPosition)).get(IMAGE) );
 
 				return v;
 			}
@@ -129,6 +187,12 @@ public class AttractionsActivity extends ExpandableListActivity {
 	public void showAttractionRoute(View view) {
 		Intent intent = new Intent (this, AttractionRouteActivity.class);
 		startActivity (intent);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		ShowMapsActivity.mlocManager.removeUpdates(ShowMapsActivity.mlocListener);
 	}
 
 }

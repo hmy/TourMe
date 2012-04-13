@@ -28,8 +28,8 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 	static protected Drawable currentPosMarker;
 	static protected CustomItemizedOverlay currentPositionOverlay = null;
 	static protected String currCityName;
-	static protected LocationManager mlocManager;
-	static protected LocationListener mlocListener;
+	static public LocationManager mlocManager;
+	static public LocationListener mlocListener;
 	static protected DetectMovementMapView mapView;
 	
 	protected Drawable poiMarker;
@@ -69,7 +69,7 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 		//gps related
 		mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		mlocListener = new MyLocationListener(getApplicationContext());
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1*1000, 0, mlocListener);  
+		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 30*1000, 0, mlocListener);  
 
 		mapView.postDelayed(waitForMapTimeTask, 100);
 

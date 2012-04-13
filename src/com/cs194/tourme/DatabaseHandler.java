@@ -36,14 +36,15 @@ public class DatabaseHandler {
 			int timeoutSocket = 2500;
 			HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 			HttpClient httpclient = new DefaultHttpClient(httpParameters);
-			//"\\s" same as " "
-
-			//caret signs need this....
-			String lessThan = URLEncoder.encode("<", "UTF-8");
-			String greaterThan = URLEncoder.encode(">", "UTF-8");
-			String query = sql.replaceAll("\\s", "%20").replaceAll("<", lessThan).replaceAll(">", greaterThan);
-
+			
+			// utf-8 format
+			String query = URLEncoder.encode(sql, "UTF-8");
+			
+			
 			HttpPost httppost = new HttpPost(PHPSERVERLOCATION + query);
+			
+			Log.d("SQL Location", PHPSERVERLOCATION + query);
+			
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
