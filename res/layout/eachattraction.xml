@@ -68,7 +68,7 @@
             android:id="@+id/buttonTakePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/camera_48" android:onClick="buttonCameraOnClick"/>
+            android:background="@drawable/camera_48" />
     </LinearLayout>
 
 </LinearLayout>

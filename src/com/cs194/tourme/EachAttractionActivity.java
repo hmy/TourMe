@@ -7,8 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.phonegap.DroidGap;
-
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ParseException;
@@ -19,10 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EachAttractionActivity extends DroidGap {
+public class EachAttractionActivity extends LocalizedActivity {
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 
 		String pictureUri = "";
@@ -101,12 +99,9 @@ public class EachAttractionActivity extends DroidGap {
 	public void buttonAudioOnClick(View v) {
 
 		MediaPlayer mp = MediaPlayer.create(this.getBaseContext(), R.raw.chinatown);  
+
 		mp.start();
 
-	}
-	
-	public void buttonCameraOnClick (View v) {
-		this.loadUrl("file:///android_asset/www/index.html");
 	}
 
 

@@ -9,7 +9,7 @@ package com.cs194.tourme;
 
 public final class R {
     public static final class array {
-        public static final int languageList=0x7f070000;
+        public static final int languageList=0x7f060000;
     }
     public static final class attr {
     }
@@ -33,30 +33,30 @@ public final class R {
         public static final int yellow_menu_btn=0x7f020010;
     }
     public static final class id {
-        public static final int LinearLayout01=0x7f080016;
-        public static final int ScrollViewForImage=0x7f080004;
-        public static final int ScrollViewForLongText=0x7f080006;
-        public static final int attractionParentGroupName=0x7f080017;
-        public static final int buttonLinkToAttractions=0x7f080012;
-        public static final int buttonLinkToMap=0x7f080013;
-        public static final int buttonNext=0x7f08000c;
-        public static final int buttonPause=0x7f08000b;
-        public static final int buttonPlay=0x7f08000a;
-        public static final int buttonPrevious=0x7f080009;
-        public static final int buttonShowInstruction=0x7f080014;
-        public static final int buttonTakePicture=0x7f08000d;
-        public static final int image=0x7f080002;
-        public static final int imageView1=0x7f080005;
-        public static final int linearLayout=0x7f080008;
-        public static final int mapview=0x7f080000;
-        public static final int name=0x7f080003;
-        public static final int scrollView1=0x7f08000f;
-        public static final int spinnerChooseLanguage=0x7f080015;
-        public static final int spinnerChoosePOI=0x7f080001;
-        public static final int spinnerText=0x7f080011;
-        public static final int textView1=0x7f08000e;
-        public static final int textView2=0x7f080010;
-        public static final int textViewAttractionDescription=0x7f080007;
+        public static final int LinearLayout01=0x7f070016;
+        public static final int ScrollViewForImage=0x7f070004;
+        public static final int ScrollViewForLongText=0x7f070006;
+        public static final int attractionParentGroupName=0x7f070017;
+        public static final int buttonLinkToAttractions=0x7f070012;
+        public static final int buttonLinkToMap=0x7f070013;
+        public static final int buttonNext=0x7f07000c;
+        public static final int buttonPause=0x7f07000b;
+        public static final int buttonPlay=0x7f07000a;
+        public static final int buttonPrevious=0x7f070009;
+        public static final int buttonShowInstruction=0x7f070014;
+        public static final int buttonTakePicture=0x7f07000d;
+        public static final int image=0x7f070002;
+        public static final int imageView1=0x7f070005;
+        public static final int linearLayout=0x7f070008;
+        public static final int mapview=0x7f070000;
+        public static final int name=0x7f070003;
+        public static final int scrollView1=0x7f07000f;
+        public static final int spinnerChooseLanguage=0x7f070015;
+        public static final int spinnerChoosePOI=0x7f070001;
+        public static final int spinnerText=0x7f070011;
+        public static final int textView1=0x7f07000e;
+        public static final int textView2=0x7f070010;
+        public static final int textViewAttractionDescription=0x7f070007;
     }
     public static final class layout {
         public static final int attractionroute=0x7f030000;
@@ -71,27 +71,23 @@ public final class R {
         public static final int parentview=0x7f030009;
     }
     public static final class raw {
-        public static final int chinatown=0x7f050000;
+        public static final int chinatown=0x7f040000;
     }
     public static final class string {
-        public static final int alertMessageExit=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int buttonNo=0x7f060003;
-        public static final int buttonPlayAudio=0x7f06000c;
-        public static final int buttonPlayVideo=0x7f06000b;
-        public static final int buttonTakePicture=0x7f06000d;
-        public static final int buttonYes=0x7f060002;
-        public static final int chooseALanguage=0x7f06000a;
-        public static final int languageListChinese=0x7f060009;
-        public static final int languageListEnglish=0x7f060007;
-        public static final int languageListKorean=0x7f060008;
-        public static final int stringButtonAttractions=0x7f060004;
-        public static final int stringButtonInstruction=0x7f060006;
-        public static final int stringButtonMaps=0x7f060005;
-        public static final int textInstruction=0x7f06000e;
-    }
-    public static final class xml {
-        public static final int phonegap=0x7f040000;
-        public static final int plugins=0x7f040001;
+        public static final int alertMessageExit=0x7f050001;
+        public static final int app_name=0x7f050000;
+        public static final int buttonNo=0x7f050003;
+        public static final int buttonPlayAudio=0x7f05000c;
+        public static final int buttonPlayVideo=0x7f05000b;
+        public static final int buttonTakePicture=0x7f05000d;
+        public static final int buttonYes=0x7f050002;
+        public static final int chooseALanguage=0x7f05000a;
+        public static final int languageListChinese=0x7f050009;
+        public static final int languageListEnglish=0x7f050007;
+        public static final int languageListKorean=0x7f050008;
+        public static final int stringButtonAttractions=0x7f050004;
+        public static final int stringButtonInstruction=0x7f050006;
+        public static final int stringButtonMaps=0x7f050005;
+        public static final int textInstruction=0x7f05000e;
     }
 }
