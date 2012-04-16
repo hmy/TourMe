@@ -2,23 +2,26 @@ package com.cs194.tourme;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Locale;
+import java.util.concurrent.Semaphore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class EachAttractionActivity extends LocalizedActivity {
+
+	TextToSpeech tts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,18 @@ public class EachAttractionActivity extends LocalizedActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.eachattraction);
 
+		tts = new TextToSpeech(EachAttractionActivity.this, new
+				TextToSpeech.OnInitListener() {
+
+			@Override
+			public void onInit(int status) {
+				// TODO Auto-generated method stub
+				if(status != TextToSpeech.ERROR){
+					tts.setLanguage(Locale.US);
+				}
+			}
+
+		});
 
 		//		Log.d("eachattraction debug", "" + AttractionsActivity.cityId);
 		//		Log.d("eachattraction debug", "" + AttractionsActivity.attractionId);
@@ -51,15 +66,15 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		Log.d("sqlquery", "select p.uri, p.description from Picture p where p.poi_id = " +
 				"(select id from POI where POI.name = '" + AttractionRouteActivity.poiName + "')");
-	
+
 		//debug
 		try{
 			Log.d("eachattraction", AttractionDetail.getJSONObject(0).getString("uri"));
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-		
-		
+
+
 		try {
 			pictureUri = AttractionDetail.getJSONObject(0).getString("uri");	
 			description = AttractionDetail.getJSONObject(0).getString("description");
@@ -97,17 +112,51 @@ public class EachAttractionActivity extends LocalizedActivity {
 		}
 	}
 
-	public void buttonAudioOnClick(View v) {
 
-		MediaPlayer mp = MediaPlayer.create(this.getBaseContext(), R.raw.chinatown);  
-
-		mp.start();
-
-	}
 
 	public void buttonTakePictureOnClick(View v) {
 		Intent intent = new Intent (this, FileUploaderActivity.class);
 		startActivity (intent);
+	}
+
+
+   
+
+	public void buttonOnButtonPause(View v) throws
+	InterruptedException {
+		if(tts.isSpeaking()){
+			synchronized (this) {
+			  tts.wait(30*1000);
+			}
+		}/* else {
+			synchronized (this) {
+			  tts.notify();
+			}
+		}*/
+	}
+
+	public synchronized void buttonOnButtonPlay(View v) {
+		if(!tts.isSpeaking()){
+			
+			TextView text = (TextView)
+					findViewById(R.id.textViewAttractionDescription);
+			String textString = (String)text.getText();
+			//Queue Flush drops pre-existing media
+			tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
+		} 
+
+	}
+
+	public void buttonOnButtonPrevious(View v) {
+
+		// TODO Auto-generated method stub
+
+		TextView text = (TextView)
+				findViewById(R.id.textViewAttractionDescription);
+		String textString = (String)text.getText();
+		//Queue Flush drops pre-existing media
+		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
+
 	}
 
 }
