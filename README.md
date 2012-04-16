@@ -40,6 +40,7 @@ Iteration By Iteration
   - Sort Attraction List by geolocation (GPS)
   - TourMyMemory Server (rails) : [link][TourMyMemory]
   - Taking picture and uploading to the server
+    Using [this][CameraUpload] library
   - Few UI Improvements (Including Android Orientation Issue Fix)
   - Instruction Update (????)
   - TTS (Text To Speech) enabled for description
@@ -79,3 +80,4 @@ What To Improve On
   [ec2db]: http://ec2-23-20-205-81.compute-1.amazonaws.com/phpmyadmin/ "EC2 DB"
   [webservice]: http://ec2-23-20-205-81.compute-1.amazonaws.com:2222/ "New Web Service"
   [TourMyMemory]: http://ec2-23-20-205-81.compute-1.amazonaws.com:3000/tour_my_memory
+  [CameraUpload]: https://github.com/brycecurtis/articles/tree/master/CameraUpload
