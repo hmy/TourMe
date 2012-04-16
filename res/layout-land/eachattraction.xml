@@ -29,55 +29,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.92"
+            android:padding="10px"
             android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" android:textColor="#000000"
-            						android:padding="10px"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000" />
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="25dp"
         android:layout_marginLeft="70dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center" >
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/buttonPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_previous_64"
-            android:layout_gravity="center" />
-		
+            android:layout_gravity="center"
+            android:background="@drawable/button_previous_64" />
+
         <Button
             android:id="@+id/buttonPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="buttonAudioOnClick"
+            android:layout_gravity="center"
             android:background="@drawable/button_play_64"
-            android:layout_gravity="center" />
-        
+            android:onClick="buttonAudioOnClick" />
+
         <Button
             android:id="@+id/buttonPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_pause_64"
-            android:layout_gravity="center" />
-        
+            android:layout_gravity="center"
+            android:background="@drawable/button_pause_64" />
+
         <Button
             android:id="@+id/buttonNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_next_64"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:background="@drawable/button_next_64" />
 
         <Button
             android:id="@+id/buttonTakePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/camera_48"
-            android:layout_gravity="center" />
+            android:onClick="buttonTakePictureOnClick" />
     </LinearLayout>
 
 </LinearLayout>

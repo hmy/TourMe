@@ -5,22 +5,24 @@ import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EachAttractionActivity extends LocalizedActivity {
+import com.phonegap.DroidGap;
+
+public class EachAttractionActivity extends DroidGap {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 
 		String pictureUri = "";
@@ -104,5 +106,20 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	}
 
+	public void buttonTakePictureOnClick(View v) {
 
+		this.loadUrl("file:///android_asset/www/index.html");
+
+	}
+	
+	/*
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	        Log.d(this.getClass().getName(), "back button pressed");
+	    }
+	    
+	    return true;
+	}
+*/
 }

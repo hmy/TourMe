@@ -3,11 +3,39 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>PhoneGap</title>
+    <title>Take a Picture</title>
     <style type="text/css">
-        div {border: 1px solid black;}
-        input {width: 100%;}
-    </style>
+         *{
+           font-family: Verdana;
+           color: #293BA3;         
+       }
+       input {
+           width: 260px;
+           height: 70px;
+       }
+       body {
+           background: url("background.png") no-repeat;
+       }
+       #actions {
+           margin-top: 70px;
+       }
+       #button, #city {
+           background:#293BA3; /*#449def;*/
+           color: #FFFF00; 
+           width:180px;
+           height:30px;
+           font-size: 12px;
+           text-style: bold;
+           border-style: none; 
+           border-radius: 10px;
+           margin-top: 5px;
+       }
+       #button:hover, #city:hover {
+           -webkit-box-shadow:0 0 20px #555;
+           -moz-box-shadow:0 0 20px #555;
+           box-shadow:0 0 20px #555;
+       }
+     </style>
     <script type="text/javascript" charset="utf-8" src="phonegap-1.1.0.js"></script>
     <script type="text/javascript" charset="utf-8">
       
@@ -65,7 +93,12 @@
         }
         
         // Verify server has been entered
-        server = document.getElementById('serverUrl').value;
+        //window.location.protocol = "http"
+        //window.location.host = "ec2-23-20-205-81.compute-1.amazonaws.com"
+        //window.location.pathname = "upload.php"
+        //server = window.location.protocol + "://" + window.location.host + "/" + window.location.pathname;
+        
+        server = "http://ec2-23-20-205-81.compute-1.amazonaws.com/upload.php"
         if (server) {
         	
             // Specify transfer options
@@ -84,89 +117,33 @@
             }, options);
         }
     }
-
-    /**
-     * View pictures uploaded to the server
-     */
-    function viewUploadedPictures() {
-    	
-    	// Get server URL
-        server = document.getElementById('serverUrl').value;
-        if (server) {
-        	
-            // Get HTML that lists all pictures on server using XHR	
-            var xmlhttp = new XMLHttpRequest();
-
-            // Callback function when XMLHttpRequest is ready
-            xmlhttp.onreadystatechange=function(){
-                if(xmlhttp.readyState === 4){
-
-                    // HTML is returned, which has pictures to display
-                    if (xmlhttp.status === 200) {
-                    	document.getElementById('server_images').innerHTML = xmlhttp.responseText;
-                    }
-
-                    // If error
-                    else {
-                    	document.getElementById('server_images').innerHTML = "Error retrieving pictures from server.";
-                    }
-                }
-            };
-            xmlhttp.open("GET", server , true);
-            xmlhttp.send();       	
-        }	
-    }
-    
-    /**
-     * Function called when page has finished loading.
-     */
-    function init() {
-        document.addEventListener("deviceready", function() {deviceReady = true;}, false);
-        window.setTimeout(function() {
-            if (!deviceReady) {
-                alert("Error: PhoneGap did not initialize.  Demo will not run correctly.");
-            }
-        },2000);
-    }
-
     </script>
 
   </head>
-  <body onload="init();">
-    <h3>PhoneGap Camera Upload Demo</h3>
-    
-    <div>
-        <h3>Server URL for upload.php:</h3>
-        <input id="serverUrl" type="text" value="http://MY_SERVER/mobile/upload.php" />
-    </div>
-    <br/>
-
-	<!-- Camera -->
-	<div>
-		<h3>Camera:</h3>
-		<b>Status:</b> <span id="camera_status"></span><br>
-        <b>Image:</b> <img style="width:120px;visibility:hidden;display:none;" id="camera_image" src="" />
-	</div>
-        
-    <!-- Actions -->
-    <div>
-        <input type="button" onclick="takePicture();" value="Take Picture" /><br/>
-        <input type="button" onclick="selectPicture();" value="Select Picture from Library" /><br/>
-        <input type="button" onclick="uploadPicture();" value="Upload Picture" />
-    </div>
-    <br/>
-    
-    <!-- Server pictures -->
-    <div>
-        <h3>Server:</h3>
-        <b>Images on server:</b>
-        <div id="server_images"></div>
-    </div>
-
-    <!-- Actions -->
-    <div>
-        <input type="button" onclick="viewUploadedPictures();" value="View Uploaded Pictures" />
-    </div>
-    
-  </body>
+ <body onload="init();">
+   <!-- Actions -->
+   <div id="actions">
+       <h3>What would you like to do?</h3>
+       <input id="button" type="button" onclick="takePicture();" value="Take Picture" /><br/>
+       <input id="button" type="button" onclick="selectPicture();" value="Select Picture from Library" /><br/>
+   </div>
+   <br/>
+   
+   <!-- Camera -->
+       <div>
+               <h3>Here's Your Picture:</h3>
+               <b>Status:</b> <span id="camera_status"></span><br/>
+       <b>Image:</b> <img style="width:120px;visibility:hidden;display:none;" id="camera_image" src="" /><br/>
+       <b>Location:</b> 
+           <select id="city">
+               <option>Fisherman's Wharf</option>
+               <option>Pier39</option>
+               <option>New York</option>
+               <option>Boston</option>
+               <option>Moscow</option>
+               </select> </br>
+       <input id="button" type="button" onclick="uploadPicture();" value="Upload Picture" />
+       </div>
+   
+ </body>
 </html>

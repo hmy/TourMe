@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -194,6 +195,8 @@ public class AttractionsActivity extends ExpandableListActivity {
 		super.onPause();
 		ShowMapsActivity.mlocManager.removeUpdates(ShowMapsActivity.mlocListener);
 	}
+	
+
 
 }
 
