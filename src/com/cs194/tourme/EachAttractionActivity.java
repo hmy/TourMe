@@ -125,14 +125,8 @@ public class EachAttractionActivity extends LocalizedActivity {
 	public void buttonOnButtonPause(View v) throws
 	InterruptedException {
 		if(tts.isSpeaking()){
-			synchronized (this) {
-			  tts.wait(30*1000);
-			}
-		}/* else {
-			synchronized (this) {
-			  tts.notify();
-			}
-		}*/
+			tts.stop();
+		}
 	}
 
 	public synchronized void buttonOnButtonPlay(View v) {
