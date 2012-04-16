@@ -10,8 +10,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature />
 
     <application
@@ -32,34 +33,45 @@
         <activity
             android:name=".TourMeActivity"
             android:label="Main Menu"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".ShowMapsActivity"
             android:label="ShowMapsActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".InstructionActivity"
             android:label="InstructionActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".AttractionsActivity"
             android:label="AttractionsActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".EachAttractionActivity"
             android:label="EachAttractionActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".AttractionRouteActivity"
             android:label="AttractionRouteActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity android:theme="@android:style/Theme.NoTitleBar" android:name="FileUploaderActivity" android:label=".FileUploaderActivity"></activity>
+        <activity
+            android:name="FileUploaderActivity"
+            android:label=".FileUploaderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

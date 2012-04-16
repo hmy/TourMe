@@ -9,7 +9,7 @@
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:apiKey="0ymNiW8O6drijbWdmgJhDnKT9c2tKQbbmJ1l1uQ"
+        android:apiKey="080ozDt23N1_u1nchVNIOzLAvFbjBBhzF6pI6xw"
         android:clickable="true" >
     </com.cs194.tourme.DetectMovementMapView>
 
@@ -17,6 +17,7 @@
 JiHun's API KEY: "0dgd5OyVlVXFsj4ShcDB5QR54vQvT9FO-HN9ehA"
 HeeMin's API KEY: "0AcqqbnRdMZcvqFgfexfA5FuRjJmxo2K6TnGp4A"
 Anastasia's API KEY: "0ymNiW8O6drijbWdmgJhDnKT9c2tKQbbmJ1l1uQ"
+Clint's API KEY: "080ozDt23N1_u1nchVNIOzLAvFbjBBhzF6pI6xw"
 --> 
 
 </LinearLayout>

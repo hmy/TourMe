@@ -45,20 +45,22 @@
             android:id="@+id/buttonPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_previous_64" />
+            android:background="@drawable/button_previous_64"
+            android:onClick="buttonOnButtonPrevious" />
 
         <Button
             android:id="@+id/buttonPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_play_64"
-            android:onClick="buttonAudioOnClick" />
+            android:onClick="buttonOnButtonPlay" />
 
         <Button
             android:id="@+id/buttonPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_pause_64" />
+            android:background="@drawable/button_pause_64"
+            android:onClick="buttonOnButtonPause" />
 
         <Button
             android:id="@+id/buttonNext"
