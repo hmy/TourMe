@@ -37,9 +37,13 @@ Iteration By Iteration
   - Various UI Improvements
 * Third Iteration Achievements:
   - Moved DB to the web (Amazon EC2) : [link][ec2db]
-  - Developing new service on the web : [link][webservice]
-  - Date : 4/16/12 Monday (Expected)
-  - TBD
+  - Sort Attraction List by geolocation (GPS)
+  - TourMyMemory Server (rails) : [link][TourMyMemory]
+  - Taking picture and uploading to the server
+  - Few UI Improvements (Including Android Orientation Issue Fix)
+  - Instruction Update (????)
+  - TTS (Text To Speech) enabled for description
+  - Date : 4/16/12 Monday
 * Fourth Iteration Achievements:
   - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM)
   - TBD
@@ -74,3 +78,4 @@ What To Improve On
   [most recent version]: https://github.com/hmy/TourMeReadMe/blob/master/README.md
   [ec2db]: http://ec2-23-20-205-81.compute-1.amazonaws.com/phpmyadmin/ "EC2 DB"
   [webservice]: http://ec2-23-20-205-81.compute-1.amazonaws.com:2222/ "New Web Service"
+  [TourMyMemory]: http://ec2-23-20-205-81.compute-1.amazonaws.com:3000/tour_my_memory
