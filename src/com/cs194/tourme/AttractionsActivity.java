@@ -76,6 +76,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 			abs((c.geolocX+180)^2-12081.506) + abs((c.geolocY+180)^2-48585.860)
 			asc
 			 */
+			
 			JSONArray listOfCities = dbHandler.getDataFromSql("select c.id, c.city " +
 					"from City c " +
 					"order by " +
