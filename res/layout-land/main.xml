@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_horiz"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonLinkToAttractions"
+        android:layout_width="230dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="37dp"
+        android:layout_gravity="center"
+        android:background="@drawable/blue_menu_btn"
+        android:onClick="showAttractions"
+        android:text="@string/stringButtonAttractions"
+        android:textColor="#FFFF00"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonLinkToMap"
+        android:layout_width="230dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="2dp"
+        android:layout_gravity="center"
+        android:background="@drawable/blue_menu_btn"
+        android:onClick="showMaps"
+        android:text="@string/stringButtonMaps"
+        android:textColor="#FFFF00"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonShowInstruction"
+        android:layout_width="230dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="2dp"
+        android:layout_gravity="center"
+        android:background="@drawable/blue_menu_btn"
+        android:onClick="showInstruction"
+        android:text="@string/stringButtonInstruction"
+        android:textColor="#FFFF00"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinnerChooseLanguage"
+        android:layout_width="230dp"
+        android:layout_height="37dp"
+        android:layout_gravity="center"
+        android:background="@drawable/blue_menu_btn"
+        android:prompt="@string/chooseALanguage"
+        android:textStyle="bold" />
+
+    <!--
+ android:textColor="#FFFF00"
+        android:textSize="20sp"
+    -->
+
+</LinearLayout>

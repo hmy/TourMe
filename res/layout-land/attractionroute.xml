@@ -4,19 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.cs194.tourme.DetectMovementMapView
+    <com.google.android.maps.MapView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mapview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:apiKey="0ymNiW8O6drijbWdmgJhDnKT9c2tKQbbmJ1l1uQ"
+        android:layout_height="382dp"
+        android:layout_weight="1.34"
+        android:apiKey="0AcqqbnRdMZcvqFgfexfA5FuRjJmxo2K6TnGp4A"
         android:clickable="true" >
-    </com.cs194.tourme.DetectMovementMapView>
+    </com.google.android.maps.MapView>
 
-<!-- 
+    <Spinner
+        android:id="@+id/spinnerChoosePOI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+ <!-- 
 JiHun's API KEY: "0dgd5OyVlVXFsj4ShcDB5QR54vQvT9FO-HN9ehA"
 HeeMin's API KEY: "0AcqqbnRdMZcvqFgfexfA5FuRjJmxo2K6TnGp4A"
-Anastasia's API KEY: "0ymNiW8O6drijbWdmgJhDnKT9c2tKQbbmJ1l1uQ"
---> 
+-->
 
 </LinearLayout>
