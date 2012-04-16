@@ -8,27 +8,28 @@
         div {border: 1px solid black;}
         input {width: 100%;}
     </style>
+    <script type="text/javascript" charset="utf-8" src="phonegap-1.1.0.js"></script>
     <script type="text/javascript" charset="utf-8">
       
-	    var deviceReady = false;
+    var deviceReady = false;
 
     /**
      * Take picture with camera
      */
-     function takePicture() {
-         navigator.camera.getPicture(
-              function(uri) {
-                  var img = document.getElementById('camera_image');
-                  img.style.visibility = "visible";
-                  img.style.display = "block";
-                  img.src = uri;
-                  document.getElementById('camera_status').innerHTML = "Success";
-              },
-              function(e) {
-                  console.log("Error getting picture: " + e);
-                  document.getElementById('camera_status').innerHTML = "Error getting picture.";
-              },
-              { quality: 50, destinationType: navigator.camera.DestinationType.FILE_URI});
+    function takePicture() {
+        navigator.camera.getPicture(
+            function(uri) {
+                var img = document.getElementById('camera_image');
+                img.style.visibility = "visible";
+                img.style.display = "block";
+                img.src = uri;
+                document.getElementById('camera_status').innerHTML = "Success";
+            },
+            function(e) {
+                console.log("Error getting picture: " + e);
+                document.getElementById('camera_status').innerHTML = "Error getting picture.";
+            },
+            { quality: 50, destinationType: navigator.camera.DestinationType.FILE_URI});
     };
 
     /**
@@ -128,33 +129,10 @@
         },2000);
     }
 
-
-
- 
-            function loadJavascript(href) {
-                var loader = {};
-				
-                loader.head=document.getElementsByTagName('head')[0];
-                loader.script=document.createElement('script');
-                loader.script.setAttribute('type', 'text/javascript');
-                loader.script.setAttribute('src', href);
-                loader.script.async = true;
-                loader.s = document.getElementsByTagName('script')[0]; 
-                loader.s.parentNode.insertBefore(loader.script, loader.s);
-            }
-			
-		    loadJavascript("phonegap-1.1.0.js");
-    
-            takePicture();
-
-
     </script>
-    
 
-    
   </head>
   <body onload="init();">
-	
     <h3>PhoneGap Camera Upload Demo</h3>
     
     <div>
@@ -172,9 +150,6 @@
         
     <!-- Actions -->
     <div>
-        <script type="text/javascript" charset="utf-8">    
-            takePicture();
-        </script>
         <input type="button" onclick="takePicture();" value="Take Picture" /><br/>
         <input type="button" onclick="selectPicture();" value="Select Picture from Library" /><br/>
         <input type="button" onclick="uploadPicture();" value="Upload Picture" />
