@@ -59,6 +59,7 @@
             android:label="AttractionRouteActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        <activity android:theme="@android:style/Theme.NoTitleBar" android:name="FileUploaderActivity" android:label=".FileUploaderActivity"></activity>
     </application>
 
 </manifest>

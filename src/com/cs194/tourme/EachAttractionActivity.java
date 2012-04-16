@@ -6,6 +6,7 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ParseException;
@@ -17,12 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.phonegap.DroidGap;
-
-public class EachAttractionActivity extends DroidGap {
+public class EachAttractionActivity extends LocalizedActivity {
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 
 		String pictureUri = "";
@@ -107,19 +106,8 @@ public class EachAttractionActivity extends DroidGap {
 	}
 
 	public void buttonTakePictureOnClick(View v) {
-
-		this.loadUrl("file:///android_asset/www/index.html");
-
+		Intent intent = new Intent (this, FileUploaderActivity.class);
+		startActivity (intent);
 	}
-	
-	/*
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	        Log.d(this.getClass().getName(), "back button pressed");
-	    }
-	    
-	    return true;
-	}
-*/
+
 }
