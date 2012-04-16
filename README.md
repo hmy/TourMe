@@ -40,9 +40,9 @@ Iteration By Iteration
   - Sort Attraction List by geolocation (GPS)
   - TourMyMemory Server (rails) : [link][TourMyMemory]
   - Taking picture and uploading to the server, using [this][CameraUpload] library
-  - Few UI Improvements (Including Android Orientation Issue Fix)
-  - Instruction Update (????)
+  - UI Improvements
   - TTS (Text To Speech) enabled for description
+  - Creating unique user (UNIX time + rand number generator)
   - Date : 4/16/12 Monday
 * Fourth Iteration Achievements:
   - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM)
@@ -53,16 +53,14 @@ What To Improve On
 ------------------
 
 * Outsourcing
-* ~~Move DB to actual web (?)~~
 * Need Actual Instruction Video
-* More Contents
-* ~~UI Improvements (Integrating)~~
+* UI Improvements (Integrating)
 * Multi-language Support
 * Settings Menu / Page
 * Double-Tap Feature on Map
 * Cleaning Up the Code
 
-### ~~Disclaimer : As of now, DB is local And it cannot be accessed via internet~~
+### ~~Disclaimer : As of now, [DB][ec2db] is local And it cannot be accessed via internet~~
 
 ```
   Last Updated on 4/16/12 by hmy
