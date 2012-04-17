@@ -42,7 +42,6 @@ Iteration By Iteration
   - Taking picture and uploading to the server, using [this][CameraUpload] library
   - UI Improvements
   - TTS (Text To Speech) enabled for description
-  - Creating unique user (UNIX time + rand number generator)
   - Date : 4/16/12 Monday
 * Fourth Iteration Achievements:
   - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM)
@@ -54,16 +53,17 @@ What To Improve On
 
 * Outsourcing
 * Need Actual Instruction Video
-* UI Improvements (Integrating)
+* UI Improvement, Enhance User Experience
 * Multi-language Support
 * Settings Menu / Page
 * Double-Tap Feature on Map
 * Cleaning Up the Code
+* Make all the features smooth
 
-### ~~Disclaimer : As of now, [DB][ec2db] is local And it cannot be accessed via internet~~
+### Disclaimer : As of now, [DB][ec2db] is local And it cannot be accessed via internet
 
 ```
-  Last Updated on 4/16/12 by hmy
+  Last Updated on 4/17/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"
