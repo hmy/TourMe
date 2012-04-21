@@ -19,9 +19,11 @@
         <item>@string/languageListChinese</item>
     </string-array>
 
+    <!-- 
     <string name="buttonPlayVideo">Play Video</string>
     <string name="buttonPlayAudio">Play Audio</string>
     <string name="buttonTakePicture">Take Picture</string>
+    -->
     <string name="textInstruction">Welcome to TourMe, your ultimate guide to friendly local tours in your own language. \n\nYou must first purchase a tour by visiting: \nwww.tours.com and selecting the &quot;add to account&quot; menu. The tour will be downloaded to your phone the next time you are in an area with wifi and open the application. \n\n  The &quot;Applications&quot; button on the homescreen leads to a map that shows the walking directions for each stop, along with a videos and pictures of each location, as well as audio in a language you select. \n\n  The &quot;Maps&quot; button provides local eateries and entertainment, as well as pictures of local attractions. You can also take a snapshot of anything of interest to a tourist for others to enjoy. \n\n  We hope you\'ll like spending time in your new country in your own language!</string>
 
 </resources>

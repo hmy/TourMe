@@ -9,7 +9,7 @@
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:apiKey="0ymNiW8O6drijbWdmgJhDnKT9c2tKQbbmJ1l1uQ"
+        android:apiKey="0AcqqbnRdMZcvqFgfexfA5FuRjJmxo2K6TnGp4A"
         android:clickable="true" >
     </com.cs194.tourme.DetectMovementMapView>
 

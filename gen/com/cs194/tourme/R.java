@@ -79,9 +79,6 @@ public final class R {
         public static final int alertMessageExit=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int buttonNo=0x7f060003;
-        public static final int buttonPlayAudio=0x7f06000c;
-        public static final int buttonPlayVideo=0x7f06000b;
-        public static final int buttonTakePicture=0x7f06000d;
         public static final int buttonYes=0x7f060002;
         public static final int chooseALanguage=0x7f06000a;
         public static final int languageListChinese=0x7f060009;
@@ -90,7 +87,13 @@ public final class R {
         public static final int stringButtonAttractions=0x7f060004;
         public static final int stringButtonInstruction=0x7f060006;
         public static final int stringButtonMaps=0x7f060005;
-        public static final int textInstruction=0x7f06000e;
+        /**  
+    <string name="buttonPlayVideo">Play Video</string>
+    <string name="buttonPlayAudio">Play Audio</string>
+    <string name="buttonTakePicture">Take Picture</string>
+    
+         */
+        public static final int textInstruction=0x7f06000b;
     }
     public static final class xml {
         public static final int phonegap=0x7f040000;
