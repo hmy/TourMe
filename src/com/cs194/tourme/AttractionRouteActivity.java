@@ -57,7 +57,7 @@ public class AttractionRouteActivity extends MapActivity {
 		MyLocationListener.animateToMap = false;
 
 		//in the spinner We would like to put name of Tour first!!!!
-		tourPOInames.add(AttractionsActivity.attractionName);
+		tourPOInames.add("Please Select From The List");
 
 		//SQL query and handling
 		DatabaseHandler dbHandler = new DatabaseHandler ();
@@ -123,8 +123,13 @@ public class AttractionRouteActivity extends MapActivity {
 				new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, poiNames);
 		placesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner spinner = (Spinner) this.findViewById(R.id.spinnerChoosePOI);
+		spinner.setPrompt(AttractionsActivity.attractionName);
 		spinner.setAdapter(placesAdapter);
 		spinner.setOnItemSelectedListener(new AttractionRouteCustomItemSelectedListener());
+
+		//message
+		Toast.makeText(this.getApplicationContext(), "You are looking at the Tour Route Map for "+
+				AttractionsActivity.attractionName + " !", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -232,8 +237,6 @@ public class AttractionRouteActivity extends MapActivity {
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 			switch (pos) {
 			case 0 : 
-				Toast.makeText(parent.getContext(), "You are looking at the Tour Route Map for "+
-						parent.getItemAtPosition(pos).toString() + " !", Toast.LENGTH_LONG).show();
 				break;
 
 			default : 

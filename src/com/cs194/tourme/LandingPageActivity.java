@@ -37,7 +37,7 @@ public class LandingPageActivity extends Activity {
 			} 
 		}, 2000); 
 
-
+		//creating user name
 		File userIdDir = new File(Environment.getExternalStorageDirectory()
 				+ File.separator + ".TourMeUser" + File.separator);
 		userIdDir.mkdirs();
@@ -59,20 +59,7 @@ public class LandingPageActivity extends Activity {
 				LandingPageActivity.userId = uniqueUserId;
 				userIdWriter.close();
 			} 
-			
-			/*
-			else {
-				BufferedReader userIdReader	= 
-						new BufferedReader(new FileReader (userIdLog));
-				LandingPageActivity.userId = userIdReader.readLine(); 
-				LandingPageActivity.numPics++;
-				String uniqueUserId = LandingPageActivity.userId
-						+ "," + LandingPageActivity.numPics + "\n";
-//				BufferedWriter userIdWriter = new BufferedWriter(new FileWriter (userIdLog));
-//				userIdWriter.write(uniqueUserId);
 
-			}
-			*/
 
 		}  catch (IOException e) {	
 			e.printStackTrace();
