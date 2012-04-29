@@ -3,14 +3,13 @@ package com.cs194.tourme;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
-import java.util.concurrent.Semaphore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -21,8 +20,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EachAttractionActivity extends LocalizedActivity {
-
+	
+	
+	// http://developer.android.com/resources/samples/ApiDemos/src/com/example/android/apis/media/MediaPlayerDemo_Audio.html
+	// This website show you how to play audio from SD Card, Res/raw, URI, and 2 others. 
+	// I deleted everything except for Local_Audio (i.e., SD card)
 	TextToSpeech tts;
+    private static final String TAG = "MediaPlayerDemo";
+    private MediaPlayer mMediaPlayer;
+    private static final String MEDIA = "media";
+  //there were alot more here than this (from res/raw, uri, etc), but since we ONLY want to use SD_Card audio, I removed them
+    private static final int LOCAL_AUDIO = 1;  
+
+    private String path;
+
+    private TextView tx;
+	
+	
 	static String poiName = AttractionRouteActivity.poiName;
 
 	@Override
@@ -48,17 +62,9 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		});
 
-		//		Log.d("eachattraction debug", "" + AttractionsActivity.cityId);
-		//		Log.d("eachattraction debug", "" + AttractionsActivity.attractionId);
 
 		DatabaseHandler dbHandler = new DatabaseHandler ();
-		//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select p.uri, p.description from Picture p, Attraction a where a.name = " + 
-		//				AttractionsActivity.attractionName);
-		//		JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture, where attraction_id = " + 
-		//				"where id from Attraction where id = \"" + AttractionsActivity.attractionName + "\"");
 		Log.d("ABC", AttractionRouteActivity.poiName);
-		//Log.d("abc", "select uri, description from Picture where attraction_id = (select id from Attraction " +
-		//		"where name = \"" + AttractionsActivity.attractionName + "\") ");
 
 		//save for later
 		//JSONArray AttractionDetail = dbHandler.getDataFromSql("select uri, description from Picture where attraction_id = (select id from Attraction where name = '" + AttractionsActivity.attractionName + "') ");
@@ -99,6 +105,9 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 		textView.setText (description); 
+		
+		//MEDIA PLAYER INFORMATION
+		playAudio(1);
 
 	}
 
@@ -119,14 +128,15 @@ public class EachAttractionActivity extends LocalizedActivity {
 		startActivity (intent);
 	}
 
-	public void buttonOnButtonPause(View v) throws
-	InterruptedException {
+	public void buttonOnButtonPause(View v) throws InterruptedException {
+		mMediaPlayer.pause();
 		if(tts.isSpeaking()){
 			tts.stop();
 		}
 	}
 
 	public synchronized void buttonOnButtonPlay(View v) {
+		mMediaPlayer.start();
 		if(!tts.isSpeaking()){
 			
 			TextView text = (TextView)
@@ -139,6 +149,8 @@ public class EachAttractionActivity extends LocalizedActivity {
 	}
 
 	public void buttonOnButtonPrevious(View v) {
+		mMediaPlayer.pause();
+		mMediaPlayer.seekTo(0);
 
 		// TODO Auto-generated method stub
 
@@ -149,4 +161,48 @@ public class EachAttractionActivity extends LocalizedActivity {
 		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 
 	}
+	
+	   private void playAudio(Integer media) {
+	        try {
+	            switch (media) {
+	                case LOCAL_AUDIO:
+	                    /**
+	                     * TODO: Set the path variable to a local audio file path.
+	                     */
+	                    path = "/sdcard/test.mp3";
+	                    if (path == "") {
+	                        // Tell the user to provide an audio file URL.
+	                        Toast
+	                                .makeText(
+	                                		EachAttractionActivity.this,
+	                                        "Please edit MediaPlayer_Audio Activity, "
+	                                                + "and set the path variable to your audio file path."
+	                                                + " Your audio file must be stored on sdcard.",
+	                                        Toast.LENGTH_LONG).show();
+
+	                    }
+	                    mMediaPlayer = new MediaPlayer();
+	                    mMediaPlayer.setDataSource(path);
+	                    mMediaPlayer.prepare();
+	                    mMediaPlayer.start();
+	                    break;
+
+	            }
+
+	        } catch (Exception e) {
+	            Log.e(TAG, "error: " + e.getMessage(), e);
+	        }
+
+	    }
+
+	    @Override
+	    protected void onDestroy() {
+	        super.onDestroy();
+	        // TODO Auto-generated method stub
+	        if (mMediaPlayer != null) {
+	            mMediaPlayer.release();
+	            mMediaPlayer = null;
+	        }
+
+	    }
 }
