@@ -24,19 +24,19 @@ import com.google.android.maps.OverlayItem;
 
 public class ShowMapsActivity extends MapActivity implements MapViewMovementListener {
 
-	static protected MapController mcForListener;
+	//static protected MapController mcForListener;
 	static protected Drawable currentPosMarker;
 	static protected CustomItemizedOverlay currentPositionOverlay = null;
 	static protected String currCityName;
-	static public LocationManager mlocManager;
-	static public LocationListener mlocListener;
+	//static public LocationManager mlocManager;
+	//static public LocationListener mlocListener;
 	static protected DetectMovementMapView mapView;
-	
+
 	protected Drawable poiMarker;
 	private Context currentContext;
 
 	static CustomItemizedOverlay nearByPOIOverlay = null;
-	
+
 
 	private Runnable waitForMapTimeTask = new Runnable() {
 		public void run() {
@@ -63,22 +63,23 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 		//setting mapview and controller
 		mapView = (DetectMovementMapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
-		mcForListener = mapView.getController();
-		mcForListener.setZoom(13);
+		LandingPageActivity.mcForListener = mapView.getController();
+		LandingPageActivity.mcForListener.setZoom(13);
 
 		//gps related
-		mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
-		mlocListener = new MyLocationListener(getApplicationContext());
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 30*1000, 0, mlocListener);  
+		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
+		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
+		LandingPageActivity.mlocManager.requestLocationUpdates( 
+				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);  
 
 		mapView.postDelayed(waitForMapTimeTask, 100);
 
 		//updates whenever you change location	
 		setMarkerNewLocation ();
-		
+
 		mapView.setOnPanListener(this);
-		
-	
+
+
 	}
 
 	@Override
@@ -99,17 +100,19 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 
 	protected void setMarkerNewLocation() {
 		//getting current location 
-		double currLat = 0.0, currLong = 0.0;
 		try {
-			currLat = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
-			currLong = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+			LandingPageActivity.currLat = LandingPageActivity.mlocManager.
+					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+			LandingPageActivity.currLong = LandingPageActivity.mlocManager.
+					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
 		} catch (Exception e) {
 			Log.d("error in loc", "error in showmapsactivity");
 			e.printStackTrace();
-			currLat = 37.87309;
-			currLong = -122.25921;
+			LandingPageActivity.currLat = 37.87309;
+			LandingPageActivity.currLong = -122.25921;
 		}
-		GeoPoint currentPos = new GeoPoint ((int) (currLat * 1E6) , (int) (currLong * 1E6));
+		GeoPoint currentPos = new GeoPoint ((int) (LandingPageActivity.currLat * 1E6) , 
+				(int) (LandingPageActivity.currLong * 1E6));
 
 		//gets approximte city name using getApproximateCity function
 		currCityName = getApproximateCity(currentPos);
@@ -126,7 +129,7 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 
 		//adding to mapview and zoom to new location
 		mapView.getOverlays().add(currentPositionOverlay);
-		this.zoomToNewLocation(currentPos, mcForListener);
+		this.zoomToNewLocation(currentPos, LandingPageActivity.mcForListener);
 		mapView.invalidate();
 
 	}
@@ -134,7 +137,7 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 	@Override
 	public void onPause() {
 		super.onPause();
-		mlocManager.removeUpdates(mlocListener);
+		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
 
 	// not sure if needed
@@ -167,18 +170,6 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 				" and a.geolocX < " + geoPointSE.getLongitudeE6()/1.0E6 +
 				" and a.geolocX > " + geoPointNW.getLongitudeE6()/1.0E6 + 
 				"))");
-
-		/*
-		Log.d("ABCDD" , "select p.name, p.geolocX, p.geolocY " +
-				"from POI p where p.tour_id = " +
-				"any (select t.id from Tour t where t.attraction_id = " +
-				"any (select a.id from Attraction a where " +
-				"a.geolocY < " + geoPointNW.getLatitudeE6()/1.0E6 + 
-				" and a.geolocY > " + geoPointSE.getLatitudeE6()/1.0E6 +
-				" and a.geolocX < " + geoPointSE.getLongitudeE6()/1.0E6 +
-				" and a.geolocX > " + geoPointNW.getLongitudeE6()/1.0E6 + 
-				"))");
-		 */
 
 		//if listOfPOI is null then no need to put markers and such
 		if (listOfPOI != null) {
@@ -218,7 +209,7 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 	public void onChange() {
 		this.setCloseByPOIMarkers();
 	}
-	
+
 }
 
 //		Berkeley GeoLocation 37.87309	-122.25921

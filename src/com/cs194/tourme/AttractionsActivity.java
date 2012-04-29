@@ -43,10 +43,10 @@ public class AttractionsActivity extends ExpandableListActivity {
 
 
 		//getting gps
-		ShowMapsActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
-		ShowMapsActivity.mlocListener = new MyLocationListener(getApplicationContext());
-		ShowMapsActivity.mlocManager.requestLocationUpdates
-		( LocationManager.GPS_PROVIDER, 60*1000, 0, ShowMapsActivity.mlocListener);  
+		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
+		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
+		LandingPageActivity.mlocManager.requestLocationUpdates( 
+				LocationManager.GPS_PROVIDER, 60*1000, 0, LandingPageActivity.mlocListener);  
 
 
 		layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,17 +55,16 @@ public class AttractionsActivity extends ExpandableListActivity {
 
 		try {
 
-			double currLat = 0.0, currLong = 0.0;
 			try {
-				currLat = ShowMapsActivity.mlocManager.
+				LandingPageActivity.currLat = LandingPageActivity.mlocManager.
 						getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
-				currLong = ShowMapsActivity.mlocManager.
+				LandingPageActivity.currLong = LandingPageActivity.mlocManager.
 						getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
 			} catch (Exception e) {
 				Log.d("error in loc", "error in AttractionActivity");
 				e.printStackTrace();
-				currLat = 37.87309;
-				currLong = -122.25921;
+				LandingPageActivity.currLat = 37.87309;
+				LandingPageActivity.currLong = -122.25921;
 			}
 
 			DatabaseHandler dbHandler = new DatabaseHandler ();
@@ -80,15 +79,19 @@ public class AttractionsActivity extends ExpandableListActivity {
 			JSONArray listOfCities = dbHandler.getDataFromSql("select c.id, c.city " +
 					"from City c " +
 					"order by " +
-					"(((c.geolocX)-" + currLong + ") * ((c.geolocX)-" + currLong + "))" +
-					"+(((c.geolocY)-" + currLat + ") * ((c.geolocY)-" + currLat + "))"
+					"(((c.geolocX)-" + LandingPageActivity.currLong + ") " +
+					"* ((c.geolocX)-" + LandingPageActivity.currLong + "))" +
+					"+(((c.geolocY)-" + LandingPageActivity.currLat + ") " +
+					"* ((c.geolocY)-" + LandingPageActivity.currLat + "))"
 					+ " asc");
 
 			Log.d("AttractionActivity SQL","select c.id, c.city " +
 					"from City c " +
 					"order by " +
-					"(((c.geolocX)-" + currLong + ") * ((c.geolocX)-" + currLong + "))" +
-					"+(((c.geolocY)-" + currLat + ") * ((c.geolocY)-" + currLat + "))"
+					"(((c.geolocX)-" + LandingPageActivity.currLong + ") " +
+					"* ((c.geolocX)-" + LandingPageActivity.currLong + "))" +
+					"+(((c.geolocY)-" + LandingPageActivity.currLat + ") " +
+					"* ((c.geolocY)-" + LandingPageActivity.currLat + "))"
 					+ " asc");
 
 			for (int i = 0 ; i < listOfCities.length(); i++) {
@@ -110,15 +113,19 @@ public class AttractionsActivity extends ExpandableListActivity {
 						dbHandler.getDataFromSql("select a.name from Attraction a where a.city_id = " 
 								+  cityId + " " +
 								"order by " +
-								"(((a.geolocX)-" + currLong + ") * ((a.geolocX)-" + currLong + "))" +
-								"+(((a.geolocY)-" + currLat + ") * ((a.geolocY)-" + currLat + "))"
+								"(((a.geolocX)-" + LandingPageActivity.currLong + ") " +
+								"* ((a.geolocX)-" + LandingPageActivity.currLong + "))" +
+								"+(((a.geolocY)-" + LandingPageActivity.currLat + ") " +
+								"* ((a.geolocY)-" + LandingPageActivity.currLat + "))"
 								+ " asc");
 
 				Log.d("AttractionActivity SQL","select a.name from Attraction a where a.city_id = " 
 						+  cityId + " " +
 						"order by " +
-						"(((a.geolocX)-" + currLong + ") * ((a.geolocX)-" + currLong + "))" +
-						"+(((a.geolocY)-" + currLat + ") * ((a.geolocY)-" + currLat + "))"
+						"(((a.geolocX)-" + LandingPageActivity.currLong + ") " +
+						"* ((a.geolocX)-" + LandingPageActivity.currLong + "))" +
+						"+(((a.geolocY)-" + LandingPageActivity.currLat + ") " +
+						"* ((a.geolocY)-" + LandingPageActivity.currLat + "))"
 						+ " asc");
 
 
@@ -193,9 +200,9 @@ public class AttractionsActivity extends ExpandableListActivity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		ShowMapsActivity.mlocManager.removeUpdates(ShowMapsActivity.mlocListener);
+		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
-	
+
 
 
 }

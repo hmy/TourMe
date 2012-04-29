@@ -11,12 +11,18 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings.Secure;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.maps.MapController;
 
 public class LandingPageActivity extends Activity {
 
@@ -25,12 +31,39 @@ public class LandingPageActivity extends Activity {
 	static public int numPics = 0; 
 	public Intent intent;
 
+	static public MapController mcForListener;
+	static public LocationManager mlocManager;
+	static public LocationListener mlocListener;
+
+	static public double currLat;
+	static public double currLong;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.landing);	
+		setContentView(R.layout.landing);
+
+		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
+		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
+		LandingPageActivity.mlocManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);  
+		try {
+			LandingPageActivity.currLat = LandingPageActivity.mlocManager.
+					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+			LandingPageActivity.currLong = LandingPageActivity.mlocManager.
+					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+		} catch (Exception e) {
+			Log.d("error in loc", "error in AttractionActivity");
+			e.printStackTrace();
+			LandingPageActivity.currLat = 37.87309;
+			LandingPageActivity.currLong = -122.25921;
+		}
+		
+		Toast.makeText(this.getApplicationContext(), "Curr Location is = " + LandingPageActivity.currLat 
+				+ " " + LandingPageActivity.currLong, Toast.LENGTH_LONG);
+		
 
 		// SLEEP 2 SECONDS HERE ...
 		intent = new Intent(this, TourMeActivity.class);
@@ -39,7 +72,7 @@ public class LandingPageActivity extends Activity {
 			public void run() { 
 				startActivity(intent); 
 			} 
-		}, 2000); 
+		}, 5000); 
 
 		//creating user name
 		File userIdDir = new File(Environment.getExternalStorageDirectory()
@@ -75,14 +108,25 @@ public class LandingPageActivity extends Activity {
 				//Close the input stream
 				in.close();
 			}
-			
+
 		}  catch (IOException e) {	
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Log.d("userid", LandingPageActivity.userId);
+
+
+
+
+
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
 }
 
