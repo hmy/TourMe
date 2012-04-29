@@ -1,7 +1,15 @@
 package com.cs194.tourme;
+/*
+ * 1) Run the program, open up DDMS viewer and make sure the SD card is viewable. Our sound file should not be there yet.
+ * 2) After opening up an Activity that uses TTS (Pier 38?),  you should hear sound after clicking "Play button"
+ * 3) During this time, the file is downloading. The SD card will update with info 2 or 3 seconds AFTER the entire file is read. 
+ * 4) You should see it appear in the SD card folder, with a size that is several thousand bytes large
+ * 5) Note: If pause is pressed, when play is pressed again, it starts one or two words later (so far).
+ */
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -31,8 +39,11 @@ public class EachAttractionActivity extends LocalizedActivity {
     private static final String MEDIA = "media";
   //there were alot more here than this (from res/raw, uri, etc), but since we ONLY want to use SD_Card audio, I removed them
     private static final int LOCAL_AUDIO = 1;  
-
     private String path;
+    private boolean firstTimePlaying = true;
+    private boolean isReset = true;
+    private int playBackPosition = 0;
+    HashMap<String, String> myHashRender;
 
     private TextView tx;
 	
@@ -107,7 +118,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 		textView.setText (description); 
 		
 		//MEDIA PLAYER INFORMATION
-		playAudio(1);
+	//	playAudio(1);
 
 	}
 
@@ -129,41 +140,80 @@ public class EachAttractionActivity extends LocalizedActivity {
 	}
 
 	public void buttonOnButtonPause(View v) throws InterruptedException {
+		// needs to get position, otherwise cannot get pause to perform correctly
+		// Time 1:09 of http://www.youtube.com/watch?v=hvpYInzY8Xg
+		playBackPosition = mMediaPlayer.getCurrentPosition();
 		mMediaPlayer.pause();
-		if(tts.isSpeaking()){
-			tts.stop();
-		}
+		Toast.makeText(getBaseContext(), "In pause method, playBackPositions is " + playBackPosition,Toast.LENGTH_LONG).show();
+
+		
 	}
 
 	public synchronized void buttonOnButtonPlay(View v) {
-		mMediaPlayer.start();
-		if(!tts.isSpeaking()){
-			
-			TextView text = (TextView)
-					findViewById(R.id.textViewAttractionDescription);
-			String textString = (String)text.getText();
-			//Queue Flush drops pre-existing media
-			tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
-		} 
+		
+		if(firstTimePlaying){
+			mMediaPlayer = new MediaPlayer();
+			convertTTSToSD();
+		}
+		setupFirstTimeMediaUse();
+		mMediaPlayer.pause();
+		mMediaPlayer.seekTo(playBackPosition);
+		Toast.makeText(getBaseContext(), "In play method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
 
+		mMediaPlayer.start();
+		
+
+
+	}
+	
+	public void setupFirstTimeMediaUse(){
+		
+		try {
+			path = "/sdcard/test.mp3";
+			
+	        mMediaPlayer.setDataSource(path);
+	        mMediaPlayer.prepare();
+	        mMediaPlayer.seekTo(playBackPosition);
+	        mMediaPlayer.start();
+	        } catch (Exception e) {
+	        	Log.e(TAG, "error: " + e.getMessage(), e);
+	        }
+
+	}
+	
+	public void convertTTSToSD(){
+		//read the text and form into words
+		TextView text = (TextView)findViewById(R.id.textViewAttractionDescription);
+		String textString = (String)text.getText();
+		//debugging: DELETE this next line to get the text from the AVD phone
+		textString = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eightteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive";
+		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
+		
+		//push to SD card
+		myHashRender = new HashMap();
+		String destFileName = "/sdcard/test.mp3";
+		myHashRender.put(TextToSpeech.Engine.KEY_PARAM_STREAM, textString);
+		tts.synthesizeToFile(textString, myHashRender, destFileName);
+		
+		Toast.makeText(getBaseContext(), "In convert method, file is synthesized",Toast.LENGTH_SHORT).show();
+		firstTimePlaying = false;
+		
 	}
 
 	public void buttonOnButtonPrevious(View v) {
 		mMediaPlayer.pause();
-		mMediaPlayer.seekTo(0);
+		playBackPosition = 0;
+		mMediaPlayer.seekTo(playBackPosition);
+		mMediaPlayer.start();
+		Toast.makeText(getBaseContext(), "In reset method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
 
-		// TODO Auto-generated method stub
-
-		TextView text = (TextView)
-				findViewById(R.id.textViewAttractionDescription);
-		String textString = (String)text.getText();
-		//Queue Flush drops pre-existing media
-		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 
 	}
 	
 	   private void playAudio(Integer media) {
 	        try {
+	        	
+
 	            switch (media) {
 	                case LOCAL_AUDIO:
 	                    /**
@@ -186,8 +236,8 @@ public class EachAttractionActivity extends LocalizedActivity {
 	                    mMediaPlayer.prepare();
 	                    mMediaPlayer.start();
 	                    break;
-
-	            }
+	                    }
+	            
 
 	        } catch (Exception e) {
 	            Log.e(TAG, "error: " + e.getMessage(), e);
