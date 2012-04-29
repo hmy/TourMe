@@ -47,23 +47,6 @@ public class LandingPageActivity extends Activity {
 
 		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
-		LandingPageActivity.mlocManager.requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);  
-		try {
-			LandingPageActivity.currLat = LandingPageActivity.mlocManager.
-					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
-			LandingPageActivity.currLong = LandingPageActivity.mlocManager.
-					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
-		} catch (Exception e) {
-			Log.d("error in loc", "error in AttractionActivity");
-			e.printStackTrace();
-			LandingPageActivity.currLat = 37.87309;
-			LandingPageActivity.currLong = -122.25921;
-		}
-		
-		Toast.makeText(this.getApplicationContext(), "Curr Location is = " + LandingPageActivity.currLat 
-				+ " " + LandingPageActivity.currLong, Toast.LENGTH_LONG);
-		
 
 		// SLEEP 2 SECONDS HERE ...
 		intent = new Intent(this, TourMeActivity.class);
@@ -72,11 +55,11 @@ public class LandingPageActivity extends Activity {
 			public void run() { 
 				startActivity(intent); 
 			} 
-		}, 5000); 
+		}, 1000); 
 
 		//creating user name
 		File userIdDir = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "TourMeUser" + File.separator);
+				+ File.separator + "TourMe" + File.separator + "UserId");
 		userIdDir.mkdirs();
 		userIdDir.setWritable(true); 
 
@@ -91,20 +74,21 @@ public class LandingPageActivity extends Activity {
 			if(userExist) {
 				BufferedWriter userIdWriter = new BufferedWriter(new FileWriter (userIdLog));
 				Random rand = new Random();
-				String uniqueUserId = Secure.ANDROID_ID + "_" + System.currentTimeMillis() + "_" + rand.nextInt(99999) + "\n";
+				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID) 
+						+ "" + System.currentTimeMillis() + "" + rand.nextInt(99999) + "\n";
 				userIdWriter.write(uniqueUserId);
 				LandingPageActivity.userId = uniqueUserId;
 				userIdWriter.close();
 			} else {
 				//reading the userId in filename
 				FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory()
-						+ File.separator + "TourMeUser" + File.separator + "userIdLog");
+						+ File.separator + "TourMe" + File.separator + "UserId" + File.separator + "userIdLog");
 				// Get the object of DataInputStream
 				DataInputStream in = new DataInputStream(fstream);
 				BufferedReader br = new BufferedReader(new InputStreamReader(in));
 				//read line and assign to userId
 				LandingPageActivity.userId = br.readLine();
-				Log.d("UserID already exists, user id is = ", LandingPageActivity.userId);
+				Log.d("UserID already exists, user id is = ", Secure.ANDROID_ID);
 				//Close the input stream
 				in.close();
 			}
@@ -115,18 +99,8 @@ public class LandingPageActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		Log.d("userid", LandingPageActivity.userId);
-
-
-
-
 
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
-	}
 }
 

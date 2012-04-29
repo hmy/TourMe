@@ -198,12 +198,16 @@ public class AttractionsActivity extends ExpandableListActivity {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		LandingPageActivity.mlocManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);  
+	}
+	
+	@Override
 	public void onPause() {
 		super.onPause();
 		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
-
-
-
 }
 

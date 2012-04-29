@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 public class EachAttractionActivity extends LocalizedActivity {
 
 	TextToSpeech tts;
+	static String poiName = AttractionRouteActivity.poiName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,15 +114,10 @@ public class EachAttractionActivity extends LocalizedActivity {
 		}
 	}
 
-
-
 	public void buttonTakePictureOnClick(View v) {
-		Intent intent = new Intent (this, FileUploaderActivity.class);
+		Intent intent = new Intent (this, FileUploadActivity.class);
 		startActivity (intent);
 	}
-
-
-   
 
 	public void buttonOnButtonPause(View v) throws
 	InterruptedException {
@@ -152,5 +149,4 @@ public class EachAttractionActivity extends LocalizedActivity {
 		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 
 	}
-
 }

@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -69,6 +69,12 @@
         <activity
             android:name="FileUploaderActivity"
             android:label=".FileUploaderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="FileUploadActivity"
+            android:label=".FileUploadActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>

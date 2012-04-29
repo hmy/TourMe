@@ -249,5 +249,11 @@ public class AttractionRouteActivity extends MapActivity {
 			// Do nothing.
 		}		
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+	}
 
 }

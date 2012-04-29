@@ -134,21 +134,6 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
-	}
-
-	// not sure if needed
-	/*
-	@Override
-	public void onResume() {
-		super.onResume();
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1*1000, 0, mlocListener);  
-	}
-	 */
-
 	public void setCloseByPOIMarkers () {
 
 		//I want this as I want to remove existing overlays
@@ -210,6 +195,20 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 		this.setCloseByPOIMarkers();
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		LandingPageActivity.mlocManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);  
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+	}
+
+	
 }
 
 //		Berkeley GeoLocation 37.87309	-122.25921
