@@ -1,9 +1,13 @@
 package com.cs194.tourme;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 import android.app.Activity;
@@ -39,11 +43,11 @@ public class LandingPageActivity extends Activity {
 
 		//creating user name
 		File userIdDir = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + ".TourMeUser" + File.separator);
+				+ File.separator + "TourMeUser" + File.separator);
 		userIdDir.mkdirs();
 		userIdDir.setWritable(true); 
 
-		File userIdLog = new File(userIdDir, ".userIdLog");
+		File userIdLog = new File(userIdDir, "userIdLog");
 		userIdLog.setWritable(true); 
 
 		boolean userExist = false;
@@ -54,22 +58,31 @@ public class LandingPageActivity extends Activity {
 			if(userExist) {
 				BufferedWriter userIdWriter = new BufferedWriter(new FileWriter (userIdLog));
 				Random rand = new Random();
-				String uniqueUserId = Secure.ANDROID_ID + System.currentTimeMillis() + "" + rand.nextInt(99999) + "\n";
+				String uniqueUserId = Secure.ANDROID_ID + "_" + System.currentTimeMillis() + "_" + rand.nextInt(99999) + "\n";
 				userIdWriter.write(uniqueUserId);
 				LandingPageActivity.userId = uniqueUserId;
 				userIdWriter.close();
-			} 
-
-
+			} else {
+				//reading the userId in filename
+				FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory()
+						+ File.separator + "TourMeUser" + File.separator + "userIdLog");
+				// Get the object of DataInputStream
+				DataInputStream in = new DataInputStream(fstream);
+				BufferedReader br = new BufferedReader(new InputStreamReader(in));
+				//read line and assign to userId
+				LandingPageActivity.userId = br.readLine();
+				Log.d("UserID already exists, user id is = ", LandingPageActivity.userId);
+				//Close the input stream
+				in.close();
+			}
+			
 		}  catch (IOException e) {	
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		Log.d("userid", LandingPageActivity.userId);
-
-
 	}
 }
 
