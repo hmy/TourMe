@@ -107,10 +107,19 @@ public class FileUploadActivity extends Activity {
 
 	public static void StoreImage(Context mContext, Uri imageLoc, File imageDir) {
 		Bitmap bm = null;
+		Bitmap resized = null;
+		int heightScale, widthScale;
+		
 		try {
 			bm = Media.getBitmap(mContext.getContentResolver(), imageLoc);
 			FileOutputStream out = new FileOutputStream(imageDir);
-			bm.compress(Bitmap.CompressFormat.JPEG, 75, out);
+			
+			heightScale = bm.getHeight() > bm.getWidth() ? bm.getHeight()/340 : bm.getHeight()/200;
+			widthScale = bm.getWidth() > bm.getHeight() ? bm.getWidth()/340 : bm.getWidth()/200;
+			
+			bm = Bitmap.createScaledBitmap(bm, bm.getWidth()/widthScale, 
+					bm.getHeight()/heightScale, true);
+			bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
 			bm.recycle();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

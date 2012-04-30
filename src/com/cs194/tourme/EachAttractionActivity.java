@@ -299,19 +299,14 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	@Override
 	protected void onResume() {
-		super.onResume();
-		Log.d("EachAttractionActivity", "Entering OnResume");
 		try {	
 			if(FileUploadActivity.isUpload) {
-
 				uploadPicture();
 			}	
 		} catch (UnsupportedEncodingException e) {
-
 			e.printStackTrace();
-		}
-
-		Log.d("EachAttractionActivity", "Exiting OnResume");
+		}	
+		super.onResume();
 	}
 
 	@Override
