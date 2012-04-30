@@ -1,5 +1,6 @@
 package com.cs194.tourme;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
@@ -169,7 +171,8 @@ import android.widget.Toast;
 		public void setupFirstTimeMediaUse(){
 			
 			try {
-				path = "/sdcard/test.mp3";
+				path = Environment.getExternalStorageDirectory()
+						+ File.separator + "TourMe" + File.separator + "speak.mp3";
 				
 		        mMediaPlayer.setDataSource(path);
 		        mMediaPlayer.prepare();
@@ -178,7 +181,6 @@ import android.widget.Toast;
 		        } catch (Exception e) {
 		        	Log.e(TAG, "error: " + e.getMessage(), e);
 		        }
-
 		}
 		
 		public void convertTTSToSD(){
@@ -193,7 +195,8 @@ import android.widget.Toast;
 			
 			//push to SD card
 			myHashRender = new HashMap<String, String>();
-			String destFileName = "/sdcard/test.mp3";
+			String destFileName = Environment.getExternalStorageDirectory()
+					+ File.separator + "TourMe" + File.separator + "speak.mp3";
 			myHashRender.put(TextToSpeech.Engine.KEY_PARAM_STREAM, textString);
 			tts.synthesizeToFile(textString, myHashRender, destFileName);
 			
