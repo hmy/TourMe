@@ -8,17 +8,20 @@ import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,16 @@ import android.widget.Toast;
 	    private int goBack = 1300;
 	    HashMap<String, String> myHashRender;
 		HashMap<String, String> myHashAlarm;			
+		
+		ProgressBar progressBar;
+		AudioManager am;
+	     private static final int PROGRESS = 0x1;
+
+	     private ProgressBar mProgress;
+	     private int mProgressStatus = 0;
+
+	     private Handler mHandler = new Handler();
+		
 
 
 	    private TextView tx;
@@ -114,9 +127,22 @@ import android.widget.Toast;
 
 			TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 			textView.setText (description); 
+			
+			//See Bar stuff: http://www.youtube.com/watch?v=8sr2Y6Aff6Y
+			am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+			progressBar = (ProgressBar)findViewById(R.id.progressBar1);
+			
+
+
+
+		     }
+
+
+		
+			
 	
 
-		}
+		
 
 
 		private Drawable LoadImageFromWeb(String url) {
@@ -170,11 +196,14 @@ import android.widget.Toast;
 				mMediaPlayer.setVolume(100, 100);
 			}
 			else
-				mMediaPlayer.start(); //You also need this method here or it won't play after first time either
-
-			
+				mMediaPlayer.start(); //You also need this method here or it won't play after first time either	
 			firstTimePlaying = false;
+			
+			
 		}
+		
+
+		
 		
 		public void setupFirstTimeMediaUse(){
 			
@@ -225,8 +254,50 @@ import android.widget.Toast;
 			mMediaPlayer.seekTo(playBackPosition);
 			mMediaPlayer.start();
 			Toast.makeText(getBaseContext(), "In reset method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
+			
+			updateProgressBar();
 
 
+		}
+		
+		public void updateProgressBar(){
+            //http://developer.android.com/reference/android/widget/ProgressBar.html
+		         // Start lengthy operation in a background thread
+		         new Thread(new Runnable() {
+		             public void run() {
+		            	 
+		            	 if (firstTimePlaying)
+							try {
+								Thread.sleep(5000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		            	 
+		                 while (mProgressStatus < 100) {
+		                     mProgressStatus = getProgressSoFar();
+
+		                     // Update the progress bar
+		                     mHandler.post(new Runnable() {
+		                         public void run() {
+		                             mProgress.setProgress(mProgressStatus);
+		                         }
+		                     });
+		                 }
+		             }
+		         }).start();
+		}
+		
+		public int getProgressSoFar(){
+			if(mMediaPlayer.isPlaying()){
+				double progressSoFar = (double)mMediaPlayer.getCurrentPosition() / (double)mMediaPlayer.getDuration();
+				int progress = (int)(progressSoFar * 100);
+				Toast.makeText(getBaseContext(), "In Thread, progress is: " + progress ,Toast.LENGTH_LONG).show();
+				return progress;
+				
+			}
+			else return 20;
+			
 		}
 		
 
