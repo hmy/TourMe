@@ -131,18 +131,7 @@ public class EachAttractionActivity extends LocalizedActivity implements OnUtter
 		//See Bar stuff: http://www.youtube.com/watch?v=8sr2Y6Aff6Y
 		am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 		progressBar = (ProgressBar)findViewById(R.id.progressBar1);
-
-
-
-
 	}
-
-
-
-
-
-
-
 
 
 	private Drawable LoadImageFromWeb(String url) {
@@ -167,8 +156,6 @@ public class EachAttractionActivity extends LocalizedActivity implements OnUtter
 		playBackPosition = mMediaPlayer.getCurrentPosition();
 		mMediaPlayer.pause();
 		Toast.makeText(getBaseContext(), "In pause method, playBackPositions is " + playBackPosition,Toast.LENGTH_LONG).show();
-
-
 	}
 
 	public synchronized void buttonOnButtonPlay(View v) {
@@ -201,9 +188,6 @@ public class EachAttractionActivity extends LocalizedActivity implements OnUtter
 
 
 	}
-
-
-
 
 	public void setupFirstTimeMediaUse(){
 
@@ -241,11 +225,8 @@ public class EachAttractionActivity extends LocalizedActivity implements OnUtter
 		myHashRender.put(TextToSpeech.Engine.KEY_PARAM_STREAM, textString);
 		tts.synthesizeToFile(textString, myHashRender, destFileName);
 
-		Toast.makeText(getBaseContext(), "In convert method, file is synthesizing. Please wait for media to load.",Toast.LENGTH_SHORT).show();
-
-
-
-
+		Toast.makeText(getBaseContext(), "In convert method, file is synthesizing." +
+				" Please wait for media to load.",Toast.LENGTH_SHORT).show();
 	}
 
 	public void buttonOnButtonPrevious(View v) {
