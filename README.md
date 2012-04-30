@@ -1,8 +1,6 @@
 TourMe, a [CS194][CS194] Spring 2012 Project
 --------------------------
 
-### Most Recent Version : [might live here][most recent version]
-
 * Members :
   - [Hee Min Yoo]
   - [Ji Hun Cho]
@@ -44,8 +42,10 @@ Iteration By Iteration
   - TTS (Text To Speech) enabled for description
   - Date : 4/16/12 Monday
 * Fourth Iteration Achievements:
+  - TTS Modified (pause, playback works after first iteration)
+  - Changed uploading method (from html library to using native HTTP POST)
+  - Modified where GPS turns on and off
   - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM)
-  - TBD
   - Last Iteration (Poster Session)
 
 What To Improve On
@@ -63,7 +63,7 @@ What To Improve On
 ### Disclaimer : As of now, [DB][ec2db] is local And it cannot be accessed via internet
 
 ```
-  Last Updated on 4/17/12 by hmy
+  Last Updated on 4/30/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"
