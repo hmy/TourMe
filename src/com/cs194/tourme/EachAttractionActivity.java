@@ -1,40 +1,31 @@
 package com.cs194.tourme;
-/*
- * 1) Run the program, open up DDMS viewer and make sure the SD card is viewable. Our sound file should not be there yet.
- * 2) After opening up an Activity that uses TTS (Pier 38?),  you should hear sound after clicking "Play button"
- * 3) During this time, the file is downloading. The SD card will update with info 2 or 3 seconds AFTER the entire file is read. 
- * 4) You should see it appear in the SD card folder, with a size that is several thousand bytes large
- * 5) Note: If pause is pressed, when play is pressed again, it starts one or two words later (so far).
- */
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EachAttractionActivity extends LocalizedActivity {
+public class EachAttractionActivity extends LocalizedActivity implements OnUtteranceCompletedListener {
 
 
 	// http://developer.android.com/resources/samples/ApiDemos/src/com/example/android/apis/media/MediaPlayerDemo_Audio.html
@@ -50,7 +41,20 @@ public class EachAttractionActivity extends LocalizedActivity {
 	private boolean firstTimePlaying = true;
 	private boolean isReset = true;
 	private int playBackPosition = 0;
+	private int goBack = 1300;
 	HashMap<String, String> myHashRender;
+	HashMap<String, String> myHashAlarm;			
+
+	ProgressBar progressBar;
+	AudioManager am;
+	private static final int PROGRESS = 0x1;
+
+	private ProgressBar mProgress;
+	private int mProgressStatus = 0;
+
+	private Handler mHandler = new Handler();
+
+
 
 	private TextView tx;
 
@@ -124,10 +128,21 @@ public class EachAttractionActivity extends LocalizedActivity {
 		TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 		textView.setText (description); 
 
-		//MEDIA PLAYER INFORMATION
-		//	playAudio(1);
+		//See Bar stuff: http://www.youtube.com/watch?v=8sr2Y6Aff6Y
+		am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+		progressBar = (ProgressBar)findViewById(R.id.progressBar1);
+
+
+
 
 	}
+
+
+
+
+
+
+
 
 
 	private Drawable LoadImageFromWeb(String url) {
@@ -164,14 +179,31 @@ public class EachAttractionActivity extends LocalizedActivity {
 		}
 		setupFirstTimeMediaUse();
 		mMediaPlayer.pause();
+
+		if( ( mMediaPlayer.getCurrentPosition() > (mMediaPlayer.getDuration() - 100) ) || 
+				(playBackPosition - goBack) < 0) 
+			playBackPosition = 0;
+		else 
+			playBackPosition = playBackPosition - goBack;
+
+
 		mMediaPlayer.seekTo(playBackPosition);
 		Toast.makeText(getBaseContext(), "In play method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
-
-		mMediaPlayer.start();
-
+		if(firstTimePlaying){
+			Toast.makeText(getBaseContext(), "Please wait while media is loaded ", Toast.LENGTH_LONG).show();
+			mMediaPlayer.setVolume(0, 0);
+			mMediaPlayer.start(); //You also need this method here or it won't play after first time either
+			mMediaPlayer.setVolume(100, 100);
+		}
+		else
+			mMediaPlayer.start(); //You also need this method here or it won't play after first time either	
+		firstTimePlaying = false;
 
 
 	}
+
+
+
 
 	public void setupFirstTimeMediaUse(){
 
@@ -181,7 +213,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 			mMediaPlayer.setDataSource(path);
 			mMediaPlayer.prepare();
 			mMediaPlayer.seekTo(playBackPosition);
-			mMediaPlayer.start();
+			mMediaPlayer.start();  //You need this method here or it will not play after the first time
 		} catch (Exception e) {
 			Log.e(TAG, "error: " + e.getMessage(), e);
 		}
@@ -189,21 +221,30 @@ public class EachAttractionActivity extends LocalizedActivity {
 	}
 
 	public void convertTTSToSD(){
+		tts.setOnUtteranceCompletedListener(this);
+		myHashAlarm = new HashMap<String, String>();			
+
+		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_STREAM, String.valueOf(AudioManager.STREAM_ALARM));
+
 		//read the text and form into words
 		TextView text = (TextView)findViewById(R.id.textViewAttractionDescription);
 		String textString = (String)text.getText();
-		//debugging: DELETE this next line to get the text from the AVD phone
-		textString = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eightteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive";
+		//debugging:
+		textString = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eightteen nineteen twenty";
 		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 
+		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "twenty");
+
 		//push to SD card
-		myHashRender = new HashMap();
+		myHashRender = new HashMap<String, String>();
 		String destFileName = "/sdcard/test.mp3";
 		myHashRender.put(TextToSpeech.Engine.KEY_PARAM_STREAM, textString);
 		tts.synthesizeToFile(textString, myHashRender, destFileName);
 
-		Toast.makeText(getBaseContext(), "In convert method, file is synthesized",Toast.LENGTH_SHORT).show();
-		firstTimePlaying = false;
+		Toast.makeText(getBaseContext(), "In convert method, file is synthesizing. Please wait for media to load.",Toast.LENGTH_SHORT).show();
+
+
+
 
 	}
 
@@ -214,126 +255,52 @@ public class EachAttractionActivity extends LocalizedActivity {
 		mMediaPlayer.start();
 		Toast.makeText(getBaseContext(), "In reset method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
 
+		updateProgressBar();
+
 
 	}
 
-	private void playAudio(Integer media) {
-		try {
+	public void updateProgressBar(){
+		//http://developer.android.com/reference/android/widget/ProgressBar.html
+		// Start lengthy operation in a background thread
+		new Thread(new Runnable() {
+			public void run() {
 
+				if (firstTimePlaying)
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
-			switch (media) {
-			case LOCAL_AUDIO:
-				/**
-				 * TODO: Set the path variable to a local audio file path.
-				 */
-				path = "/sdcard/test.mp3";
-				if (path == "") {
-					// Tell the user to provide an audio file URL.
-					Toast
-					.makeText(
-							EachAttractionActivity.this,
-							"Please edit MediaPlayer_Audio Activity, "
-									+ "and set the path variable to your audio file path."
-									+ " Your audio file must be stored on sdcard.",
-									Toast.LENGTH_LONG).show();
+				while (mProgressStatus < 100) {
+					mProgressStatus = getProgressSoFar();
 
+					// Update the progress bar
+					mHandler.post(new Runnable() {
+						public void run() {
+							mProgress.setProgress(mProgressStatus);
+						}
+					});
 				}
-				mMediaPlayer = new MediaPlayer();
-				mMediaPlayer.setDataSource(path);
-				mMediaPlayer.prepare();
-				mMediaPlayer.start();
-				break;
 			}
+		}).start();
+	}
 
+	public int getProgressSoFar(){
+		if(mMediaPlayer.isPlaying()){
+			double progressSoFar = (double)mMediaPlayer.getCurrentPosition() / (double)mMediaPlayer.getDuration();
+			int progress = (int)(progressSoFar * 100);
+			Toast.makeText(getBaseContext(), "In Thread, progress is: " + progress ,Toast.LENGTH_LONG).show();
+			return progress;
 
-		} catch (Exception e) {
-			Log.e(TAG, "error: " + e.getMessage(), e);
 		}
+		else return 20;
 
 	}
 
 
-
-	private void uploadPicture() throws UnsupportedEncodingException {
-
-		Toast.makeText(getApplicationContext(), 
-				"Uploading your picture to server. Please be patient. Thank you", 
-				Toast.LENGTH_SHORT).show();
-
-		HttpURLConnection connection = null;
-		DataOutputStream outputStream = null;
-		DataInputStream inputStream = null;
-
-		String pathToOurFile = FileUploadActivity.pictureName;
-		String urlServer = "http://ec2-23-20-205-81.compute-1.amazonaws.com/hmyUploadPicture.php";
-		String lineEnd = "\r\n";
-		String twoHyphens = "--";
-		String boundary =  "*****";
-
-		int bytesRead, bytesAvailable, bufferSize;
-		byte[] buffer;
-		int maxBufferSize = 1*1024*1024;
-
-		try	{
-			FileInputStream fileInputStream = new FileInputStream(new File(pathToOurFile) );
-
-			URL url = new URL(urlServer);
-			connection = (HttpURLConnection) url.openConnection();
-
-			// Allow Inputs & Outputs
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-			connection.setUseCaches(false);
-
-			// Enable POST method
-			connection.setRequestMethod("POST");
-
-			connection.setRequestProperty("Connection", "Keep-Alive");
-			connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-
-			outputStream = new DataOutputStream( connection.getOutputStream() );
-			outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-			outputStream.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + pathToOurFile +"\"" + lineEnd);
-			outputStream.writeBytes(lineEnd);
-
-			bytesAvailable = fileInputStream.available();
-			bufferSize = Math.min(bytesAvailable, maxBufferSize);
-			buffer = new byte[bufferSize];
-
-			// Read file
-			bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-			while (bytesRead > 0)
-			{
-				outputStream.write(buffer, 0, bufferSize);
-				bytesAvailable = fileInputStream.available();
-				bufferSize = Math.min(bytesAvailable, maxBufferSize);
-				bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-			}
-
-			outputStream.writeBytes(lineEnd);
-			outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-			// Responses from the server (code and message)
-			int serverResponseCode = connection.getResponseCode();
-			String serverResponseMessage = connection.getResponseMessage();
-
-			fileInputStream.close();
-			outputStream.flush();
-			outputStream.close();
-
-			Toast.makeText(getApplicationContext(), 
-					"Finished uploading the picture, Thank you for waiting!", 
-					Toast.LENGTH_SHORT).show();
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			Toast.makeText(getApplicationContext(), 
-					"Upload Failed, please try again later.", 
-					Toast.LENGTH_SHORT).show();
-		}
-
-	}
 
 	@Override
 	protected void onDestroy() {
@@ -343,24 +310,18 @@ public class EachAttractionActivity extends LocalizedActivity {
 			mMediaPlayer.release();
 			mMediaPlayer = null;
 		}
+
 	}
 
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.d("EachAttractionActivity", "Entering OnResume");
-		try {	
-			if(FileUploadActivity.isUpload) {
+	public void onUtteranceCompleted(String utteranceId) {
+		// TODO Auto-generated method stub
+		// if (utteranceId == "twenty") {
+		Toast.makeText(getBaseContext(), "In utterance method: DONE!",Toast.LENGTH_SHORT).show();
+		Log.v("MESSAGE", "Uterrance Completed");
 
-				uploadPicture();
-			}	
-		} catch (UnsupportedEncodingException e) {
+		//} 
 
-			e.printStackTrace();
-		}
-
-		Log.d("EachAttractionActivity", "Exiting OnResume");
 	}
-
 }
