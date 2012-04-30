@@ -110,7 +110,7 @@ public class FileUploadActivity extends Activity {
 		try {
 			bm = Media.getBitmap(mContext.getContentResolver(), imageLoc);
 			FileOutputStream out = new FileOutputStream(imageDir);
-			bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
+			bm.compress(Bitmap.CompressFormat.JPEG, 75, out);
 			bm.recycle();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
