@@ -45,8 +45,8 @@ Iteration By Iteration
   - TTS Modified (pause, playback works after first iteration)
   - Changed uploading method (from html library to using native HTTP POST)
   - Modified where GPS turns on and off
-  - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM)
-  - Last Iteration (Poster Session)
+  - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM), Poster Session
+
 
 What To Improve On
 ------------------
@@ -60,7 +60,8 @@ What To Improve On
 * Cleaning Up the Code
 * Make all the features smooth
 
-### Disclaimer : As of now, [DB][ec2db] is local And it cannot be accessed via internet
+### * [DB][ec2db] is online
+
 
 ```
   Last Updated on 4/30/12 by hmy
