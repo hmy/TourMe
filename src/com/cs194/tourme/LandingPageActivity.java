@@ -74,8 +74,9 @@ public class LandingPageActivity extends Activity {
 			if(userExist) {
 				BufferedWriter userIdWriter = new BufferedWriter(new FileWriter (userIdLog));
 				Random rand = new Random();
-				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID) 
-						+ "" + System.currentTimeMillis() + "" + rand.nextInt(99999) + "\n";
+//				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID) 
+//						+ "" + System.currentTimeMillis() + "" + rand.nextInt(99999) + "\n";
+				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID); 
 				userIdWriter.write(uniqueUserId);
 				LandingPageActivity.userId = uniqueUserId;
 				userIdWriter.close();
@@ -88,7 +89,6 @@ public class LandingPageActivity extends Activity {
 				BufferedReader br = new BufferedReader(new InputStreamReader(in));
 				//read line and assign to userId
 				LandingPageActivity.userId = br.readLine();
-				Log.d("UserID already exists, user id is = ", Secure.ANDROID_ID);
 				//Close the input stream
 				in.close();
 			}

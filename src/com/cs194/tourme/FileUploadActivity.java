@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,6 +26,8 @@ public class FileUploadActivity extends Activity {
 	protected Intent currentIntent;
 	static int Counter = 1;
 	String poiName = EachAttractionActivity.poiName;
+	static public String pictureName = null;
+	static public boolean isUpload = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,20 +35,28 @@ public class FileUploadActivity extends Activity {
 
 		try {         
 			File root = new File(Environment.getExternalStorageDirectory()
-					+ File.separator + "TourMe" + File.separator + "Pictures" + File.separator + poiName);
+					+ File.separator + "TourMe" + File.separator +  poiName + File.separator + "Pictures");
 			root.mkdirs();
 			sdImageMainDirectory = new File(root, LandingPageActivity.userId + "_" + poiName + 
-					"_" + LandingPageActivity.numPics++ + ".jpg");
+					"_" + ++LandingPageActivity.numPics + ".jpg");
 			currentIntent = this.getIntent();
 			startCameraActivity();
 			Log.d("abc", "AHH Dont Go Here before taking picture");
+			
+			
+			FileUploadActivity.pictureName =  sdImageMainDirectory.toString();
+			FileUploadActivity.isUpload = true;
+			
+			
 		} catch (Exception e) {
 			finish();
 			Toast.makeText(this, "Error occured. Please try again later.",
 					Toast.LENGTH_SHORT).show();
 		}
-	}
 
+		
+		
+	}
 
 	protected void startCameraActivity() {
 
@@ -109,5 +120,6 @@ public class FileUploadActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

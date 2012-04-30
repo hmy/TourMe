@@ -26,6 +26,7 @@ public class DatabaseHandler {
 	private StringBuilder sb=null;
 	private final String PHPSERVERLOCATION = "http://ec2-23-20-205-81.compute-1.amazonaws.com/dbrequest.php?sql=";
 
+
 	public JSONArray getDataFromSql(String sql) {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 

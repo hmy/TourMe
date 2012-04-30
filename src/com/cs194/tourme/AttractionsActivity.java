@@ -41,31 +41,12 @@ public class AttractionsActivity extends ExpandableListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attractions);
 
-
-		//getting gps
-		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
-		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
-		LandingPageActivity.mlocManager.requestLocationUpdates( 
-				LocationManager.GPS_PROVIDER, 60*1000, 0, LandingPageActivity.mlocListener);  
-
-
-		layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		headerData = new ArrayList<HashMap<String, String>>();
-		childData = new ArrayList<ArrayList<HashMap<String, Object>>>();
-
 		try {
 
-			try {
-				LandingPageActivity.currLat = LandingPageActivity.mlocManager.
-						getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
-				LandingPageActivity.currLong = LandingPageActivity.mlocManager.
-						getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
-			} catch (Exception e) {
-				Log.d("error in loc", "error in AttractionActivity");
-				e.printStackTrace();
-				LandingPageActivity.currLat = 37.87309;
-				LandingPageActivity.currLong = -122.25921;
-			}
+			layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			headerData = new ArrayList<HashMap<String, String>>();
+			childData = new ArrayList<ArrayList<HashMap<String, Object>>>();
+
 
 			DatabaseHandler dbHandler = new DatabaseHandler ();
 
@@ -181,6 +162,25 @@ public class AttractionsActivity extends ExpandableListActivity {
 			}
 		}
 				);		
+		
+		//getting gps
+		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
+		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
+		LandingPageActivity.mlocManager.requestLocationUpdates( 
+				LocationManager.GPS_PROVIDER, 60*1000, 0, LandingPageActivity.mlocListener);  
+
+		try {
+			LandingPageActivity.currLat = LandingPageActivity.mlocManager.
+					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+			LandingPageActivity.currLong = LandingPageActivity.mlocManager.
+					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+		} catch (Exception e) {
+			Log.d("error in loc", "error in AttractionActivity");
+			e.printStackTrace();
+			LandingPageActivity.currLat = 37.87309;
+			LandingPageActivity.currLong = -122.25921;
+		}
+		
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 		LandingPageActivity.mlocManager.requestLocationUpdates(
 				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);  
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
