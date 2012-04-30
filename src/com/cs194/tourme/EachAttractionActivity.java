@@ -1,26 +1,28 @@
 	package com.cs194.tourme;
 
 	import java.io.InputStream;
-	import java.net.URL;
-	import java.util.HashMap;
-	import java.util.Locale;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Locale;
 
-	import org.json.JSONArray;
-	import org.json.JSONException;
+import org.json.JSONArray;
+import org.json.JSONException;
 
-	import android.content.Intent;
-	import android.graphics.drawable.Drawable;
-	import android.media.MediaPlayer;
-	import android.net.ParseException;
-	import android.os.Bundle;
-	import android.speech.tts.TextToSpeech;
-	import android.util.Log;
-	import android.view.View;
-	import android.widget.ImageView;
-	import android.widget.TextView;
-	import android.widget.Toast;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.ParseException;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-	public class EachAttractionActivity extends LocalizedActivity {
+	public class EachAttractionActivity extends LocalizedActivity implements OnUtteranceCompletedListener {
 		
 		
 		// http://developer.android.com/resources/samples/ApiDemos/src/com/example/android/apis/media/MediaPlayerDemo_Audio.html
@@ -38,6 +40,8 @@
 	    private int playBackPosition = 0;
 	    private int goBack = 1300;
 	    HashMap<String, String> myHashRender;
+		HashMap<String, String> myHashAlarm;			
+
 
 	    private TextView tx;
 		
@@ -110,9 +114,7 @@
 
 			TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 			textView.setText (description); 
-			
-			//MEDIA PLAYER INFORMATION
-		//	playAudio(1);
+	
 
 		}
 
@@ -161,11 +163,17 @@
 			
 			mMediaPlayer.seekTo(playBackPosition);
 			Toast.makeText(getBaseContext(), "In play method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
+			if(firstTimePlaying){
+				Toast.makeText(getBaseContext(), "Please wait while media is loaded ", Toast.LENGTH_LONG).show();
+				mMediaPlayer.setVolume(0, 0);
+				mMediaPlayer.start(); //You also need this method here or it won't play after first time either
+				mMediaPlayer.setVolume(100, 100);
+			}
+			else
+				mMediaPlayer.start(); //You also need this method here or it won't play after first time either
 
-			mMediaPlayer.start();
 			
-
-
+			firstTimePlaying = false;
 		}
 		
 		public void setupFirstTimeMediaUse(){
@@ -176,7 +184,7 @@
 		        mMediaPlayer.setDataSource(path);
 		        mMediaPlayer.prepare();
 		        mMediaPlayer.seekTo(playBackPosition);
-		        mMediaPlayer.start();
+		        mMediaPlayer.start();  //You need this method here or it will not play after the first time
 		        } catch (Exception e) {
 		        	Log.e(TAG, "error: " + e.getMessage(), e);
 		        }
@@ -184,21 +192,30 @@
 		}
 		
 		public void convertTTSToSD(){
+			tts.setOnUtteranceCompletedListener(this);
+			myHashAlarm = new HashMap<String, String>();			
+
+			myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_STREAM, String.valueOf(AudioManager.STREAM_ALARM));
+			
 			//read the text and form into words
 			TextView text = (TextView)findViewById(R.id.textViewAttractionDescription);
 			String textString = (String)text.getText();
 			//debugging:
-			textString = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eightteen nineteen twenty twenty-one twenty-two twenty-three twenty-four twenty-five";
+			textString = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eightteen nineteen twenty";
 			tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 			
+			myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "twenty");
+			
 			//push to SD card
-			myHashRender = new HashMap();
+			myHashRender = new HashMap<String, String>();
 			String destFileName = "/sdcard/test.mp3";
 			myHashRender.put(TextToSpeech.Engine.KEY_PARAM_STREAM, textString);
 			tts.synthesizeToFile(textString, myHashRender, destFileName);
 			
-			Toast.makeText(getBaseContext(), "In convert method, file is synthesized",Toast.LENGTH_SHORT).show();
-			firstTimePlaying = false;
+			Toast.makeText(getBaseContext(), "In convert method, file is synthesizing. Please wait for media to load.",Toast.LENGTH_SHORT).show();
+			
+
+
 			
 		}
 
@@ -212,40 +229,7 @@
 
 		}
 		
-		   private void playAudio(Integer media) {
-		        try {
-		        	
 
-		            switch (media) {
-		                case LOCAL_AUDIO:
-		                    /**
-		                     * TODO: Set the path variable to a local audio file path.
-		                     */
-		                    path = "/sdcard/test.mp3";
-		                    if (path == "") {
-		                        // Tell the user to provide an audio file URL.
-		                        Toast
-		                                .makeText(
-		                                		EachAttractionActivity.this,
-		                                        "Please edit MediaPlayer_Audio Activity, "
-		                                                + "and set the path variable to your audio file path."
-		                                                + " Your audio file must be stored on sdcard.",
-		                                        Toast.LENGTH_LONG).show();
-
-		                    }
-		                    mMediaPlayer = new MediaPlayer();
-		                    mMediaPlayer.setDataSource(path);
-		                    mMediaPlayer.prepare();
-		                    mMediaPlayer.start();
-		                    break;
-		                    }
-		            
-
-		        } catch (Exception e) {
-		            Log.e(TAG, "error: " + e.getMessage(), e);
-		        }
-
-		    }
 
 		    @Override
 		    protected void onDestroy() {
@@ -257,4 +241,16 @@
 		        }
 
 		    }
+
+
+			@Override
+			public void onUtteranceCompleted(String utteranceId) {
+				// TODO Auto-generated method stub
+			   // if (utteranceId == "twenty") {
+					Toast.makeText(getBaseContext(), "In utterance method: DONE!",Toast.LENGTH_SHORT).show();
+					Log.v("MESSAGE", "Uterrance Completed");
+
+			    //} 
+				
+			}
 	}
