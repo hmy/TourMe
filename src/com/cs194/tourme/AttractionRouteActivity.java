@@ -234,7 +234,7 @@ public class AttractionRouteActivity extends MapActivity {
 		startActivity (intent);
 	}
 
-	/* to disable home button 
+	//disable home button now
 	@Override
 	public void onAttachedToWindow() {  
 	    Log.i("TESTE", "onAttachedToWindow");
@@ -242,18 +242,7 @@ public class AttractionRouteActivity extends MapActivity {
 	    super.onAttachedToWindow();  
 	}
 	
-	public boolean onKeyDown(int keyCode, KeyEvent event){
-		switch(keyCode){
 
-		case KeyEvent.KEYCODE_HOME:
-			LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
-			break;
-			
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-	*/
-	
 	public class AttractionRouteCustomItemSelectedListener implements OnItemSelectedListener {
 
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
