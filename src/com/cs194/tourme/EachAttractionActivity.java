@@ -122,7 +122,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 		textView.setText (description); 	
-		Toast.makeText(getBaseContext(), "Please wait for media to load",Toast.LENGTH_SHORT).show();
+		Toast.makeText(getBaseContext(), "   Please Press Play: \n Then wait for media to load",Toast.LENGTH_SHORT).show();
 
 
 	}
@@ -203,7 +203,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 		//read the text and form into words
 		TextView text = (TextView)findViewById(R.id.textViewAttractionDescription);
 		String textString = (String)text.getText();
-
+		tts.setSpeechRate((float) 1.3);
 		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 
 
