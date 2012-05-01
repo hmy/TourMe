@@ -168,7 +168,7 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 				} catch (JSONException e) {
 					Log.d("Json error", e.toString());
 					Toast.makeText(currentContext, "JSONException Has Occured" +
-							" in Attractions Route Activity" ,Toast.LENGTH_LONG).show();
+							" in Attractions Route Activity" ,Toast.LENGTH_SHORT).show();
 					e.printStackTrace();
 				}
 

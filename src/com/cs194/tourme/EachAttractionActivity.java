@@ -105,7 +105,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 		} catch(JSONException e1){
 			Log.d("Json error", e1.toString());
 			Toast.makeText(getBaseContext(), "JSONException Has Occured" +
-					" in Attractions Activity" ,Toast.LENGTH_LONG).show();
+					" in Attractions Activity" ,Toast.LENGTH_SHORT).show();
 			// no need for below? taken care as default value for this column is this
 			//			pictureUri = "http://thegarageblog.com/garage/wp-content/uploads/noimageavailable.jpg";
 		} catch (ParseException e1) {
@@ -120,7 +120,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		TextView textView = (TextView) findViewById(R.id.textViewAttractionDescription);
 		textView.setText (description); 	
-		Toast.makeText(getBaseContext(), "Please wait for media to load",Toast.LENGTH_LONG).show();
+		Toast.makeText(getBaseContext(), "Please wait for media to load",Toast.LENGTH_SHORT).show();
 
 
 	}

@@ -125,7 +125,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 		} catch(JSONException e1){
 			Log.d("Json error", e1.toString());
 			Toast.makeText(getBaseContext(), "JSONException Has Occured" +
-					" in Attractions Activity" ,Toast.LENGTH_LONG).show();
+					" in Attractions Activity" ,Toast.LENGTH_SHORT).show();
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
