@@ -28,6 +28,9 @@ public class FileUploadActivity extends Activity {
 	String poiName = EachAttractionActivity.poiName;
 	static public String pictureName = null;
 	static public boolean isUpload = false;
+	
+	static double picWidth;
+	static double picHeight;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +44,9 @@ public class FileUploadActivity extends Activity {
 					"_" + ++LandingPageActivity.numPics + ".jpg");
 			currentIntent = this.getIntent();
 			startCameraActivity();
-			Log.d("abc", "AHH Dont Go Here before taking picture");
-			
 			
 			FileUploadActivity.pictureName =  sdImageMainDirectory.toString();
-			FileUploadActivity.isUpload = true;
+
 			
 			
 		} catch (Exception e) {
@@ -78,6 +79,7 @@ public class FileUploadActivity extends Activity {
 		case -1:
 			try { 
 				StoreImage(this, Uri.parse("file://" + sdImageMainDirectory.toString()), sdImageMainDirectory);
+				FileUploadActivity.isUpload = true;
 				//				StoreImage(this, Uri.parse(data.toURI()), sdImageMainDirectory);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -116,6 +118,8 @@ public class FileUploadActivity extends Activity {
 			
 			heightScale = bm.getHeight() > bm.getWidth() ? bm.getHeight()/340 : bm.getHeight()/200;
 			widthScale = bm.getWidth() > bm.getHeight() ? bm.getWidth()/340 : bm.getWidth()/200;
+			FileUploadActivity.picWidth = bm.getWidth()/widthScale;
+			FileUploadActivity.picHeight = bm.getHeight()/heightScale;
 			
 			bm = Bitmap.createScaledBitmap(bm, bm.getWidth()/widthScale, 
 					bm.getHeight()/heightScale, true);

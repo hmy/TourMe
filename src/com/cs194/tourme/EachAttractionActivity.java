@@ -4,13 +4,26 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -21,6 +34,7 @@ import android.net.ParseException;
 import android.os.Bundle;
 import android.os.Environment;
 import android.speech.tts.TextToSpeech;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,7 +60,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 
 		String pictureUri = "";
 		String description = "";
@@ -60,7 +73,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 			@Override
 			public void onInit(int status) {
-				// TODO Auto-generated method stub
 				if(status != TextToSpeech.ERROR){
 					tts.setLanguage(Locale.US);
 				}
@@ -114,86 +126,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	}
 
-	private void uploadPicture() throws UnsupportedEncodingException{
 
-		Toast.makeText(getApplicationContext(), 
-				"Uploading your picture to server. Please be patient. Thank you", 
-				Toast.LENGTH_SHORT).show();
-
-		HttpURLConnection connection = null;
-		DataOutputStream outputStream = null;
-		DataInputStream inputStream = null;
-
-		String pathToOurFile = FileUploadActivity.pictureName;
-		String urlServer = "http://ec2-23-20-205-81.compute-1.amazonaws.com/hmyUploadPicture.php";
-		String lineEnd = "\r\n";
-		String twoHyphens = "--";
-		String boundary =  "*****";
-
-		int bytesRead, bytesAvailable, bufferSize;
-		byte[] buffer;
-		int maxBufferSize = 1*1024*1024;
-
-		try	{
-			FileInputStream fileInputStream = new FileInputStream(new File(pathToOurFile) );
-
-			URL url = new URL(urlServer);
-			connection = (HttpURLConnection) url.openConnection();
-
-			// Allow Inputs & Outputs
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-			connection.setUseCaches(false);
-
-			// Enable POST method
-			connection.setRequestMethod("POST");
-
-			connection.setRequestProperty("Connection", "Keep-Alive");
-			connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-
-			outputStream = new DataOutputStream( connection.getOutputStream() );
-			outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-			outputStream.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + pathToOurFile +"\"" + lineEnd);
-			outputStream.writeBytes(lineEnd);
-
-			bytesAvailable = fileInputStream.available();
-			bufferSize = Math.min(bytesAvailable, maxBufferSize);
-			buffer = new byte[bufferSize];
-
-			// Read file
-			bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-			while (bytesRead > 0)
-			{
-				outputStream.write(buffer, 0, bufferSize);
-				bytesAvailable = fileInputStream.available();
-				bufferSize = Math.min(bytesAvailable, maxBufferSize);
-				bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-			}
-
-			outputStream.writeBytes(lineEnd);
-			outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-			// Responses from the server (code and message)
-			int serverResponseCode = connection.getResponseCode();
-			String serverResponseMessage = connection.getResponseMessage();
-
-			fileInputStream.close();
-			outputStream.flush();
-			outputStream.close();
-
-			Toast.makeText(getApplicationContext(), 
-					"Finished uploading the picture, Thank you for waiting!", 
-					Toast.LENGTH_SHORT).show();
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			Toast.makeText(getApplicationContext(), 
-					"Upload Failed, please try again later.", 
-					Toast.LENGTH_SHORT).show();
-		}
-
-	}
 
 
 	private Drawable LoadImageFromWeb(String url) {
@@ -297,15 +230,160 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	}
 
+	//upload picture
+	private void uploadPicture() throws UnsupportedEncodingException{
+
+		Toast.makeText(getApplicationContext(), 
+				"Uploading your picture to server. Please be patient. Thank you", 
+				Toast.LENGTH_SHORT).show();
+
+		HttpURLConnection connection = null;
+		DataOutputStream outputStream = null;
+		DataInputStream inputStream = null;
+
+		String pathToOurFile = FileUploadActivity.pictureName;
+		String urlServer = "http://ec2-23-20-205-81.compute-1.amazonaws.com/UploadPicture.php";
+
+		Log.d("urlServer", urlServer);
+
+
+		String lineEnd = "\r\n";
+		String twoHyphens = "--";
+		String boundary =  "*****";
+
+		int bytesRead, bytesAvailable, bufferSize;
+		byte[] buffer;
+		int maxBufferSize = 1*1024*1024;
+
+		try	{
+			FileInputStream fileInputStream = new FileInputStream(new File(pathToOurFile) );
+
+			URL url = new URL(urlServer);
+			connection = (HttpURLConnection) url.openConnection();
+
+			// Allow Inputs & Outputs
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setUseCaches(false);
+
+			// Enable POST method
+			connection.setRequestMethod("POST");
+
+			connection.setRequestProperty("Connection", "Keep-Alive");
+			connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
+
+			outputStream = new DataOutputStream( connection.getOutputStream() );
+			outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+			outputStream.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + pathToOurFile +"\"" + lineEnd);
+			outputStream.writeBytes(lineEnd);
+
+			bytesAvailable = fileInputStream.available();
+			bufferSize = Math.min(bytesAvailable, maxBufferSize);
+			buffer = new byte[bufferSize];
+
+			// Read file
+			bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+			while (bytesRead > 0)
+			{
+				outputStream.write(buffer, 0, bufferSize);
+				bytesAvailable = fileInputStream.available();
+				bufferSize = Math.min(bytesAvailable, maxBufferSize);
+				bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+			}
+
+			outputStream.writeBytes(lineEnd);
+			outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+			// Responses from the server (code and message)
+			int serverResponseCode = connection.getResponseCode();
+			String serverResponseMessage = connection.getResponseMessage();
+
+			fileInputStream.close();
+			outputStream.flush();
+			outputStream.close();
+
+			Toast.makeText(getApplicationContext(), 
+					"Finished uploading the picture, Thank you for waiting!", 
+					Toast.LENGTH_SHORT).show();
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			Toast.makeText(getApplicationContext(), 
+					"Upload Failed, please try again later.", 
+					Toast.LENGTH_SHORT).show();
+		}
+
+	}
+
+	private void storePictureIntoRails() {
+		//based on DBHandler
+		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+		try {
+
+			//			String phpLocation = "http://ec2-23-20-205-81.compute-1.amazonaws.com/postPicture.php?";
+			String phpLocation = "http://ec2-23-20-205-81.compute-1.amazonaws.com:3000" +
+					"/tour_my_memory/postPicture?";
+			String userID = URLEncoder.encode(LandingPageActivity.userId, "UTF-8");
+			String title =  URLEncoder.encode(EachAttractionActivity.poiName, "UTF-8");
+			String lat = URLEncoder.encode(Double.toString(LandingPageActivity.currLat), "UTF-8");
+			String lng = URLEncoder.encode(Double.toString(LandingPageActivity.currLong), "UTF-8");
+			String pictureURI = URLEncoder.encode(FileUploadActivity.pictureName.replace(
+					"/mnt/sdcard/TourMe/", "/home/ubuntu/TourMePics/"), "UTF-8");
+
+			//get time -> description
+			Time currTime = new Time(Time.getCurrentTimezone());
+			currTime.setToNow();
+			String description = URLEncoder.encode(currTime.toString(), "UTF-8");
+			
+			//get width / height
+			String width = URLEncoder.encode(Double.toString(FileUploadActivity.picWidth), "UTF-8");
+			String height = URLEncoder.encode(Double.toString(FileUploadActivity.picHeight), "UTF-8");
+
+			// utf-8 format
+			String arguments = "pictureURI=" + pictureURI + "&userID=" + userID + "&title=" + title + "&lat=" + 
+					lat + "&lng=" + lng + "&description=" + description + "&width=" + width + "&height=" + height;
+
+
+			//			InputStream is = null;
+
+			HttpParams httpParameters = new BasicHttpParams();
+			HttpClient httpclient = new DefaultHttpClient(httpParameters);
+			HttpPost httppost = new HttpPost(phpLocation + arguments);
+
+			Log.d("PHP CALL from Each Attraction Activity", phpLocation + arguments);
+
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity entity = response.getEntity();
+			//			is = entity.getContent();
+
+			//			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	@Override
 	protected void onResume() {
+		Log.d("EachAttractionActivity", Boolean.toString(FileUploadActivity.isUpload));
 		try {	
 			if(FileUploadActivity.isUpload) {
 				uploadPicture();
+				FileUploadActivity.isUpload = false;
+				storePictureIntoRails();
 			}	
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}	
+
 		super.onResume();
 	}
 

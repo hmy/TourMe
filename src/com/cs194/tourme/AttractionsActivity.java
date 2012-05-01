@@ -174,6 +174,8 @@ public class AttractionsActivity extends ExpandableListActivity {
 					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
 			LandingPageActivity.currLong = LandingPageActivity.mlocManager.
 					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+			
+			Log.d("change in lag long", LandingPageActivity.currLat + " " + LandingPageActivity.currLong);
 		} catch (Exception e) {
 			Log.d("error in loc", "error in AttractionActivity");
 			e.printStackTrace();
