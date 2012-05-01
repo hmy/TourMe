@@ -46,7 +46,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	// http://developer.android.com/resources/samples/ApiDemos/src/com/example/android/apis/media/MediaPlayerDemo_Audio.html
 	TextToSpeech tts;
-	boolean debugging = false;
 	private static final String TAG = "MediaPlayerDemo";
 	private MediaPlayer mMediaPlayer;
 
@@ -150,7 +149,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 		// Time 1:09 of http://www.youtube.com/watch?v=hvpYInzY8Xg
 		playBackPosition = mMediaPlayer.getCurrentPosition();
 		mMediaPlayer.pause();
-		if(debugging) Toast.makeText(getBaseContext(), "In pause method, playBackPositions is " + playBackPosition,Toast.LENGTH_LONG).show();
 
 	}
 
@@ -172,9 +170,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 
 		mMediaPlayer.seekTo(playBackPosition);
-		if(debugging)Toast.makeText(getBaseContext(), "In play method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
 		if(firstTimePlaying){
-			if (debugging) Toast.makeText(getBaseContext(), "Please wait while media is loaded ", Toast.LENGTH_LONG).show();
 			mMediaPlayer.setVolume(0, 0);
 			mMediaPlayer.start(); //You also need this method here or it won't play after first time either
 			mMediaPlayer.setVolume(100, 100);
@@ -206,7 +202,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 		TextView text = (TextView)findViewById(R.id.textViewAttractionDescription);
 		String textString = (String)text.getText();
 
-		if(debugging) textString = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eightteen nineteen twenty";
 		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 
 
@@ -217,8 +212,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 		myHashRender.put(TextToSpeech.Engine.KEY_PARAM_STREAM, textString);
 		tts.synthesizeToFile(textString, myHashRender, destFileName);
 
-		if(debugging) Toast.makeText(getBaseContext(), "In convert method, file is synthesizing. Please wait for media to load.",Toast.LENGTH_SHORT).show();
-
 	}
 
 	public void buttonOnButtonPrevious(View v) {
@@ -226,7 +219,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 		playBackPosition = 0;
 		mMediaPlayer.seekTo(playBackPosition);
 		mMediaPlayer.start();
-		if(debugging) Toast.makeText(getBaseContext(), "In reset method, playBackPositions is " + playBackPosition,Toast.LENGTH_SHORT).show();
 
 	}
 
