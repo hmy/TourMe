@@ -14,7 +14,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -66,11 +68,13 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 		LandingPageActivity.mcForListener = mapView.getController();
 		LandingPageActivity.mcForListener.setZoom(13);
 
+		/*
 		//gps related
 		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
 		LandingPageActivity.mlocManager.requestLocationUpdates( 
 				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);  
+		*/
 
 		mapView.postDelayed(waitForMapTimeTask, 100);
 
@@ -195,6 +199,8 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 		this.setCloseByPOIMarkers();
 	}
 
+	
+	/*
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -207,8 +213,26 @@ public class ShowMapsActivity extends MapActivity implements MapViewMovementList
 		super.onPause();
 		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
-
 	
+	
+	@Override
+	public void onAttachedToWindow() {  
+	    Log.i("TESTE", "onAttachedToWindow");
+	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+	    super.onAttachedToWindow();  
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		switch(keyCode){
+
+		case KeyEvent.KEYCODE_HOME:
+			LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+			break;
+			
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	*/
 }
 
 //		Berkeley GeoLocation 37.87309	-122.25921

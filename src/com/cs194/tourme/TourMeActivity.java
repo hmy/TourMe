@@ -5,18 +5,19 @@ import java.util.Locale;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class TourMeActivity extends LocalizedActivity {
 	/** Called when the activity is first created. */
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -61,16 +62,8 @@ public class TourMeActivity extends LocalizedActivity {
 			}
 		});
 
-
 	}
 
-	public boolean onKeyDown(int keyCode, KeyEvent event){
-		switch(keyCode){
-		case KeyEvent.KEYCODE_BACK:
-			exitEvent();
-		}
-		return true;
-	}
 
 	public void showAttractions(View view) {
 		Intent intent = new Intent(this, AttractionsActivity.class);
@@ -100,24 +93,60 @@ public class TourMeActivity extends LocalizedActivity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				moveTaskToBack(true);
+				//remove GPS
+				LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 				finish();
 			}
 		})
 		.setNegativeButton(buttonNo, null)
 		.show();
+
 	}
-	
+
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		switch(keyCode){
+		case KeyEvent.KEYCODE_BACK:
+			exitEvent();
+			break;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	/*
+	@Override
+	public void onAttachedToWindow() {  
+		Log.i("TESTE", "onAttachedToWindow");
+		this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+		super.onAttachedToWindow();  
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		switch(keyCode){
+		case KeyEvent.KEYCODE_BACK:
+			exitEvent();
+			break;
+
+		case KeyEvent.KEYCODE_HOME:
+			LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+			break;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		LandingPageActivity.mlocManager.requestLocationUpdates(
 				LocationManager.GPS_PROVIDER, 30*1000, 0, LandingPageActivity.mlocListener);
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
 		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
+	 */
 }
 

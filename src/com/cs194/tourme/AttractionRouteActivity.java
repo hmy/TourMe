@@ -22,7 +22,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -79,7 +81,7 @@ public class AttractionRouteActivity extends MapActivity {
 			} catch (JSONException e) {
 				Log.d("Json error", e.toString());
 				Toast.makeText(getBaseContext(), "JSONException Has Occured" +
-						" in Attractions Route Activity" ,Toast.LENGTH_LONG).show();
+						" in Attractions Route Activity" ,Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			}
 
@@ -129,7 +131,7 @@ public class AttractionRouteActivity extends MapActivity {
 
 		//message
 		Toast.makeText(this.getApplicationContext(), "You are looking at the Tour Route Map for "+
-				AttractionsActivity.attractionName + " !", Toast.LENGTH_LONG).show();
+				AttractionsActivity.attractionName + " !", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -232,6 +234,26 @@ public class AttractionRouteActivity extends MapActivity {
 		startActivity (intent);
 	}
 
+	/* to disable home button 
+	@Override
+	public void onAttachedToWindow() {  
+	    Log.i("TESTE", "onAttachedToWindow");
+	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+	    super.onAttachedToWindow();  
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		switch(keyCode){
+
+		case KeyEvent.KEYCODE_HOME:
+			LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+			break;
+			
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	*/
+	
 	public class AttractionRouteCustomItemSelectedListener implements OnItemSelectedListener {
 
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -249,11 +271,6 @@ public class AttractionRouteActivity extends MapActivity {
 			// Do nothing.
 		}		
 	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
-	}
+
 
 }

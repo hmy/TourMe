@@ -36,7 +36,9 @@ import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -319,8 +321,10 @@ public class EachAttractionActivity extends LocalizedActivity {
 					"/tour_my_memory/postPicture?";
 			String userID = URLEncoder.encode(LandingPageActivity.userId, "UTF-8");
 			String title =  URLEncoder.encode(EachAttractionActivity.poiName, "UTF-8");
+			
 			String lat = URLEncoder.encode(Double.toString(LandingPageActivity.currLat), "UTF-8");
 			String lng = URLEncoder.encode(Double.toString(LandingPageActivity.currLong), "UTF-8");
+			
 			String pictureURI = URLEncoder.encode(FileUploadActivity.pictureName.replace(
 					"/mnt/sdcard/TourMe/", "/home/ubuntu/TourMePics/"), "UTF-8");
 
@@ -362,6 +366,23 @@ public class EachAttractionActivity extends LocalizedActivity {
 		}
 
 	}
+	
+	/*
+	@Override
+	public void onAttachedToWindow() {  
+	    Log.i("TESTE", "onAttachedToWindow");
+	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+	    super.onAttachedToWindow();  
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		switch(keyCode){
+		case KeyEvent.KEYCODE_HOME:
+			LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+			break;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 	@Override
 	protected void onResume() {
@@ -378,7 +399,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		super.onResume();
 	}
-
+*/
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

@@ -33,6 +33,9 @@ public class MyLocationListener extends ShowMapsActivity implements LocationList
 		
 		GeoPoint newloc = new GeoPoint ((int) (loc.getLatitude()*1E6), 
 				(int) (loc.getLongitude()*1E6)); 
+		
+		LandingPageActivity.currLat = loc.getLatitude();
+		LandingPageActivity.currLong = loc.getLongitude();
 
 		//this fixes the bug that moves the map when you are in diff. activity 
 		if(MyLocationListener.animateToMap) {

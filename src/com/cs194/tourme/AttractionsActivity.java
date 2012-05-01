@@ -163,12 +163,13 @@ public class AttractionsActivity extends ExpandableListActivity {
 		}
 				);		
 		
+		/*
 		//getting gps
 		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
 		LandingPageActivity.mlocManager.requestLocationUpdates( 
 				LocationManager.GPS_PROVIDER, 60*1000, 0, LandingPageActivity.mlocListener);  
-
+		*/
 		try {
 			LandingPageActivity.currLat = LandingPageActivity.mlocManager.
 					getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
@@ -199,6 +200,19 @@ public class AttractionsActivity extends ExpandableListActivity {
 		startActivity (intent);
 	}
 
+	/*
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		switch(keyCode){
+
+		case KeyEvent.KEYCODE_HOME:
+			LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+			break;
+			
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -211,5 +225,6 @@ public class AttractionsActivity extends ExpandableListActivity {
 		super.onPause();
 		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
+	*/
 }
 

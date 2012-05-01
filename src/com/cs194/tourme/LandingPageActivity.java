@@ -20,6 +20,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings.Secure;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.maps.MapController;
@@ -47,6 +49,8 @@ public class LandingPageActivity extends Activity {
 
 		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
+		LandingPageActivity.mlocManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 10*1000, 0, LandingPageActivity.mlocListener);
 
 		// SLEEP 2 SECONDS HERE ...
 		intent = new Intent(this, TourMeActivity.class);
@@ -55,7 +59,7 @@ public class LandingPageActivity extends Activity {
 			public void run() { 
 				startActivity(intent); 
 			} 
-		}, 1000); 
+		}, 1500); 
 
 		//creating user name
 		File userIdDir = new File(Environment.getExternalStorageDirectory()
@@ -74,8 +78,6 @@ public class LandingPageActivity extends Activity {
 			if(userExist) {
 				BufferedWriter userIdWriter = new BufferedWriter(new FileWriter (userIdLog));
 				Random rand = new Random();
-//				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID) 
-//						+ "" + System.currentTimeMillis() + "" + rand.nextInt(99999) + "\n";
 				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID); 
 				userIdWriter.write(uniqueUserId);
 				LandingPageActivity.userId = uniqueUserId;
@@ -101,6 +103,22 @@ public class LandingPageActivity extends Activity {
 
 
 	}
-
+	/*
+	@Override
+	public void onAttachedToWindow() {  
+	    Log.i("TESTE", "onAttachedToWindow");
+	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+	    super.onAttachedToWindow();  
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		switch(keyCode){
+		case KeyEvent.KEYCODE_HOME:
+			LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+			break;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	*/
 }
 
