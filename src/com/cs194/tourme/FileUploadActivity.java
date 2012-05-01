@@ -40,7 +40,7 @@ public class FileUploadActivity extends Activity {
 
 		try {         
 			File root = new File(Environment.getExternalStorageDirectory()
-					+ File.separator + "TourMe" + File.separator +  poiName + File.separator + "Pictures");
+					+ File.separator + "TourMe" + File.separator +  poiName + File.separator);
 			root.mkdirs();
 			sdImageMainDirectory = new File(root, LandingPageActivity.userId + "_" + poiName + 
 					"_" + ++LandingPageActivity.numPics + ".jpg");
@@ -118,8 +118,8 @@ public class FileUploadActivity extends Activity {
 			bm = Media.getBitmap(mContext.getContentResolver(), imageLoc);
 			FileOutputStream out = new FileOutputStream(imageDir);
 			
-			heightScale = bm.getHeight() > bm.getWidth() ? bm.getHeight()/340 : bm.getHeight()/200;
-			widthScale = bm.getWidth() > bm.getHeight() ? bm.getWidth()/340 : bm.getWidth()/200;
+			heightScale = (int) (bm.getHeight() > bm.getWidth() ? bm.getHeight()/100 : bm.getHeight()/58.8);
+			widthScale = (int) (bm.getWidth() > bm.getHeight() ? bm.getWidth()/100 : bm.getWidth()/58.8);
 			FileUploadActivity.picWidth = bm.getWidth()/widthScale;
 			FileUploadActivity.picHeight = bm.getHeight()/heightScale;
 			

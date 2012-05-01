@@ -325,15 +325,20 @@ public class EachAttractionActivity extends LocalizedActivity {
 			String lat = URLEncoder.encode(Double.toString(LandingPageActivity.currLat), "UTF-8");
 			String lng = URLEncoder.encode(Double.toString(LandingPageActivity.currLong), "UTF-8");
 			
-			String pictureURI = URLEncoder.encode(FileUploadActivity.pictureName.replace(
-					"/mnt/sdcard/TourMe/", "/home/ubuntu/TourMePics/"), "UTF-8");
 
+			Log.d("pictureURI", FileUploadActivity.pictureName);
+			String pictureURI = URLEncoder.encode(FileUploadActivity.pictureName.replace(
+					"/mnt/sdcard/TourMe/", "/TourMePics/"), "UTF-8");
+
+
+			Log.d("pictureURI", pictureURI);
+			
 			//get time -> description
 			Time currTime = new Time(Time.getCurrentTimezone());
 			currTime.setToNow();
 			String description = URLEncoder.encode(currTime.toString(), "UTF-8");
 			
-			//get width / height
+			//get width / height (this should be int though)		
 			String width = URLEncoder.encode(Double.toString(FileUploadActivity.picWidth), "UTF-8");
 			String height = URLEncoder.encode(Double.toString(FileUploadActivity.picHeight), "UTF-8");
 
@@ -384,6 +389,8 @@ public class EachAttractionActivity extends LocalizedActivity {
 		return super.onKeyDown(keyCode, event);
 	}
 
+*/
+	
 	@Override
 	protected void onResume() {
 		Log.d("EachAttractionActivity", Boolean.toString(FileUploadActivity.isUpload));
@@ -399,7 +406,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		super.onResume();
 	}
-*/
+	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
