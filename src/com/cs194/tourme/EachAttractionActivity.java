@@ -47,9 +47,9 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 
 	// http://developer.android.com/resources/samples/ApiDemos/src/com/example/android/apis/media/MediaPlayerDemo_Audio.html
-	TextToSpeech tts;
+	TextToSpeech tts = null;
 	private static final String TAG = "MediaPlayerDemo";
-	private MediaPlayer mMediaPlayer;
+	private MediaPlayer mMediaPlayer = null;
 
 	private String path;
 	private boolean firstTimePlaying = true;
@@ -321,10 +321,10 @@ public class EachAttractionActivity extends LocalizedActivity {
 					"/tour_my_memory/postPicture?";
 			String userID = URLEncoder.encode(LandingPageActivity.userId, "UTF-8");
 			String title =  URLEncoder.encode(EachAttractionActivity.poiName, "UTF-8");
-			
+
 			String lat = URLEncoder.encode(Double.toString(LandingPageActivity.currLat), "UTF-8");
 			String lng = URLEncoder.encode(Double.toString(LandingPageActivity.currLong), "UTF-8");
-			
+
 
 			Log.d("pictureURI", FileUploadActivity.pictureName);
 			String pictureURI = URLEncoder.encode(FileUploadActivity.pictureName.replace(
@@ -332,12 +332,12 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 
 			Log.d("pictureURI", pictureURI);
-			
+
 			//get time -> description
 			Time currTime = new Time(Time.getCurrentTimezone());
 			currTime.setToNow();
 			String description = URLEncoder.encode(currTime.toString(), "UTF-8");
-			
+
 			//get width / height (this should be int though)		
 			String width = URLEncoder.encode(Double.toString(FileUploadActivity.picWidth), "UTF-8");
 			String height = URLEncoder.encode(Double.toString(FileUploadActivity.picHeight), "UTF-8");
@@ -371,16 +371,16 @@ public class EachAttractionActivity extends LocalizedActivity {
 		}
 
 	}
-	
+
 	//disable home button for now
 	@Override
 	public void onAttachedToWindow() {  
-	    Log.i("TESTE", "onAttachedToWindow");
-	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
-	    super.onAttachedToWindow();  
+		Log.i("TESTE", "onAttachedToWindow");
+		this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+		super.onAttachedToWindow();  
 	}
 
-	
+
 	@Override
 	protected void onResume() {
 		Log.d("EachAttractionActivity", Boolean.toString(FileUploadActivity.isUpload));
@@ -396,7 +396,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		super.onResume();
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -404,7 +404,10 @@ public class EachAttractionActivity extends LocalizedActivity {
 			mMediaPlayer.release();
 			mMediaPlayer = null;
 		}
-
+		if (tts != null) {
+			tts.stop();
+			tts.shutdown();
+		}
 	}
 
 }
