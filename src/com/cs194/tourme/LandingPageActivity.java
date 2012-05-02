@@ -30,7 +30,7 @@ public class LandingPageActivity extends Activity {
 
 
 	static public String userId = "";
-	static public int numPics = 0; 
+	static public Integer numPics = 0; 
 	public Intent intent;
 
 	static public MapController mcForListener;
@@ -50,7 +50,7 @@ public class LandingPageActivity extends Activity {
 		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
 		LandingPageActivity.mlocManager.requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 10*1000, 0, LandingPageActivity.mlocListener);
+				LocationManager.GPS_PROVIDER, 45*1000, 0, LandingPageActivity.mlocListener);
 
 		// SLEEP 2 SECONDS HERE ...
 		intent = new Intent(this, TourMeActivity.class);
@@ -77,10 +77,11 @@ public class LandingPageActivity extends Activity {
 
 			if(userExist) {
 				BufferedWriter userIdWriter = new BufferedWriter(new FileWriter (userIdLog));
-				Random rand = new Random();
-				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID); 
-				userIdWriter.write(uniqueUserId);
+				String uniqueUserId = "Android" + Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
+				int pictureNumber = 0;
+				userIdWriter.write(uniqueUserId + "," + pictureNumber);
 				LandingPageActivity.userId = uniqueUserId;
+				LandingPageActivity.numPics = pictureNumber; 
 				userIdWriter.close();
 			} else {
 				//reading the userId in filename
@@ -90,9 +91,13 @@ public class LandingPageActivity extends Activity {
 				DataInputStream in = new DataInputStream(fstream);
 				BufferedReader br = new BufferedReader(new InputStreamReader(in));
 				//read line and assign to userId
-				LandingPageActivity.userId = br.readLine();
+				String [] userIdAndNumPic = br.readLine().split(",");
+				LandingPageActivity.userId = userIdAndNumPic[0];
+				LandingPageActivity.numPics = Integer.parseInt(userIdAndNumPic[1]);
 				//Close the input stream
 				in.close();
+				
+				Log.d("LandingPageActivity", LandingPageActivity.userId + "," + LandingPageActivity.numPics);
 			}
 
 		}  catch (IOException e) {	

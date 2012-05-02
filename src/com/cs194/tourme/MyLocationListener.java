@@ -26,7 +26,7 @@ public class MyLocationListener extends ShowMapsActivity implements LocationList
 		String Text = "My location changed to:" +
 				" Latitude = " + loc.getLatitude() +
 				" Longitude = " + loc.getLongitude() + 
-				" For debugging purpose only" ;
+				" For Display only, when in real use delete this line in MyLocationListener.java" ;
 		
 		Toast.makeText (currentContext, Text, Toast.LENGTH_SHORT).show();
 		// until here

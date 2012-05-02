@@ -1,11 +1,17 @@
 package com.cs194.tourme;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -85,6 +91,22 @@ public class TourMeActivity extends LocalizedActivity {
 		String buttonYes = getResources().getString(R.string.buttonYes);
 		String buttonNo = getResources().getString(R.string.buttonNo);
 
+		
+		//save new info into the file
+		BufferedWriter userIdWriter;
+		try {
+			userIdWriter = new BufferedWriter(new FileWriter (Environment.getExternalStorageDirectory()
+					+ File.separator + "TourMe" + File.separator + "UserId" + File.separator + "userIdLog"));
+			userIdWriter.write(LandingPageActivity.userId + "," + LandingPageActivity.numPics);
+			userIdWriter.close();
+			
+			Log.d("TourMeActivity", LandingPageActivity.userId + "," + LandingPageActivity.numPics);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
 		new AlertDialog.Builder(TourMeActivity.this)
 		.setTitle(alertTitle)
 		.setMessage(buttonMessage)

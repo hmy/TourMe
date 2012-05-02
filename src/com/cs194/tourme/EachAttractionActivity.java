@@ -336,7 +336,8 @@ public class EachAttractionActivity extends LocalizedActivity {
 			//get time -> description
 			Time currTime = new Time(Time.getCurrentTimezone());
 			currTime.setToNow();
-			String description = URLEncoder.encode(currTime.toString(), "UTF-8");
+			//String description = URLEncoder.encode(currTime.toString(), "UTF-8");
+			String description = URLEncoder.encode(currTime.format("Taken on %Y/%m/%d  %H:%M:%S"), "UTF-8");
 
 			//get width / height (this should be int though)		
 			String width = URLEncoder.encode(Double.toString(FileUploadActivity.picWidth), "UTF-8");
