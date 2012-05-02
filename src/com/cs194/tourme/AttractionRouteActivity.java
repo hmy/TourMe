@@ -234,6 +234,7 @@ public class AttractionRouteActivity extends MapActivity {
 		startActivity (intent);
 	}
 
+	/*
 	//disable home button now
 	@Override
 	public void onAttachedToWindow() {  
@@ -241,7 +242,7 @@ public class AttractionRouteActivity extends MapActivity {
 	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
 	    super.onAttachedToWindow();  
 	}
-	
+	*/
 
 	public class AttractionRouteCustomItemSelectedListener implements OnItemSelectedListener {
 

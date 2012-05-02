@@ -13,12 +13,13 @@ public class InstructionActivity extends LocalizedActivity {
 		setContentView(R.layout.instruction);
 	}
 	
+	/*
 	@Override
 	public void onAttachedToWindow() {  
 	    Log.i("TESTE", "onAttachedToWindow");
 	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
 	    super.onAttachedToWindow();  
 	}
-
+	*/
 	
 }

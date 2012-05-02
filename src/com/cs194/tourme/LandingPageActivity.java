@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,9 +19,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings.Secure;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.google.android.maps.MapController;
 
@@ -50,7 +46,7 @@ public class LandingPageActivity extends Activity {
 		LandingPageActivity.mlocManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);
 		LandingPageActivity.mlocListener = new MyLocationListener(getApplicationContext());
 		LandingPageActivity.mlocManager.requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 45*1000, 0, LandingPageActivity.mlocListener);
+				LocationManager.GPS_PROVIDER, 20*1000, 0, LandingPageActivity.mlocListener);
 
 		// SLEEP 2 SECONDS HERE ...
 		intent = new Intent(this, TourMeActivity.class);
@@ -109,13 +105,14 @@ public class LandingPageActivity extends Activity {
 
 	}
 	
+	/*
 	@Override
 	public void onAttachedToWindow() {  
 	    Log.i("TESTE", "onAttachedToWindow");
 	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
 	    super.onAttachedToWindow();  
 	}
-
+	*/
 	
 }
 

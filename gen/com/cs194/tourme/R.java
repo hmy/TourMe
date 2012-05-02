@@ -51,6 +51,7 @@ public final class R {
         public static final int linearLayout=0x7f070008;
         public static final int mapview=0x7f070000;
         public static final int name=0x7f070003;
+        public static final int railsView=0x7f070018;
         public static final int scrollView1=0x7f07000f;
         public static final int spinnerChooseLanguage=0x7f070015;
         public static final int spinnerChoosePOI=0x7f070001;
@@ -70,6 +71,7 @@ public final class R {
         public static final int main=0x7f030007;
         public static final int maps=0x7f030008;
         public static final int parentview=0x7f030009;
+        public static final int rails=0x7f03000a;
     }
     public static final class string {
         public static final int alertMessageExit=0x7f050001;

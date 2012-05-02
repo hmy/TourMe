@@ -201,6 +201,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 		startActivity (intent);
 	}
 
+	/*
 	//disable home button for now
 	@Override
 	public void onAttachedToWindow() {  
@@ -208,7 +209,7 @@ public class AttractionsActivity extends ExpandableListActivity {
 	    this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
 	    super.onAttachedToWindow();  
 	}
-	
+	*/
 	
 	/*
 	@Override

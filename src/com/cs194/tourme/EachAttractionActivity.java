@@ -373,6 +373,13 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	}
 
+	public void showRailsView(View view) {
+		Intent intent = new Intent (this, TourMyMemoryRailsActivity.class);
+		startActivity(intent);
+	}
+
+	
+	/*
 	//disable home button for now
 	@Override
 	public void onAttachedToWindow() {  
@@ -380,7 +387,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 		this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
 		super.onAttachedToWindow();  
 	}
-
+*/
 
 	@Override
 	protected void onResume() {

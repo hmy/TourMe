@@ -125,12 +125,16 @@ public class TourMeActivity extends LocalizedActivity {
 
 	}
 	
+	/*
+	
 	@Override
 	public void onAttachedToWindow() {  
 		Log.i("TESTE", "onAttachedToWindow");
 		this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
 		super.onAttachedToWindow();  
 	}
+	
+	*/
 
 	public boolean onKeyDown(int keyCode, KeyEvent event){
 		switch(keyCode){
@@ -157,5 +161,13 @@ public class TourMeActivity extends LocalizedActivity {
 		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
 	}
 	 */
+	
+	@Override
+	protected void  onUserLeaveHint () {
+		super.onUserLeaveHint();
+		LandingPageActivity.mlocManager.removeUpdates(LandingPageActivity.mlocListener);
+		Log.d("aaaaaonStop onUserLeaveHint","aaaonStop onUserLeaveHint");
+	}
+	
 }
 
