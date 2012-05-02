@@ -53,7 +53,8 @@ btnPlus.setOnClickListener(new View.OnClickListener() {
   android:id="@+id/buttonChangeText"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:text="@string/changeText" android:onClick="changeText"/>
+  android:text="@string/changeText" 
+  android:onClick="changeText"/>
 ```
 
 
