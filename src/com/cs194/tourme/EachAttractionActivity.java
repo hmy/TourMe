@@ -68,20 +68,6 @@ public class EachAttractionActivity extends LocalizedActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.eachattraction);
 
-		//Set up Text to Speech, US language
-		tts = new TextToSpeech(EachAttractionActivity.this, new
-				TextToSpeech.OnInitListener() {
-
-			@Override
-			public void onInit(int status) {
-				if(status != TextToSpeech.ERROR){
-					tts.setLanguage(Locale.US);
-				}
-			}
-
-		});
-
-
 		DatabaseHandler dbHandler = new DatabaseHandler ();
 		Log.d("ABC", AttractionRouteActivity.poiName);
 
@@ -320,7 +306,7 @@ public class EachAttractionActivity extends LocalizedActivity {
 			String phpLocation = "http://ec2-23-20-205-81.compute-1.amazonaws.com:3000" +
 					"/tour_my_memory/postPicture?";
 			String userID = URLEncoder.encode(LandingPageActivity.userId, "UTF-8");
-			String title =  URLEncoder.encode(EachAttractionActivity.poiName, "UTF-8");
+			String title =  URLEncoder.encode(poiName, "UTF-8");
 
 			String lat = URLEncoder.encode(Double.toString(LandingPageActivity.currLat), "UTF-8");
 			String lng = URLEncoder.encode(Double.toString(LandingPageActivity.currLong), "UTF-8");
@@ -402,6 +388,18 @@ public class EachAttractionActivity extends LocalizedActivity {
 			e.printStackTrace();
 		}	
 
+		//Set up Text to Speech, US language
+		tts = new TextToSpeech(EachAttractionActivity.this, new
+				TextToSpeech.OnInitListener() {
+
+			@Override
+			public void onInit(int status) {
+				if(status != TextToSpeech.ERROR){
+					tts.setLanguage(Locale.US);
+				}
+			}
+
+		});
 		super.onResume();
 	}
 
