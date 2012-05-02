@@ -27,8 +27,10 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ParseException;
 import android.net.Uri;
@@ -158,9 +160,8 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 		mMediaPlayer.seekTo(playBackPosition);
 		if(firstTimePlaying){
-			mMediaPlayer.setVolume(0, 0);
+			mMediaPlayer.setVolume(1000, 1000);
 			mMediaPlayer.start(); //You also need this method here or it won't play after first time either
-			mMediaPlayer.setVolume(100, 100);
 		}
 		else
 			mMediaPlayer.start(); //You also need this method here or it won't play after first time either
@@ -184,11 +185,17 @@ public class EachAttractionActivity extends LocalizedActivity {
 	}
 
 	public void convertTTSToSD(){
+		//change volume to be max
+		AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+		int amStreamMusicMaxVol = am.getStreamMaxVolume(am.STREAM_MUSIC);
+		am.setStreamVolume(am.STREAM_MUSIC, amStreamMusicMaxVol, 0);
+		//tts.speak("Hello", TextToSpeech.QUEUE_FLUSH, null);
+
 
 		//read the text and form into words
 		TextView text = (TextView)findViewById(R.id.textViewAttractionDescription);
 		String textString = (String)text.getText();
-		tts.setSpeechRate((float) 1.3);
+		tts.setSpeechRate((float) 1.3);		
 		tts.speak(textString, TextToSpeech.QUEUE_FLUSH, null);
 
 

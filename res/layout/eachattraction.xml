@@ -9,8 +9,9 @@
     <ScrollView
         android:id="@+id/ScrollViewForImage"
         android:layout_width="match_parent"
-        android:layout_height="223dp"
-        android:layout_marginTop="60dp" >
+        android:layout_height="70dp"
+        android:layout_marginTop="60dp"
+        android:layout_weight="0.21" >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -23,7 +24,7 @@
         android:id="@+id/ScrollViewForLongText"
         android:layout_width="match_parent"
         android:layout_height="104dp"
-        android:layout_weight="0.58" >
+        android:layout_weight="0.45" >
 
         <TextView
             android:id="@+id/textViewAttractionDescription"
@@ -40,7 +41,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp" >
+        android:layout_marginBottom="5dp" >
 
         <Button
             android:id="@+id/buttonPrevious"
