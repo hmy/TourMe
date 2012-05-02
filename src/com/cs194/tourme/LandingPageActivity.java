@@ -24,7 +24,6 @@ import com.google.android.maps.MapController;
 
 public class LandingPageActivity extends Activity {
 
-
 	static public String userId = "";
 	static public Integer numPics = 0; 
 	public Intent intent;
@@ -35,7 +34,6 @@ public class LandingPageActivity extends Activity {
 
 	static public double currLat;
 	static public double currLong;
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

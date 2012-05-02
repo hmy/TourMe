@@ -78,12 +78,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity
-            android:name="TourMyMemoryRailsActivity"
-            android:label=".TourMyMemoryRailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
     </application>
 
 </manifest>

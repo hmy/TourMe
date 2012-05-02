@@ -31,14 +31,13 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ParseException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -359,9 +358,11 @@ public class EachAttractionActivity extends LocalizedActivity {
 
 	}
 
-	public void showRailsView(View view) {
-		Intent intent = new Intent (this, TourMyMemoryRailsActivity.class);
-		startActivity(intent);
+	public void showRailsView(View view) {	
+		//open rails app in default broswer instead of webview
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://ec2-23-20-205-81." +
+				"compute-1.amazonaws.com:3000/tour_my_memory/showallmaps"));
+		startActivity(browserIntent);
 	}
 
 	
@@ -404,15 +405,20 @@ public class EachAttractionActivity extends LocalizedActivity {
 	}
 
 	@Override
+	protected void onPause() {
+		if (tts != null) {
+			tts.stop();
+			tts.shutdown();
+		}
+		super.onPause();
+	}
+	
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (mMediaPlayer != null) {
 			mMediaPlayer.release();
 			mMediaPlayer = null;
-		}
-		if (tts != null) {
-			tts.stop();
-			tts.shutdown();
 		}
 	}
 
