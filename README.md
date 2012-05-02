@@ -43,28 +43,17 @@ Iteration By Iteration
   - Date : 4/16/12 Monday
 * Fourth Iteration Achievements:
   - TTS Modified (pause, playback works after first iteration)
-  - Changed uploading method (from html library to using native HTTP POST)
+  - Changed uploading picture method (from html library to using native HTTP POST)
   - Modified where GPS turns on and off
+  - Home button disabled for now for better navigation
+  - TourMyMemory integration : [TourMyMemoryUser], [TourMyMemoryAll]
   - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM), Poster Session
-
-
-What To Improve On
-------------------
-
-* Outsourcing
-* Need Actual Instruction Video
-* UI Improvement, Enhance User Experience
-* Multi-language Support
-* Settings Menu / Page
-* Double-Tap Feature on Map
-* Cleaning Up the Code
-* Make all the features smooth
 
 ### * [DB][ec2db] is online
 
 
 ```
-  Last Updated on 4/30/12 by hmy
+  Last Updated on 5/1/12 by hmy
 ```
 
   [Hee Min Yoo]: https://github.com/hmy "GitHub Page"
@@ -77,5 +66,6 @@ What To Improve On
   [most recent version]: https://github.com/hmy/TourMeReadMe/blob/master/README.md
   [ec2db]: http://ec2-23-20-205-81.compute-1.amazonaws.com/phpmyadmin/ "EC2 DB"
   [webservice]: http://ec2-23-20-205-81.compute-1.amazonaws.com:2222/ "New Web Service"
-  [TourMyMemory]: http://ec2-23-20-205-81.compute-1.amazonaws.com:3000/tour_my_memory
+  [TourMyMemoryUser]: http://ec2-23-20-205-81.compute-1.amazonaws.com:3000/tour_my_memory
+  [TourMyMemoryAll]: http://ec2-23-20-205-81.compute-1.amazonaws.com:3000/tour_my_memory/showallmaps
   [CameraUpload]: https://github.com/brycecurtis/articles/tree/master/CameraUpload
