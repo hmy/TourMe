@@ -44,8 +44,8 @@ Iteration By Iteration
 * Fourth Iteration Achievements:
   - TTS Modified (pause, playback works after first iteration)
   - Changed uploading picture method (from html library to using native HTTP POST)
-  - Modified where GPS turns on and off
-  - Home button disabled for now for better navigation
+  - Modified where GPS turns on and off 
+    (By Android convention, only way to properly turn off app is to use back button)
   - TourMyMemory integration : [TourMyMemoryUser], [TourMyMemoryAll]
   - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM), Poster Session
 
