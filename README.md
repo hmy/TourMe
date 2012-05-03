@@ -60,7 +60,7 @@ Iteration By Iteration
   [Ji Hun Cho]: https://github.com/creamsoup "GitHub Page"
   [Anastasia Ingargiola]: https://github.com/velvet117 "GitHub Page"
   [Clint Anderson]: https://github.com/clintanderson "GitHub Page"
-  [link to proposal]: http://vmphone2.cs.berkeley.edu/cs194-22sp12/projects/TourMe.pdf 
+  [link to proposal]: http://ec2-23-20-205-81.compute-1.amazonaws.com/TourMe/TourMeProposal.pdf 
   [link to coding style]: https://github.com/hmy/TourMeReadMe/blob/master/CODINGSTYLE.md
   [CS194]: http://phone.cs.berkeley.edu/dokuwiki/doku.php?id=194-22:sp2012
   [most recent version]: https://github.com/hmy/TourMeReadMe/blob/master/README.md
