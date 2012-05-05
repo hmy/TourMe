@@ -47,7 +47,7 @@ Iteration By Iteration
   - Modified where GPS turns on and off 
     (By Android convention, only way to properly turn off app is to use back button)
   - TourMyMemory integration : [TourMyMemoryUser], [TourMyMemoryAll]
-  - Date : 5/2/12 Wednesday (1-4PM, Soda 5PM), Poster Session
+  - Date : 5/2/12 Wednesday (1-4PM, Soda 5th Floor), Poster Session
 
 ### * [DB][ec2db] is online
 
