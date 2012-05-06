@@ -36,7 +36,7 @@ Iteration By Iteration
 * Third Iteration Achievements:
   - Moved DB to the web (Amazon EC2) : [link][ec2db]
   - Sort Attraction List by geolocation (GPS)
-  - TourMyMemory Server (rails) : [link][TourMyMemory]
+  - TourMyMemory Server (rails) : [link][TourMyMemoryUser]
   - Taking picture and uploading to the server, using [this][CameraUpload] library
   - UI Improvements
   - TTS (Text To Speech) enabled for description
